@@ -1,6 +1,6 @@
-
 #ifndef MACROS_H
 # define MACROS_H
+
 #include "minishell.h"
 
 # define SHELL_NAME "minishell"
@@ -8,10 +8,10 @@
 //Macrofication
 # define FALSE          0
 # define TRUE           1
-# define NOT            !
-# define AND            &&
-# define OR             ||
-# define ELIF           else if // why not?
+# define NOT            ! // This is the python style !!
+# define AND            && // This is the python style !!
+# define OR             || // This is the python style !!
+# define ELIF           else if // why not? // No need its not a clean code !!!
 
 # define DIGITS         "0123456789"
 # define ASCII_LOWER    "abcdefghijklmnopqrstuvwxyz"
@@ -24,7 +24,7 @@
 # define BACK_SLASH     '\\'
 # define EOL            '\n'
 # define FLUSH          put_char('\n')
-# define PASS           0;
+# define PASS           0; // !!
 
 // BUFF_SIZE for get_next_line
 # undef BUFF_SIZE
@@ -37,13 +37,13 @@
 
 // 42 norminette: parameterized macros are forbidden
 
-# define MALLOC(ptr)        (ptr) = malloc(sizeof(*(ptr) ))
-# define ARRLLOC(p, l)      (p) = malloc(sizeof(*(p) ) * l)
+# define MALLOC(ptr)        (ptr) = malloc(sizeof(*(ptr) )) // No need also Not a clean code
+# define ARRLLOC(p, l)      (p) = malloc(sizeof(*(p) ) * l) // SAME
 
-# define IS_NUM(c)          (c >= '0' AND c <= '0')
-# define IS_LOWER(c)        (c >= 'a' AND c <= 'z')
-# define IS_UPPER(c)        (c >= 'A' AND c <= 'Z')
-# define IS_ALPHA(c)        (IS_LOWER(c) OR IS_UPPER(c))
+# define IS_NUM(c)          (c >= '0' AND c <= '0') // SAME
+# define IS_LOWER(c)        (c >= 'a' AND c <= 'z') // SAME
+# define IS_UPPER(c)        (c >= 'A' AND c <= 'Z') // SAME
+# define IS_ALPHA(c)        (IS_LOWER(c) OR IS_UPPER(c)) // SAME
 
 # define ENV                t_env *env
 # define LIST               t_node **list

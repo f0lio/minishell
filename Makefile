@@ -1,4 +1,3 @@
-
 .PHONEY: all clean fclean re bonus
 
 NAME			= 	minishell
@@ -16,7 +15,7 @@ UTILS			=	tmp_utils.c \
 CONSTRUCTORS	=	env.c
 TOKENIZER		=	commands_splitter.c quotes_checker.c tokenize.c
 LEXER			=	lexer.c
-PARSER			=	
+PARSER			=	parser.c
 EXECUTER		=	
 
 DBG				=	MY_DBG.C
