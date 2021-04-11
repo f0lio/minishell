@@ -14,8 +14,13 @@ int 	is_it_cmd(char *line)
 
 int 		check_for_double_quote(char *line)
 {
-	//TODO: Implement the logic to fill the structure with the quotes inside of the line
+	// TODO: Implement the logic to fill the structure with the quotes inside of the line
 	return (0);
+}
+
+int			check_special_operator(char *line)
+{
+	// TODO: ...
 }
 
 int 		parse_special_chars(char *line)
