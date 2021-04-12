@@ -28,3 +28,17 @@ int 		parse_special_chars(char *line)
 	// TODO: ...
 	return (0);
 }
+
+static int 		_isalpha(int c)
+{
+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+
+t_cmd 		*parse_line(char *line, t_cmd *commands)
+{
+	while (_isalpha(*line))
+	{
+		// TODO: ...
+		line++;
+	}
+}
