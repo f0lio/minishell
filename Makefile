@@ -1,4 +1,3 @@
-
 .PHONEY: all clean fclean re bonus
 
 NAME			= 	minishell
@@ -70,7 +69,3 @@ re: fclean all
 
 bu: fclean
 	@bash git_bu.sh
-
-#Run dev container
-docker:
-	@bash start.sh

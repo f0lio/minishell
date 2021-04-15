@@ -37,6 +37,13 @@ typedef struct			s_token
 	t_bool				quoted; 
 }						t_token;
 
+/*
+** -tokens:	list of command tokens ["ls", "-la", "file"]
+** -
+** -ret		return value of the command,
+**			if ret == ZERO && sep == "&&" then stop executing.
+*/
+
 typedef struct			s_command
 {
 	char				*cmd;
@@ -58,8 +65,8 @@ typedef struct			s_env
 	char				**argv;
 	char				**env_var;
 	t_input				*input;
-	t_node				*tokens;
-	t_node				*commands;
+	t_node              *tokens;
+	t_node              *commands; //[, , , ], [, , , ]
 	//char				**builtins;
 }						t_env;
 

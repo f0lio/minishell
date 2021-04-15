@@ -63,7 +63,7 @@ t_token *get_token(ENV)
     short   k;
     char    *line;
     
-    //To handle:
+    //To h&&le:
     //  +[ cd d\ ir]
     //  -[echo okay \\ > file]
     //  -[echo okay \ > file]
@@ -111,8 +111,8 @@ t_bool tokenize_input(ENV)
         else
             i++;
     }
-    print("############");
-    print_tokens(&env->tokens);
-    print("############");
+    // print("############");
+    // print_tokens(&env->tokens);
+    // print("############");
     return 0;
 }

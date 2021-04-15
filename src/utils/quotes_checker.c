@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-t_bool check_quotes(char *str)
+t_bool  check_quotes(char *str)
 {
     int     i;
     int     len;

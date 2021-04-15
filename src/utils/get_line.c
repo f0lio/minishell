@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 /*
@@ -30,6 +29,7 @@ static int		got_line(char **stream, char **buff, char **line)
 	return (1);
 }
 
+// WTF !!! 🤖
 int		get_line(int fd, char **line)
 {
 	static char *stream[OPEN_MAX];

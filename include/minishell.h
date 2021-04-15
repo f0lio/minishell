@@ -1,8 +1,7 @@
+#ifndef __MINISHELL_H__
+# define __MINISHELL_H__
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdio.h> //tmp?
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include "macros.h"
@@ -12,17 +11,6 @@
 //tempo
 # include "../dbg/my_dbg.h" 
 
-// it's tempo', I promise.
-static
-char *builtins[] =
-{
-    "echo",
-    "cd",
-    "pwd",
-    "export",
-    "unset",
-    "env",
-    "exit"
-};
+static char *builtins[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 
 #endif
