@@ -1,15 +1,15 @@
-#include "../../include/minishell.h"
+
+#include "minishell.h"
 
 //initialize props
 t_env   *init_env(int argc, char **argv, char **env_var)
 {
     t_env   *env;
 
-    malloc(env);
-    malloc(env->input);
-
-    env->tokens = NULL;    //...
-    env->commands = NULL;  //...
+    MALLOC(env);
+    MALLOC(env->input);
+    env->tokens = NULL;
+    env->commands = NULL;
     return (env);
 }
 
@@ -17,7 +17,7 @@ t_token *new_token(void *tok)
 {
     t_token *token;
 
-    malloc(token);
+    MALLOC(token);
     if (tok)
         token->tok = tok;
     return (token);
@@ -27,7 +27,7 @@ t_command *new_cmd(void)
 {
     t_command *cmd;
 
-    cmd = malloc(sizeof(cmd));
+    MALLOC(cmd);
     if (!cmd)
         return (NULL);
     return (cmd);

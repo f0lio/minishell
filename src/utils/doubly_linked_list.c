@@ -1,25 +1,25 @@
 
-#include "../../include/doubly_linked_list.h"
-#include "../../include/errors.h"
+#include "minishell.h"
 
-void	push(t_node **head, void *data)
+t_bool	push(t_node **head, void *data)
 {
 	t_node		*new_node;
 
 	if (!(new_node = malloc(sizeof(t_node))))
-		ft_error_and_quit(1);
+		return (1);
 	new_node->value = data;
 	new_node->next = (*head);
-    new_node->prev = NULL;
+  new_node->prev = NULL;
+	return (0);
 }
 
-void	append(t_node **head, void *data)
+t_bool	append(t_node **head, void *data)
 {
 	t_node		*new_node;
 	t_node		*last;
 
 	if (!(new_node = malloc(sizeof(t_node))))
-		ft_error_and_quit(1);
+		return (1);
 	new_node->value = data;
 	new_node->next = NULL;
 
@@ -27,7 +27,7 @@ void	append(t_node **head, void *data)
 	{
 		new_node->prev = NULL;
 		*head = new_node;
-		return ;
+		return 0;
 	}
 
 	while (last->next != NULL)
@@ -35,7 +35,7 @@ void	append(t_node **head, void *data)
 	last->next = new_node;
 	new_node->prev = last;
 
-    return ;
+  return 0;
 }
 
 void	reverse(t_node **head)

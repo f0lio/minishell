@@ -14,26 +14,28 @@ UTILS			=	tmp_utils.c \
 					#bintree.c
 
 CONSTRUCTORS	=	env.c
-TOKENIZER		=	commands_splitter.c quotes_checker.c tokenize.c
-LEXER			=	lexer.c
-PARSER			=	
-EXECUTER		=	
+TOKENIZER			=	commands_splitter.c quotes_checker.c tokenize.c
+LEXER					=	lexer.c
+PARSER				=	
+EXECUTER			=	
+HISTORY				=	history.c
 
-DBG				=	MY_DBG.C
+DBG						=	MY_DBG.C
 
-SRC				=	src/minishell.c\
-					$(TOKENIZER:%.c=./src/tokenizer/%.c)\
-					$(LEXER:%.c=./src/lexer/%.c)\
-					$(PARSER:%.c=./src/parser/%.c)\
-					$(UTILS:%.c=./src/utils/%.c)\
-					$(CONSTRUCTORS:%.c=./src/constructors/%.c)
+SRC					=	src/minishell.c\
+						$(CONSTRUCTORS:%.c=./src/constructors/%.c)\
+						$(TOKENIZER:%.c=./src/tokenizer/%.c)\
+						$(LEXER:%.c=./src/lexer/%.c)\
+						$(PARSER:%.c=./src/parser/%.c)\
+						$(UTILS:%.c=./src/utils/%.c)\
+						$(HISTORY:%.c=./src/history/%.c)
 
-OBJ				=	minishell.o\
-					$(TOKENIZER:.c=.o)\
-					$(LEXER:.c=.o)\
-					$(PARSER:.c=.o)\
-					$(UTILS:.c=.o)\
-					$(CONSTRUCTORS:.c=.o)
+OBJ					=	minishell.o\
+						$(TOKENIZER:.c=.o)\
+						$(LEXER:.c=.o)\
+						$(PARSER:.c=.o)\
+						$(UTILS:.c=.o)\
+						$(CONSTRUCTORS:.c=.o) #$(HISTORY:.c=.o)
 
 ## For debuging:
 DBG_FLAGS		=  -I dbg

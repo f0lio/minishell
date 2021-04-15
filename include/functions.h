@@ -37,6 +37,10 @@ t_token         *tokenize_double_quoted(ENV);
 // Commands
 t_bool          split_commands(ENV);
 t_command       *new_cmd(void);
+t_command       *get_quoted_command(ENV);
+t_command       *single_quoted_cmd(ENV);
+t_command       *double_quoted_cmd(ENV);
+t_command       *get_command(ENV);
 
 // Lexer
 int             lex_tokens(ENV);
@@ -89,15 +93,8 @@ void        delete_lst(LIST);
 t_bool      split_by_type(char *buff, t_node **tokens);
 int         tokenize(char *buff, ENV);
 
-
-t_command   *get_quoted_command(ENV);
-t_command   *single_quoted_cmd(ENV);
-t_command   *double_quoted_cmd(ENV);
-t_command   *get_command(ENV);
-t_bool      split_commands(ENV);
-
-
-
+//Error
+void  raise_error(t_env *env, char *msg);
 
 
 //tmp_utils

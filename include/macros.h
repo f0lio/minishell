@@ -7,7 +7,7 @@
 # ifndef OPEN_MAX
 #  define OPEN_MAX 512
 # endif
-# define SHELL_NAME "minishell"
+# define SHELL_NAME     "minishell"
 # define DIGITS         "0123456789"
 # define ASCII_LOWER    "abcdefghijklmnopqrstuvwxyz"
 # define ASCII_UPPER    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -19,8 +19,8 @@
 # define BACK_SLASH     '\\'
 # define EOL            '\n'
 # define SEP            ';'
-# define RED        "\033[1;31m"
-# define GREEN      "\033[1;32m"
+# define RED            "\033[1;31m"
+# define GREEN          "\033[1;32m"
 /*
 **
 */
@@ -39,6 +39,11 @@
 # define ENV                t_env *env
 # define LIST               t_node **list
 
+//Error messages, prefix macros with "ERR_"
+# define  ERR_MALLOC  "Couldn't allocate memory"
+
+
 //define signal codes
+
 
 #endif
