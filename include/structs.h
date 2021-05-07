@@ -51,12 +51,12 @@ typedef struct s_command
 	t_bool sep;
 } t_command;
 
-typedef struct s_input
+typedef struct	s_input
 {
-	char *line;
-	size_t len;
-	size_t i;
-} t_input;
+	char		*line;
+	size_t		len;
+	size_t		i;
+}				t_input;
 
 typedef struct s_env
 {
