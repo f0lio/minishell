@@ -41,6 +41,7 @@ t_command       *get_quoted_command(ENV);
 t_command       *single_quoted_cmd(ENV);
 t_command       *double_quoted_cmd(ENV);
 t_command       *get_command(ENV);
+t_bool          command_is_valid(ENV, t_command *cmd);
 
 // Lexer
 int             lex_tokens(ENV);
@@ -95,7 +96,8 @@ t_bool      split_by_type(char *buff, t_node **tokens);
 int         tokenize(char *buff, ENV);
 
 //Error
-void  raise_error(t_env *env, char *msg);
+t_bool      raise_error(ENV, char *msg);
+void        destroy_env(ENV);
 
 
 //tmp_utils

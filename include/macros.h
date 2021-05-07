@@ -39,8 +39,8 @@
 # define LIST               t_node **list
 
 //Error messages, prefix macros with "ERR_"
-# define  ERR_MALLOC  "Couldn't allocate memory"
-
+# define ERR_MALLOC         "Couldn't allocate memory"
+# define ERR_SYNTAX         "invalid syntax"
 
 //define signal codes
 

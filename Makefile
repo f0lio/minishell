@@ -1,25 +1,26 @@
 .PHONEY: all clean fclean re bonus
 
-NAME			= 	minishell
-CC				=	clang
-FLAGS			= 	-Werror -Wextra -Wall
+NAME				= 	minishell
+CC					=	clang
+FLAGS				= 	-Werror -Wextra -Wall
 
 #Source Files
-UTILS			=	tmp_utils.c \
-					strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
-					linked_list.c
-					#num_tools_0.c\
-					#get_line.c \
-					#bintree.c
+UTILS				=	tmp_utils.c \
+						strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
+						linked_list.c\
+						error_handlers.c
+						#num_tools_0.c\
+						#get_line.c \
+						#bintree.c
 
-CONSTRUCTORS	=	env.c
-TOKENIZER			=	commands_splitter.c quotes_checker.c tokenize.c
-LEXER					=	lexer.c
+CONSTRUCTORS		=	env.c
+TOKENIZER			=	commands_splitter.c quotes_checker.c tokenize.c command_checker.c
+LEXER				=	lexer.c
 PARSER				=	
 EXECUTER			=	
 HISTORY				=	history.c
 
-DBG						=	MY_DBG.C
+DBG					=	MY_DBG.C
 
 SRC					=	src/minishell.c\
 						$(CONSTRUCTORS:%.c=./src/constructors/%.c)\
@@ -36,7 +37,7 @@ OBJ					=	minishell.o\
 						$(UTILS:.c=.o)\
 						$(CONSTRUCTORS:.c=.o) #$(HISTORY:.c=.o)
 
-## For debuging:
+## For debugging:
 DBG_FLAGS		=  -I dbg
 
 ###################
