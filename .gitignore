@@ -6,3 +6,4 @@ _*.py
 *.swp
 minishell
 .idea
+*.o
