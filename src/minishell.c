@@ -47,8 +47,8 @@ int repl(t_env *env)
     env->input->len = str_len(env->input->line);
     if (split_commands(env) == -1)
         return 0;
-    // if (tokenize_commands(env) == -1)
-    //     return 0;
+    if (tokenize_commands(env) == -1)
+        return 0;
 
     // {
     //     t_command *cmd;

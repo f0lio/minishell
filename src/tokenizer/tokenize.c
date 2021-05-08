@@ -98,19 +98,22 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
     {
         env->input->i = i;
         if (line[i] != SPACE)
+        // echo okay; cd dir ; pwd | cat > file
         {
             if (line[i] == DOUBLE_QT || line[i] == SINGLE_QT)
                 token = tokenize_quoted_cmd(env, cmd);
             else
                 token = get_token(env, cmd);
             i = env->input->i;
-            push_back(&cmd->tokens, (void*)token);
+            // push_back(&cmd->tokens, (void*)token);
+            push_back(&cmd->tokens, token);
         }
         else
             i++;
     }
-    print("############");
-    print_tokens(&env->tokens);
+    // print("############");
+    // print_tokens(&cmd->tokens);
+    // print("############");
     return 0;
 }
 
