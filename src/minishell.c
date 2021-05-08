@@ -4,8 +4,8 @@
 int read_input(char **input)
 {
     ssize_t read_ret;
-    char *buff;
-    char *p;
+    char    *buff;
+    char    *p;
 
     ARRLLOC(buff, 2);
     *input = str_dup("");
@@ -29,9 +29,9 @@ int read_input(char **input)
 //repl => Read-Eval-Print-Loop
 int repl(t_env *env)
 {
-    int ret;
-    char *input;
-    size_t len;
+    int     ret;
+    char    *input;
+    size_t  len;
 
     put_str(SHELL_NAME);
     put_str("$ ");
@@ -40,19 +40,29 @@ int repl(t_env *env)
         return (-1);
     else if (line_isempty(env->input->line))
         return (0);
-
-    // print(env->input->line);
-
     /* TODO:
-        -> Split commands then tokenize.
+        +> Split commands
+        -> then tokenize.
     */
     env->input->len = str_len(env->input->line);
-
-
     if (split_commands(env) == -1)
         return 0;
-    // if (tokenize_input(env) == -1)
-    //     return 0;
+    if (tokenize_commands(env) == -1)
+        return 0;
+
+    // {
+    //     t_command *cmd;
+    //     t_token *token;
+    //     ITER(env->commands);
+    //     while (iter)
+    //     {
+    //         cmd = (t_command*)iter->data;
+    //         free(cmd->cmd);
+    //         free(cmd);
+    //         NEXT(iter);
+    //     }
+    // }
+    
     // print_tokens(&env->tokens);
     //ret = lex_tokens(env);
     //ret = parse_tokens();
