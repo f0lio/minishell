@@ -1,33 +1,45 @@
 
 #include "minishell.h"
 
-void    destroy_token(void **ptr)
+void    reset_data(ENV)
+{
+    safe_free ((void**)&env->input->line);
+    list_iter(&env->commands, destroy_command);
+    safe_free((void**)&env->commands);
+    MALLOC(env->commands);
+    env->input->i = 0;
+}
+
+void    destroy_command(void *ptr)
+{
+    t_command *cmd;
+    cmd = ptr;
+    if (!cmd)
+        return ;
+    safe_free((void**)&cmd->cmd);
+    list_iter(&cmd->tokens, destroy_token);
+    cmd->tokens = NULL;
+    safe_free((void**)&cmd);
+}
+
+void    destroy_token(void *ptr)
 {
     t_token *token;
 
-    token = (t_token*)ptr;
-    if (token->tok)
-    {
-        free(token->tok);
-        if (token->type)
-            free(token->type);
-        // token->tok = NULL;
-    }
-    free(token);
-    // token = NULL;
+    token = ptr;
+    if (token == NULL)
+        return ;
+    safe_free((void*)&token->tok);
+    safe_free((void*)&token->type);
+    safe_free((void*)&token);
 }
 
-void    destroy_command(void **ptr)
+void safe_free(void **ptr)
 {
-    t_command   *cmd;
-
-    cmd = *ptr;      // ¯\_(ツ)_/¯
-    free(cmd->cmd);
-    cmd->cmd = NULL;
-
-    list_iter(&cmd->tokens, destroy_token);
-
-    // cmd->tokens = NULL;
-    free(cmd);
-    cmd = NULL;
+    if (*ptr == NULL)
+        return ;
+    free(*ptr);
+    *ptr = NULL;
 }
+
+//echo okay; cd dir; pwd | cat | grep *

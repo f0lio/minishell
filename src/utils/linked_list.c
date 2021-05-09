@@ -55,7 +55,7 @@ t_node      *push_front(LIST, void  **data)
     }
 }
 
-void    list_iter(LIST, void(*fun)(void **))
+void    list_iter(LIST, void(*fun)(void *))
 {
     t_node      *tmp;
 
@@ -64,7 +64,7 @@ void    list_iter(LIST, void(*fun)(void **))
     tmp = *list;
     while (tmp != NULL)
     {
-        (fun)(&tmp->data);
+        (fun)(tmp->data);
         tmp = tmp->next;
     }
 }
@@ -94,14 +94,14 @@ size_t  list_size(t_node    *list)
     return (i);
 }
 
-void	safe_free(void **p)
-{
-	if (*p)
-	{
-		free(*p);
-		*p = NULL;
-	}
-}
+// void	safe_free(void **p)
+// {
+// 	if (*p)
+// 	{
+// 		free(*p);
+//		*p = NULL;
+// 	}
+// }
 
 void    destroy_lst(LIST)
 {
