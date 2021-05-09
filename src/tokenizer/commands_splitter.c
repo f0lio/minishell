@@ -75,7 +75,6 @@ t_command   *get_command(ENV)
     char        *line;
     int         j;
 
-    cmd = new_cmd();
     line = env->input->line;
     j = env->input->i;
     if (line[j] == ';')
@@ -90,6 +89,7 @@ t_command   *get_command(ENV)
             break;
         j++;
     }
+    cmd = new_cmd();
     cmd->cmd = sub_str(line, env->input->i, j);
     env->input->i = j + 1;
     return cmd;
