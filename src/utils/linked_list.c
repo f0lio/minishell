@@ -26,6 +26,8 @@ void      push_back(t_node **list, void *data)
     }
     if (!*list)
     {
+        print("LIST == NULL");
+        print(((t_token*)data)->tok);
         *list = new_node(data);
         return ;
     }
@@ -85,6 +87,7 @@ size_t  list_size(t_node    *list)
     i = 0;
     while (tmp)
     {
+        print("LIST_SIZE");
         print((char*)tmp->data);
         tmp = tmp->next;
         i++;

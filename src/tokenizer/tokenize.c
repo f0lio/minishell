@@ -102,13 +102,13 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
     {
         env->input->i = i;
         if (line[i] != SPACE)
-
         {
             if (line[i] == DOUBLE_QT || line[i] == SINGLE_QT)
                 token = tokenize_quoted_cmd(env, cmd);
             else
                 token = get_token(env, cmd);
             i = env->input->i;
+            printf("[%s]\n", token->tok);
             push_back(&cmd->tokens, token);
         }
         else

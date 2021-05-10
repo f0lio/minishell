@@ -6,6 +6,7 @@ void    reset_data(ENV)
     safe_free ((void**)&env->input->line);
     list_iter(&env->commands, destroy_command);
     safe_free((void**)&env->commands);
+    env->commands = NULL;
     env->input->i = 0;
 }
 

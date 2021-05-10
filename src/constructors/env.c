@@ -29,6 +29,8 @@ t_command *new_cmd(void)
     MALLOC(cmd);
     if (!cmd)
         return (NULL);
+    cmd->cmd = NULL;
+    cmd->tokens = NULL;
     return (cmd);
 }
 
