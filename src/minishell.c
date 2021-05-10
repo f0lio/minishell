@@ -49,7 +49,6 @@ int repl(t_env *env)
         return 0;
     if (tokenize_commands(env) == -1)
         return 0;
-
     //ret = lex_tokens(env);
     //ret = parse_tokens();
     //ret = execute();
@@ -70,3 +69,6 @@ int main(int argc, char **argv, char **env_vars)
     //-Free allocated mem
     return (0);
 }
+/*
+echo okay; cd $MY_DIR; pwd | cat | grep $VAR
+*/

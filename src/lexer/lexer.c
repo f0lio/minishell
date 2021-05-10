@@ -5,7 +5,7 @@ int     lex_tokens(ENV)
     t_token *token;
     t_node  *iter;
 
-    iter = env->tokens;
+
     while (iter)
     {
         token = iter->data;
