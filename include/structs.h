@@ -63,7 +63,6 @@ typedef struct s_env
 	int argc;
 	char **argv;
 	char **env_var;
-
 	t_input *input;
 	t_node *commands; //[, , , ], [, , , ]
 					  //char				**builtins;

@@ -19,7 +19,7 @@ TOKENIZER			=	commands_splitter.c quotes_checker.c tokenize.c command_checker.c
 LEXER				=	lexer.c
 PARSER				=	
 EXECUTER			=	
-HISTORY				=	history.c
+HISTORY				=	init.c history.c 
 
 DBG					=	MY_DBG.C
 
@@ -36,7 +36,8 @@ OBJ					=	minishell.o\
 						$(LEXER:.c=.o)\
 						$(PARSER:.c=.o)\
 						$(UTILS:.c=.o)\
-						$(CONSTRUCTORS:.c=.o) #$(HISTORY:.c=.o)
+						$(CONSTRUCTORS:.c=.o)\
+						$(HISTORY:.c=.o)
 
 ## For debugging:
 DBG_FLAGS		=  -I dbg
