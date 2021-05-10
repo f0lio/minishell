@@ -33,8 +33,6 @@ void      push_back(t_node **list, void *data)
     while (iter->next)
         iter = iter->next;
     iter->next = new_node(data);
-    //printf("[--> %s]\n", token->tok);
-
     if (!iter)
         return ;
 }
@@ -55,7 +53,7 @@ t_node      *push_front(LIST, void  **data)
     }
 }
 
-void    list_iter(LIST, void(*fun)(void **))
+void    list_iter(LIST, void(*fun)(void *))
 {
     t_node      *tmp;
 
@@ -64,7 +62,7 @@ void    list_iter(LIST, void(*fun)(void **))
     tmp = *list;
     while (tmp != NULL)
     {
-        (fun)(&tmp->data);
+        (fun)(tmp->data);
         tmp = tmp->next;
     }
 }
@@ -94,14 +92,14 @@ size_t  list_size(t_node    *list)
     return (i);
 }
 
-void	safe_free(void **p)
-{
-	if (*p)
-	{
-		free(*p);
-		*p = NULL;
-	}
-}
+// void	safe_free(void **p)
+// {
+// 	if (*p)
+// 	{
+// 		free(*p);
+//		*p = NULL;
+// 	}
+// }
 
 void    destroy_lst(LIST)
 {
@@ -123,7 +121,7 @@ void	delete_lst(LIST)
 { 
    t_node *current;
    t_node *next;
-   
+
    current = *list; 
    while (current != NULL)  
    { 
@@ -132,4 +130,4 @@ void	delete_lst(LIST)
        current = next; 
    } 
    *list = NULL; 
-} 
+}

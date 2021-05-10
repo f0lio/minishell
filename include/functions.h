@@ -23,10 +23,15 @@ int         repl(ENV);
 int         read_input(char **input);
 
 // Constructos
-t_token         *new_token(void *tok);
+t_token         *new_token(char *tok);
 t_array         *new_array(int size);
 t_env           *init_env(int argc, char **argv, char **env_var);
 
+// Destructors 
+void    reset_data(ENV);
+void    destroy_command(void *command);
+void    destroy_token(void *token);
+void    safe_free(void **ptr);
 // Tokenizer
 t_bool          tokenize_commands(ENV);
 t_bool          tokenize_cmd(ENV, t_command *cmd);
@@ -85,9 +90,8 @@ t_node      *new_node(void *data);
 void        push_back(LIST, void  *data);
 t_node      *push_front(LIST, void  **data);
 
-size_t      list_size(t_node    *list);
-void        list_iter(LIST, void(*fun)(void **));
-void        safe_free(void **p);
+size_t      list_size(t_node *list);
+void        list_iter(LIST, void(*fun)(void *));
 void        destroy_lst(LIST);
 void        delete_lst(LIST);
 
@@ -102,6 +106,6 @@ void        destroy_env(ENV);
 
 //tmp_utils
 void    print_array(t_array *arr, t_bool minus);
-void    print_tokens(t_node **tokens);
+void    print_tokens(t_node *tokens);
 
 #endif

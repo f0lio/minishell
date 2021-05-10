@@ -1,9 +1,9 @@
 
 #include "minishell.h"
 
-t_token    *tokenize_quoted_cmd(ENV, t_command *cmd)
+t_token     *tokenize_quoted_cmd(ENV, t_command *cmd)
 {
-    t_token    *token;
+    t_token     *token;
 
     if (env->input->line[env->input->i] == SINGLE_QT)
         token = tokenize_single_quoted(env, cmd);
@@ -29,7 +29,11 @@ t_token    *tokenize_single_quoted(ENV, t_command *cmd)
             j++;
             break;
         }
-    token = new_token(sub_str(line, env->input->i, j));
+    char *tok = sub_str(line, env->input->i, j);
+    print("TOK------------");
+    print(tok);
+    print("---------------");
+    token = new_token(tok);
     env->input->i = j;
     return (token);
 }
@@ -98,22 +102,21 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
     {
         env->input->i = i;
         if (line[i] != SPACE)
-        // echo okay; cd dir ; pwd | cat > file
+
         {
             if (line[i] == DOUBLE_QT || line[i] == SINGLE_QT)
                 token = tokenize_quoted_cmd(env, cmd);
             else
                 token = get_token(env, cmd);
             i = env->input->i;
-            // push_back(&cmd->tokens, (void*)token);
             push_back(&cmd->tokens, token);
         }
         else
             i++;
     }
-    // print("############");
-    // print_tokens(&cmd->tokens);
-    // print("############");
+    print("############");
+    print_tokens(cmd->tokens);
+    print("############");
     return 0;
 }
 
@@ -125,7 +128,7 @@ t_bool tokenize_commands(ENV)
     iter = env->commands;
     while (iter)
     {
-        cmd = iter->data;
+        cmd = (t_command*)iter->data;
         env->input->i = 0;
         env->input->len = str_len(cmd->cmd);
         tokenize_cmd(env, cmd);
