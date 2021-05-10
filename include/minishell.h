@@ -14,6 +14,7 @@
 # define ITER(list) t_node *iter; iter = list;
 # define NEXT(iter) iter = iter->next;
 
+
 static char *builtins[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 
 #endif

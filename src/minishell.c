@@ -35,7 +35,7 @@ int repl(t_env *env)
 
     put_str(SHELL_NAME);
     put_str("$ ");
-
+    // MALLOC(env->input);
     if (read_input(&env->input->line) == -1)
         return (-1);
     else if (line_isempty(env->input->line))
@@ -50,20 +50,6 @@ int repl(t_env *env)
     if (tokenize_commands(env) == -1)
         return 0;
 
-    // {
-    //     t_command *cmd;
-    //     t_token *token;
-    //     ITER(env->commands);
-    //     while (iter)
-    //     {
-    //         cmd = (t_command*)iter->data;
-    //         free(cmd->cmd);
-    //         free(cmd);
-    //         NEXT(iter);
-    //     }
-    // }
-    
-    // print_tokens(&env->tokens);
     //ret = lex_tokens(env);
     //ret = parse_tokens();
     //ret = execute();
@@ -73,13 +59,14 @@ int repl(t_env *env)
 int main(int argc, char **argv, char **env_vars)
 {
     t_env   *env;
-    int     i;
 
     env = init_env(argc, argv, env_vars);
-    i = 0;
     while (1)
+    {
         if (repl(env))
             break;
+        reset_data(env);
+    }
     //-Free allocated mem
     return (0);
 }

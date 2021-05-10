@@ -13,7 +13,7 @@ t_env   *init_env(int argc, char **argv, char **env_var)
     return (env);
 }
 
-t_token *new_token(void *tok)
+t_token *new_token(char *tok)
 {
     t_token *token;
 

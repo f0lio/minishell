@@ -33,8 +33,6 @@ void      push_back(t_node **list, void *data)
     while (iter->next)
         iter = iter->next;
     iter->next = new_node(data);
-    //printf("[--> %s]\n", token->tok);
-
     if (!iter)
         return ;
 }
@@ -123,7 +121,7 @@ void	delete_lst(LIST)
 { 
    t_node *current;
    t_node *next;
-   
+
    current = *list; 
    while (current != NULL)  
    { 
@@ -132,4 +130,4 @@ void	delete_lst(LIST)
        current = next; 
    } 
    *list = NULL; 
-} 
+}

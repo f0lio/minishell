@@ -97,12 +97,11 @@ t_command   *get_command(ENV)
 
 t_bool split_commands(ENV)
 {
-    t_token *token;
-    t_command *cmd;
-    char *line;
-
-    int i;
-    int j;
+    t_token     *token;
+    t_command   *cmd;
+    char        *line;
+    int         i;
+    int         j;
 
     line = env->input->line;
     i = 0;
@@ -120,52 +119,10 @@ t_bool split_commands(ENV)
                 push_back(&env->commands, cmd);
             else
                 return raise_error(env, ERR_SYNTAX);
-            print(cmd->cmd);
+            // printf("CMD:[%s]\n", cmd->cmd);
         }
         else
             i++;
     }
     return 0;
 }
-
-// t_bool     split_commands(ENV)
-// {
-//     t_node      *iter;
-//     t_token     *token;
-//     t_command       *cmd;
-//     t_bool      flag;
-
-//     //Either this allocation, or tweaking new_node()
-//     MALLOC(env->commands);
-
-//     flag = FALSE;
-//     cmd = new_cmd();
-//     iter = env->tokens;
-//     while (iter)
-//     {
-//         token = iter->data;
-//         if (str_cmp(token->tok, ";")
-//             OR str_cmp(token->tok, "||"))
-//         {
-//             // print("ANOTHER ONE");
-//             push_back(&env->commands, cmd);
-//             // print("AFTER");
-//             cmd = new_cmd();
-//             flag = TRUE;
-//         }
-//         else if (str_cmp(token->tok, "&&"))
-//         {
-//             push_back(&env->commands, cmd);
-//             cmd = new_cmd();
-//             flag = TRUE;
-//         }
-//         else
-//         {
-//             push_back(&cmd->tokens, iter->data);
-//             flag = FALSE;
-//             // when there is no such SEP, add to commands list.
-//         }
-//         iter = iter->next;
-//     }
-//     return 0;
-// }

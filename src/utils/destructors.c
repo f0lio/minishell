@@ -6,7 +6,6 @@ void    reset_data(ENV)
     safe_free ((void**)&env->input->line);
     list_iter(&env->commands, destroy_command);
     safe_free((void**)&env->commands);
-    MALLOC(env->commands);
     env->input->i = 0;
 }
 
@@ -18,7 +17,6 @@ void    destroy_command(void *ptr)
         return ;
     safe_free((void**)&cmd->cmd);
     list_iter(&cmd->tokens, destroy_token);
-    cmd->tokens = NULL;
     safe_free((void**)&cmd);
 }
 
@@ -29,7 +27,7 @@ void    destroy_token(void *ptr)
     token = ptr;
     if (token == NULL)
         return ;
-    safe_free((void*)&token->tok);
+    // safe_free((void*)&token->tok);
     safe_free((void*)&token->type);
     safe_free((void*)&token);
 }
@@ -42,4 +40,6 @@ void safe_free(void **ptr)
     *ptr = NULL;
 }
 
-//echo okay; cd dir; pwd | cat | grep *
+/* 
+echo okay; cd dir; pwd | cat | grep *
+*/
