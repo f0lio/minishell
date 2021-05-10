@@ -42,7 +42,7 @@ int repl(t_env *env)
         return (0);
     /* TODO:
         +> Split commands
-        -> then tokenize.
+        +> then tokenize.
     */
     env->input->len = str_len(env->input->line);
     if (split_commands(env) == -1)

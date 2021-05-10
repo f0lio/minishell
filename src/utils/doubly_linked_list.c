@@ -9,7 +9,7 @@ t_bool	push(t_node **head, void *data)
 		return (1);
 	new_node->value = data;
 	new_node->next = (*head);
-  new_node->prev = NULL;
+  	new_node->prev = NULL;
 	return (0);
 }
 
@@ -34,7 +34,6 @@ t_bool	append(t_node **head, void *data)
 		last = last->next;
 	last->next = new_node;
 	new_node->prev = last;
-
   return 0;
 }
 

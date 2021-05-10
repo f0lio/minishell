@@ -20,14 +20,9 @@ void      push_back(t_node **list, void *data)
     t_node      *iter;
 
     if (!data)
-    {
-        print("&& NULL_DATA &&");
         return ;
-    }
     if (!*list)
     {
-        print("LIST == NULL");
-        print(((t_token*)data)->tok);
         *list = new_node(data);
         return ;
     }
@@ -35,8 +30,6 @@ void      push_back(t_node **list, void *data)
     while (iter->next)
         iter = iter->next;
     iter->next = new_node(data);
-    if (!iter)
-        return ;
 }
 
 t_node      *push_front(LIST, void  **data)
@@ -94,15 +87,6 @@ size_t  list_size(t_node    *list)
     }
     return (i);
 }
-
-// void	safe_free(void **p)
-// {
-// 	if (*p)
-// 	{
-// 		free(*p);
-//		*p = NULL;
-// 	}
-// }
 
 void    destroy_lst(LIST)
 {

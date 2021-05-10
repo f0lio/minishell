@@ -108,15 +108,14 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
             else
                 token = get_token(env, cmd);
             i = env->input->i;
-            printf("[%s]\n", token->tok);
             push_back(&cmd->tokens, token);
         }
         else
             i++;
     }
-    print("############");
-    print_tokens(cmd->tokens);
-    print("############");
+    // print("############");
+    // print_tokens(cmd->tokens);
+    // print("############");
     return 0;
 }
 

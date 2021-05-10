@@ -17,6 +17,9 @@ t_token *new_token(char *tok)
     t_token *token;
 
     MALLOC(token);
+    token->tok = NULL;
+    token->type = NULL;
+    token->len = NULL;
     if (tok)
         token->tok = tok;
     return (token);
