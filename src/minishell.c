@@ -44,6 +44,8 @@ int repl(t_env *env)
         +> Split commands
         +> then tokenize.
     */
+    if (is_arrow(env))
+        return get_history(env);
     env->input->len = str_len(env->input->line);
     if (split_commands(env) == -1)
         return 0;

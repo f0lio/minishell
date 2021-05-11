@@ -104,6 +104,11 @@ int         tokenize(char *buff, ENV);
 t_bool      raise_error(ENV, char *msg);
 void        destroy_env(ENV);
 
+//history
+t_bool      is_arrow(ENV);
+t_bool      get_history(ENV);
+
+
 //tmp_utils
 void    print_array(t_array *arr, t_bool minus);
 void    print_tokens(t_node *tokens);

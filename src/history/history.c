@@ -1,8 +1,12 @@
 
 #include "minishell.h"
 
-void  get_history(ENV)
+t_bool  is_arrow(ENV)
 {
+    return FALSE;
+}
 
-
+t_bool  get_history(ENV)
+{
+    return 0;
 }
