@@ -25,6 +25,13 @@ int read_input(char **input)
     return (0);
 }
 
+
+void    show_prompt(char *msg)
+{
+    put_str(msg);
+    put_str("$ ");
+}
+
 //This is the shell loop.
 //repl => Read-Eval-Print-Loop
 int repl(t_env *env)
@@ -33,9 +40,8 @@ int repl(t_env *env)
     char    *input;
     size_t  len;
 
-    put_str(SHELL_NAME);
-    put_str("$ ");
-    // MALLOC(env->input);
+    show_prompt(SHELL_NAME);
+    signal(SIGINT, handle_interuption);
     if (read_input(&env->input->line) == -1)
         return (-1);
     else if (line_isempty(env->input->line))

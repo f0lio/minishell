@@ -21,6 +21,7 @@
 // main
 int         repl(ENV);
 int         read_input(char **input);
+void        show_prompt(char *msg);
 
 // Constructos
 t_token         *new_token(char *tok);
@@ -108,6 +109,8 @@ void        destroy_env(ENV);
 t_bool      is_arrow(ENV);
 t_bool      get_history(ENV);
 
+//signal handlers
+void	handle_interuption(int sig_code);
 
 //tmp_utils
 void    print_array(t_array *arr, t_bool minus);

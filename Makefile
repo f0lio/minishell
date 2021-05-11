@@ -9,10 +9,8 @@ UTILS				=	tmp_utils.c \
 						strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
 						linked_list.c\
 						error_handlers.c\
-						destructors.c
-						#num_tools_0.c\
-						#get_line.c \
-						#bintree.c
+						destructors.c\
+						signals_handlers.c
 
 CONSTRUCTORS		=	env.c
 TOKENIZER			=	commands_splitter.c quotes_checker.c tokenize.c command_checker.c

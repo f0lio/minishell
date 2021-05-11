@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
 # include "macros.h"
 # include "structs.h"
 # include "functions.h"
