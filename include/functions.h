@@ -21,6 +21,7 @@
 // main
 int         repl(ENV);
 int         read_input(char **input);
+void        show_prompt(char *msg);
 
 // Constructos
 t_token         *new_token(char *tok);
@@ -107,6 +108,13 @@ void        destroy_env(ENV);
 //history
 t_bool      is_arrow(ENV);
 t_bool      get_history(ENV);
+
+//Signal handlers
+void	handle_interuption(int sig_code);
+t_bool	is_ctrl_d(char *input);
+
+//On exit
+void    exit_program(ENV, int exit_code);
 
 
 //tmp_utils
