@@ -16,6 +16,8 @@ int read_input(char **input)
         buff[read_ret] = 0;
         if (*buff == EOL)
             return 0;
+        else if (*buff == 0)
+            return 1;
         p = *input;
         *input = str_join(*input, buff);
         free(p);
@@ -42,9 +44,12 @@ int repl(t_env *env)
 
     show_prompt(SHELL_NAME);
     signal(SIGINT, handle_interuption);
-    if (read_input(&env->input->line) == -1)
-        return (-1);
-    else if (line_isempty(env->input->line))
+    ret = read_input(&env->input->line);
+    if (ret == -1)
+        raise_error(env, ERR_INPUT);
+    else if (ret == 1) //CTRL+D
+        exit_program(env, EXIT_SUCCESS);
+    if (line_isempty(env->input->line))
         return (0);
     /* TODO:
         +> Split commands

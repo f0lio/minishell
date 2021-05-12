@@ -1,6 +1,4 @@
-
 #include "minishell.h"
-
 
 t_bool    raise_error(ENV, char *msg)
 {
@@ -9,9 +7,4 @@ t_bool    raise_error(ENV, char *msg)
     put_char('\n');
     //Free memory
     return (-1);
-}
-
-void    destroy_env(ENV)
-{
-    //Recursively, free all t_env properties.
 }

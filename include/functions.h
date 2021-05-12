@@ -109,8 +109,13 @@ void        destroy_env(ENV);
 t_bool      is_arrow(ENV);
 t_bool      get_history(ENV);
 
-//signal handlers
+//Signal handlers
 void	handle_interuption(int sig_code);
+t_bool	is_ctrl_d(char *input);
+
+//On exit
+void    exit_program(ENV, int exit_code);
+
 
 //tmp_utils
 void    print_array(t_array *arr, t_bool minus);
