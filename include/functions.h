@@ -89,7 +89,7 @@ int         get_line(int fd, char **line);
 t_node      *new_node(void *data);
 
 void        push_back(LIST, void  *data);
-t_node      *push_front(LIST, void  **data);
+void        push_front(LIST, void  *data);
 
 size_t      list_size(t_node *list);
 void        list_iter(LIST, void(*fun)(void *));
@@ -105,9 +105,15 @@ int         tokenize(char *buff, ENV);
 t_bool      raise_error(ENV, char *msg);
 void        destroy_env(ENV);
 
-//history
+//File tools
+t_bool      create_file(char *path);
+t_bool      file_exists(char *path);
+t_node      *read_lines(int fd);
+
+//History
 t_bool      is_arrow(ENV);
 t_bool      get_history(ENV);
+t_bool      set_history(ENV);
 
 //Signal handlers
 void	handle_interuption(int sig_code);
@@ -120,5 +126,6 @@ void    exit_program(ENV, int exit_code);
 //tmp_utils
 void    print_array(t_array *arr, t_bool minus);
 void    print_tokens(t_node *tokens);
+void    print_linked_list(t_node *list);
 
 #endif

@@ -5,5 +5,5 @@ _*.py
 *.in
 *.swp
 minishell
-.idea
+.*
 *.o

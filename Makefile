@@ -11,7 +11,9 @@ UTILS				=	tmp_utils.c \
 						error_handlers.c\
 						destructors.c\
 						signals_handlers.c\
-						exit_handlers.c
+						exit_handlers.c\
+						file_tools.c\
+						get_line.c
 
 CONSTRUCTORS		=	env.c
 TOKENIZER			=	commands_splitter.c quotes_checker.c tokenize.c command_checker.c
