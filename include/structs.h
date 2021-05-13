@@ -2,11 +2,12 @@
 #define STRUCTS_H
 typedef char t_bool;
 
-typedef struct s_node
+typedef struct		s_node
 {
-	void *data;
-	struct s_node *next;
-} t_node;
+	struct s_node	*prev;
+	void			*data;
+	struct s_node	*next;
+}					t_node;
 
 typedef struct s_btree
 {
@@ -60,12 +61,11 @@ typedef struct	s_input
 
 typedef struct s_env
 {
-	int argc;
-	char **argv;
-	char **env_var;
-	t_input *input;
-	t_node *commands; //[, , , ], [, , , ]
-					  //char				**builtins;
+	int 		argc;
+	char 		**argv;
+	char 		**env_var;
+	t_input		*input;
+	t_node		*commands;
 } t_env;
 
 #endif

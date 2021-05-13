@@ -10,6 +10,7 @@ t_node  *new_node(void *data)
     MALLOC(node);
     if (!node)
         return (NULL);
+    node->prev = NULL;
     node->data = data;
     node->next = NULL;
     return (node);
@@ -30,21 +31,22 @@ void      push_back(t_node **list, void *data)
     while (iter->next)
         iter = iter->next;
     iter->next = new_node(data);
+    iter->next->prev = iter;
 }
 
-t_node      *push_front(LIST, void  **data)
+void      push_front(LIST, void  *data)
 {
     t_node      *node;
+    t_node      *curr;
 
+    node = new_node(data);
     if (!*list)
-        return new_node(*data);
-    else
+        *list = node;
+    else if (node)
     {
-        node = new_node(*data);
-        if (!node)
-            return NULL;
+        ((t_node*)*list)->prev = node;
         node->next = *list;
-        return node;
+        *list = node;
     }
 }
 

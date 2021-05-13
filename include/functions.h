@@ -89,7 +89,7 @@ int         get_line(int fd, char **line);
 t_node      *new_node(void *data);
 
 void        push_back(LIST, void  *data);
-t_node      *push_front(LIST, void  **data);
+void        push_front(LIST, void  *data);
 
 size_t      list_size(t_node *list);
 void        list_iter(LIST, void(*fun)(void *));
