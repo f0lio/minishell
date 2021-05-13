@@ -16,11 +16,12 @@ typedef struct s_btree
 	struct s_btree *l;
 } t_btree;
 
-typedef struct s_file
+typedef struct	s_file
 {
-	int fd;
-	char *name;
-} t_file;
+	int			fd;
+	char		*path;
+	t_node		*lines;
+}				t_file;
 
 typedef struct s_array
 {
@@ -64,6 +65,7 @@ typedef struct s_env
 	int 		argc;
 	char 		**argv;
 	char 		**env_var;
+	t_file		*history;
 	t_input		*input;
 	t_node		*commands;
 } t_env;

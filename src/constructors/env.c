@@ -7,6 +7,7 @@ t_env   *init_env(int argc, char **argv, char **env_var)
     t_env   *env;
 
     MALLOC(env);
+    MALLOC(env->history);
     MALLOC(env->input);
     env->commands = NULL;
     return (env);

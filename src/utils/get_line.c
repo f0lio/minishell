@@ -1,9 +1,17 @@
+
 #include "minishell.h"
 
 /*
-TODO:
-	-Make it more readable.
-	-plz.
+	TODO:
+**	-This code is far from being called spaghetti;
+**	-Fix it, optimize, make it more readable.
+**	-plz !!
+**
+**	@NOTE:
+**	-On file_eol(), it's better to have an optional parameter
+** 	to know where to start searching. That for avoiding searching
+**	from the beginning, which is not neccessary because we have
+**	a constant BUFFER_SIZE.
 */
 static short	free_buff(char **p)
 {
@@ -47,10 +55,11 @@ int		get_line(int fd, char **line)
 		buff[read_ret] = '\0';
 		p = stream[fd];
 		stream[fd] = str_join(stream[fd], buff);
-		if (NOT stream[fd])
+		if (!stream[fd])
 			return (free_buff(&p));
 		free_buff(&p);
 	}
+	print(stream[fd]);
 	if (find_eol(stream[fd]))
 		return (got_line(&stream[fd], &buff, line));
 	if (!(*line = str_dup(stream[fd])))

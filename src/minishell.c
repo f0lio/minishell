@@ -73,6 +73,7 @@ int main(int argc, char **argv, char **env_vars)
     t_env   *env;
 
     env = init_env(argc, argv, env_vars);
+    set_history(env);
     while (1)
     {
         if (repl(env))
