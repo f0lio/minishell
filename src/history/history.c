@@ -11,7 +11,7 @@ t_bool  set_history(ENV)
 
     ret = TRUE;
     history = env->history;
-    history->path = "./.minishell_history";
+    history->path = HISTORY_FILE;
     if (!file_exists(history->path))
         ret = create_file(history->path);
     if (ret == FALSE)
@@ -22,7 +22,19 @@ t_bool  set_history(ENV)
     history->fd = open(history->path, O_RDONLY);
     history->lines = read_lines(history->fd);
     // print_linked_list(history->lines);
+    close(history->fd);
     return 0;
+}
+
+void  saveto_history(ENV)
+{
+    int fd;
+
+    push_back(&env->history->lines, env->input);
+    fd = open(env->history->path, O_APPEND | O_WRONLY);
+    write_line(fd, env->input->line);
+    write(fd, "\n", 1);
+    close(fd);
 }
 
 

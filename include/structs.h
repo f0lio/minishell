@@ -16,11 +16,16 @@ typedef struct s_btree
 	struct s_btree *l;
 } t_btree;
 
+
+/**
+** @property index: last line
+*/
 typedef struct	s_file
 {
 	int			fd;
 	char		*path;
 	t_node		*lines;
+	int			index;
 }				t_file;
 
 typedef struct s_array
