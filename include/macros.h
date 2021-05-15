@@ -7,6 +7,7 @@
 #  define OPEN_MAX 512
 # endif
 # define SHELL_NAME "minishell"
+# define HISTORY_FILE ".minishell_history"
 # define DIGITS "0123456789"
 # define ASCII_LOWER "abcdefghijklmnopqrstuvwxyz"
 # define ASCII_UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -27,6 +28,8 @@
 # define TRUE 1
 # define FLUSH write(1, '\n', 1)
 # define PASS 0;
+
+
 
 //!!! 42 norminette: parameterized macros are forbidden
 # define MALLOC(ptr) (ptr) = malloc(sizeof(*(ptr)))

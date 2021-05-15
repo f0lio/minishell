@@ -11,7 +11,7 @@ t_bool  set_history(ENV)
 
     ret = TRUE;
     history = env->history;
-    history->path = ".minishell_history";
+    history->path = HISTORY_FILE;
     if (!file_exists(history->path))
         ret = create_file(history->path);
     if (ret == FALSE)
