@@ -55,4 +55,33 @@ t_node  *read_lines(int fd)
     }
     return lines;
 }
+/**
+**  Writes a line to file
+** 
+**  @param fd file descriptor to write in
+**  @return 0 on success
+**/
+t_bool  write_line(int fd, char *line)
+{
+    return (write(fd, line, str_len((const char *)line)) != -1);
+}
 
+/**
+**  Writes to file from a doubly linked list
+** 
+**  @param fd file descriptor to write in
+**  @return 0 on success
+**/
+t_bool  write_lines(int fd, t_node *lines)
+{
+    t_node *iter;
+
+    iter = lines;
+    while (iter)
+    {
+        if (write_line(fd, (char*)iter->data))
+            return 1;
+        iter = iter->next;
+    }
+    return 0;
+}

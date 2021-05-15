@@ -109,11 +109,15 @@ void        destroy_env(ENV);
 t_bool      create_file(char *path);
 t_bool      file_exists(char *path);
 t_node      *read_lines(int fd);
+t_bool      write_line(int fd, char *line);
+t_bool      write_lines(int fd, t_node *lines);
+
 
 //History
 t_bool      is_arrow(ENV);
 t_bool      get_history(ENV);
 t_bool      set_history(ENV);
+void        saveto_history(ENV);
 
 //Signal handlers
 void	handle_interuption(int sig_code);

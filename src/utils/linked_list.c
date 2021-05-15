@@ -16,6 +16,8 @@ t_node  *new_node(void *data)
     return (node);
 }
 
+//TODO:
+// -Should return list length for, of course, again, for optimization reasons!
 void      push_back(t_node **list, void *data)
 {
     t_node      *iter;

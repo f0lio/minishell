@@ -51,6 +51,7 @@ int repl(t_env *env)
         exit_program(env, EXIT_SUCCESS);
     if (line_isempty(env->input->line))
         return (0);
+    saveto_history(env);
     /* TODO:
         +> Split commands
         +> then tokenize.

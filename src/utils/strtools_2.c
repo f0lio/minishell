@@ -21,7 +21,8 @@ size_t	line_len(const char *line)
 
 t_bool	line_isempty(char *line)
 {
-	if (line[0] == EOL && line[1] == 0)
+	// if (line[0] == EOL && line[1] == 0)
+	if (line[0] == 0)
 		return (TRUE);
 	return (FALSE);
 }
