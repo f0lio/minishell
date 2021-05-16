@@ -129,22 +129,30 @@ void	delete_lst(LIST)
    *list = NULL; 
 }
 
-t_node *get_n_node(t_node *lines, int index)
+/**
+**  Get the nth node from a linked list
+**
+**  @param list to get the nth node from
+**  @param n number of the node to get,
+**           if n == -1 it gets the last node
+*8  @return the nth node
+**/
+t_node *get_n_node(t_node *list, int n)
 {
     t_node  *node;
     int     i;
 
-    if (index < 0)
+    node = list;
+    if (node == NULL)
         return NULL;
-    // else if (index == 0)
-    //     return lines;
-    node = lines;
-    i = 0;
-    printf("[%d]\n",index);
-    while (i++ < index && node->next)
+    if (n == -1)
     {
-        printf("|%s|\n", (char*)node->data);
-        node = node->next;
+        while (node->next)
+            node = node->next;
+        return node;
     }
+    i = 0;
+    while (i++ < n && node)
+        node = node->next;
     return node;
 }

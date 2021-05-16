@@ -50,14 +50,17 @@ int repl(t_env *env)
     else if (ret == 1) //CTRL+D
         exit_program(env, EXIT_SUCCESS);
     if (line_isempty(env->input->line))
+    {
+        env->history->curr_line = env->history->last_line;
         return (0);
+    }
+    if (is_arrow(env)) //tmp condition
+        return get_history(env);
     saveto_history(env);
     /* TODO:
         +> Split commands
         +> then tokenize.
     */
-    if (is_arrow(env))
-        return get_history(env);
     env->input->len = str_len(env->input->line);
     if (split_commands(env) == -1)
         return 0;
