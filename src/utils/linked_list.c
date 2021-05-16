@@ -16,24 +16,30 @@ t_node  *new_node(void *data)
     return (node);
 }
 
-//TODO:
-// -Should return list length for, of course, again, for optimization reasons!
-void      push_back(t_node **list, void *data)
+/**
+**  
+**  @param list list where to add data
+**  @param data data pointer to add to the list
+**  @return pointer to the added/last node
+** 
+*/
+t_node      *push_back(t_node **list, void *data)
 {
-    t_node      *iter;
+    t_node      *node;
 
     if (!data)
-        return ;
+        return NULL;
     if (!*list)
     {
         *list = new_node(data);
-        return ;
+        return *list;
     }
-    iter = *list;
-    while (iter->next)
-        iter = iter->next;
-    iter->next = new_node(data);
-    iter->next->prev = iter;
+    node = *list;
+    while (node->next)
+        node = node->next;
+    node->next = new_node(data);
+    node->next->prev = node;
+    return node;
 }
 
 void      push_front(LIST, void  *data)
@@ -121,4 +127,24 @@ void	delete_lst(LIST)
        current = next; 
    } 
    *list = NULL; 
+}
+
+t_node *get_n_node(t_node *lines, int index)
+{
+    t_node  *node;
+    int     i;
+
+    if (index < 0)
+        return NULL;
+    // else if (index == 0)
+    //     return lines;
+    node = lines;
+    i = 0;
+    printf("[%d]\n",index);
+    while (i++ < index && node->next)
+    {
+        printf("|%s|\n", (char*)node->data);
+        node = node->next;
+    }
+    return node;
 }
