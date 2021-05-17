@@ -23,7 +23,6 @@ t_bool  set_history(ENV)
     history->lines = read_lines(history->fd);
     history->last_line = get_n_node(history->lines, -1);
     history->curr_line = history->last_line;
-    // print(history->last_line->data);
     // print_linked_list(history->lines);
     //should stay open for realtime updates? coffee?
     close(history->fd); 
@@ -39,7 +38,8 @@ void  saveto_history(ENV)
     write_line(fd, env->input->line);
     write(fd, "\n", 1);
     close(fd);
-    env->history->last_line = push_back(&env->history->lines, env->input->line);
+    env->history->last_line = push_back(
+        &env->history->lines, str_dup(env->input->line));
     env->history->curr_line = env->history->last_line;
 }
 
@@ -52,14 +52,16 @@ t_bool  is_arrow(ENV)
 
 t_bool  get_history(ENV)
 {
-    printf("->|%s", env->history->curr_line->data);
+    
+    print(env->history->curr_line->data);
+    fflush(stdout);
     if (env->history->curr_line->prev)
         env->history->curr_line = env->history->curr_line->prev;
     return 0;
 }
 
+
 void    print_linked_list(t_node *list)
 {
-    for (t_node *iter = list; iter; iter = iter->next)
-        printf("-->|%s",iter->data);
+    LOOP_LIST(list, print)
 }
