@@ -87,8 +87,8 @@ int         get_line(int fd, char **line);
 
 // Linked list functions
 t_node      *new_node(void *data);
-
-void        push_back(LIST, void  *data);
+t_node      *get_n_node(t_node *lines, int index);
+t_node      *push_back(LIST, void  *data);
 void        push_front(LIST, void  *data);
 
 size_t      list_size(t_node *list);

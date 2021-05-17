@@ -21,22 +21,27 @@ t_bool  set_history(ENV)
     }
     history->fd = open(history->path, O_RDONLY);
     history->lines = read_lines(history->fd);
+    history->last_line = get_n_node(history->lines, -1);
+    history->curr_line = history->last_line;
     // print_linked_list(history->lines);
-    close(history->fd);
+    //should stay open for realtime updates? coffee?
+    close(history->fd); 
     return 0;
 }
 
+//Protect unresolved FDs
 void  saveto_history(ENV)
 {
     int fd;
 
-    push_back(&env->history->lines, env->input);
     fd = open(env->history->path, O_APPEND | O_WRONLY);
     write_line(fd, env->input->line);
     write(fd, "\n", 1);
     close(fd);
+    env->history->last_line = push_back(
+        &env->history->lines, str_dup(env->input->line));
+    env->history->curr_line = env->history->last_line;
 }
-
 
 t_bool  is_arrow(ENV)
 {
@@ -47,12 +52,16 @@ t_bool  is_arrow(ENV)
 
 t_bool  get_history(ENV)
 {
+    
+    print(env->history->curr_line->data);
+    fflush(stdout);
+    if (env->history->curr_line->prev)
+        env->history->curr_line = env->history->curr_line->prev;
     return 0;
 }
 
 
 void    print_linked_list(t_node *list)
 {
-    for (t_node *iter = list; iter; iter = iter->next)
-        print(iter->data);
+    LOOP_LIST(list, print)
 }

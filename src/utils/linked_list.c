@@ -16,24 +16,30 @@ t_node  *new_node(void *data)
     return (node);
 }
 
-//TODO:
-// -Should return list length for, of course, again, for optimization reasons!
-void      push_back(t_node **list, void *data)
+/**
+**  
+**  @param list list where to add data
+**  @param data data pointer to add to the list
+**  @return pointer to the added/last node
+** 
+*/
+t_node      *push_back(t_node **list, void *data)
 {
-    t_node      *iter;
+    t_node      *node;
 
     if (!data)
-        return ;
+        return NULL;
     if (!*list)
     {
         *list = new_node(data);
-        return ;
+        return *list;
     }
-    iter = *list;
-    while (iter->next)
-        iter = iter->next;
-    iter->next = new_node(data);
-    iter->next->prev = iter;
+    node = *list;
+    while (node->next)
+        node = node->next;
+    node->next = new_node(data);
+    node->next->prev = node;
+    return node->next;
 }
 
 void      push_front(LIST, void  *data)
@@ -121,4 +127,32 @@ void	delete_lst(LIST)
        current = next; 
    } 
    *list = NULL; 
+}
+
+/**
+**  Get the nth node from a linked list
+**
+**  @param list to get the nth node from
+**  @param n number of the node to get,
+**           if n == -1 it gets the last node
+*8  @return the nth node
+**/
+t_node *get_n_node(t_node *list, int n)
+{
+    t_node  *node;
+    int     i;
+
+    node = list;
+    if (node == NULL)
+        return NULL;
+    if (n == -1)
+    {
+        while (node->next)
+            node = node->next;
+        return node;
+    }
+    i = 0;
+    while (i++ < n && node)
+        node = node->next;
+    return node;
 }

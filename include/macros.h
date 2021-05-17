@@ -29,8 +29,6 @@
 # define FLUSH write(1, '\n', 1)
 # define PASS 0;
 
-
-
 //!!! 42 norminette: parameterized macros are forbidden
 # define MALLOC(ptr) (ptr) = malloc(sizeof(*(ptr)))
 # define ARRLLOC(p, l) (p) = malloc(sizeof(*(p)) * l)

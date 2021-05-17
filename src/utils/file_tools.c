@@ -39,22 +39,21 @@ t_node  *read_lines(int fd)
     char    *line;
 
     lines = NULL;
-
     // tmp block for testing purposes
     {
-        #define MAX_LINE_LENGTH 1024
-        FILE *file = fopen("./.minishell_history", "r");
+        # define MAX_LINE_LENGTH 1024
+        FILE *file = fopen(HISTORY_FILE, "r");
         char *line = calloc(MAX_LINE_LENGTH, sizeof(char));
         while (fgets(line, MAX_LINE_LENGTH, file))
         {
             if (!line)
                 break;
             push_back(&lines, str_dup(line));
-            // free(line);
         }
     }
     return lines;
 }
+
 /**
 **  Writes a line to file
 ** 
