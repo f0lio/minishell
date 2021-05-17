@@ -39,7 +39,7 @@ t_node      *push_back(t_node **list, void *data)
         node = node->next;
     node->next = new_node(data);
     node->next->prev = node;
-    return node;
+    return node->next;
 }
 
 void      push_front(LIST, void  *data)
