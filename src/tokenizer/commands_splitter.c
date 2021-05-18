@@ -103,6 +103,7 @@ t_bool split_commands(ENV)
     int         i;
     int         j;
 
+    env->input->len = str_len(env->input->line);
     line = env->input->line;
     i = 0;
     while (i < env->input->len)
@@ -119,7 +120,7 @@ t_bool split_commands(ENV)
                 push_back(&env->commands, cmd);
             else
                 return raise_error(env, ERR_SYNTAX);
-            // printf("CMD:[%s]\n", cmd->cmd);
+            printf("CMD:[%s]\n", cmd->cmd);
         }
         else
             i++;

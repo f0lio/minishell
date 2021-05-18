@@ -4,7 +4,7 @@
 
 # include "minishell.h"
 
-//This header file is only for functions' prototypes
+// This header file is only for functions' prototypes
 
 /* 
 ## Allowed functions: 
@@ -23,6 +23,35 @@ int         repl(ENV);
 int         read_input(char **input);
 void        show_prompt(char *msg);
 
+// Commands Splitter
+t_bool          split_commands(ENV);
+t_command       *new_cmd(void);
+t_command       *get_quoted_command(ENV);
+t_command       *single_quoted_cmd(ENV);
+t_command       *double_quoted_cmd(ENV);
+t_command       *get_command(ENV);
+t_bool          command_is_valid(ENV, t_command *cmd);
+
+// Tokenizer
+t_bool          tokenize_commands(ENV);
+t_bool          tokenize_cmd(ENV, t_command *cmd);
+t_token         *get_token(ENV, t_command *cmd);
+t_token         *tokenize_quoted_cmd(ENV, t_command *cmd);
+t_token         *tokenize_single_quoted(ENV, t_command *cmd);
+t_token         *tokenize_double_quoted(ENV, t_command *cmd);
+
+// Lexer
+void            lex_commands(ENV);
+void            lex_cmd(ENV, t_command *cmd);
+
+// Parser
+void            parse_input(ENV);
+
+// //Parsing 
+// t_bool      split_by_type(char *buff, t_node **tokens);
+// int         tokenize(char *buff, ENV);
+
+
 // Constructos
 t_token         *new_token(char *tok);
 t_array         *new_array(int size);
@@ -33,25 +62,6 @@ void    reset_data(ENV);
 void    destroy_command(void *command);
 void    destroy_token(void *token);
 void    safe_free(void **ptr);
-// Tokenizer
-t_bool          tokenize_commands(ENV);
-t_bool          tokenize_cmd(ENV, t_command *cmd);
-t_token         *get_token(ENV, t_command *cmd);
-t_token         *tokenize_quoted_cmd(ENV, t_command *cmd);
-t_token         *tokenize_single_quoted(ENV, t_command *cmd);
-t_token         *tokenize_double_quoted(ENV, t_command *cmd);
-
-// commands
-t_bool          split_commands(ENV);
-t_command       *new_cmd(void);
-t_command       *get_quoted_command(ENV);
-t_command       *single_quoted_cmd(ENV);
-t_command       *double_quoted_cmd(ENV);
-t_command       *get_command(ENV);
-t_bool          command_is_valid(ENV, t_command *cmd);
-
-// Lexer
-int             lex_tokens(ENV);
 
 // strtools_0
 size_t      str_len(const char *str);
@@ -82,9 +92,6 @@ t_bool      check_quoted_str(char *str, char c);
 t_bool      is_str_quoted(char *str, char mark);
 t_bool      is_bad_quoted(char *str);
 
-// idk
-int         get_line(int fd, char **line);
-
 // Linked list functions
 t_node      *new_node(void *data);
 t_node      *get_n_node(t_node *lines, int index);
@@ -97,11 +104,7 @@ void        destroy_lst(LIST);
 void        delete_lst(LIST);
 
 
-//Parsing 
-t_bool      split_by_type(char *buff, t_node **tokens);
-int         tokenize(char *buff, ENV);
-
-//Error
+// Error handlers
 t_bool      raise_error(ENV, char *msg);
 void        destroy_env(ENV);
 
@@ -112,24 +115,24 @@ t_node      *read_lines(int fd);
 t_bool      write_line(int fd, char *line);
 t_bool      write_lines(int fd, t_node *lines);
 
-
-//History
+// History
 t_bool      is_arrow(ENV);
 t_bool      get_history(ENV);
 t_bool      set_history(ENV);
 void        saveto_history(ENV);
 
-//Signal handlers
+// Signal handlers
 void	handle_interuption(int sig_code);
 t_bool	is_ctrl_d(char *input);
 
-//On exit
+// On Exit
 void    exit_program(ENV, int exit_code);
-
 
 //tmp_utils
 void    print_array(t_array *arr, t_bool minus);
 void    print_tokens(t_node *tokens);
 void    print_linked_list(t_node *list);
+int         get_line(int fd, char **line);
+
 
 #endif

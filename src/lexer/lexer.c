@@ -1,30 +1,24 @@
 #include "minishell.h"
 
-int     lex_tokens(ENV)
+void     lex_commands(ENV)
 {
-    t_token *token;
-    t_node  *iter;
+    t_node *cmd;
 
-
-    while (iter)
+    cmd = env->commands;
+    while (cmd)
     {
-        token = iter->data;
-
-        //if tok == SEP -> new_cmd
-        //if tok ==  -> new_cmd
-
-
-        if (0)
-        {
-
-        }
-
-        //BUILTIN / CMD
-        //ARG
-        //VAR
-        //SEP ; | || & &&
-
-        iter = iter->next;
+        lex_cmd(env, (t_command*)cmd);
+        cmd = cmd->next;
     }
-    return 0;
+}
+
+void     lex_cmd(ENV, t_command *cmd)
+{
+    t_node *token;
+
+    token = cmd->tokens;
+
+    
+
+    // I need meaning..!!
 }

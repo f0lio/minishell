@@ -27,6 +27,12 @@ int read_input(char **input)
     return (0);
 }
 
+void  parse_input(ENV)
+{
+    split_commands(env);
+    tokenize_commands(env);
+    lex_commands(env);
+}
 
 void    show_prompt(char *msg)
 {
@@ -57,19 +63,9 @@ int repl(t_env *env)
     if (is_arrow(env)) //tmp condition
         return get_history(env);
     saveto_history(env);
-    /* TODO:
-        +> Split commands
-        +> then tokenize.
-    */
-    env->input->len = str_len(env->input->line);
-    if (split_commands(env) == -1)
-        return 0;
-    if (tokenize_commands(env) == -1)
-        return 0;
-    //ret = lex_tokens(env);
-    //ret = parse_tokens();
-    //ret = execute();
-    return (0);
+    parse_input(env);
+    // execute(ENV);
+    return (ret);
 }
 
 int main(int argc, char **argv, char **env_vars)
