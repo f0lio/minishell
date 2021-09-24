@@ -10,6 +10,7 @@
 # define SHELL_NAME         "minishell"
 # define HISTORY_FILE       ".minishell_history"
 
+# define BOOL               char
 # define FALSE              0
 # define TRUE               1
 # define DIGITS             "0123456789"

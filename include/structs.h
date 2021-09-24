@@ -49,7 +49,8 @@ typedef struct 	s_token
 typedef struct	s_command
 {
 	char		*cmd;
-	t_node		*tokens;
+	t_token		**tokens;
+	int			tokens_count;
 	t_bool		ret;
 	t_bool		sep;
 }				t_command;

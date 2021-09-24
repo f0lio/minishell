@@ -12,6 +12,7 @@ void        show_prompt(char *msg);
 t_token         *new_token(char *tok);
 t_array         *new_array(int size);
 t_env           *init_env(int argc, char **argv, char **env_var);
+t_token         **create_tokens_array(t_node *list, int size);
 
 // Destructors 
 void            reset_data(ENV);

@@ -17,7 +17,11 @@ void    destroy_command(void *ptr)
     if (!cmd)
         return ;
     safe_free((void**)&cmd->cmd);
-    list_iter(&cmd->tokens, destroy_token);
+    while (cmd->tokens_count >= 0)
+    {
+        destroy_token(cmd->tokens[cmd->tokens_count]);
+        cmd->tokens_count--;
+    }
     safe_free((void**)&cmd);
 }
 
