@@ -1,0 +1,9 @@
+.vscode/
+.DS_*
+_*.py
+*.out
+*.in
+*.swp
+*.o
+.*history
+minishell
