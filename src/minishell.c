@@ -87,6 +87,3 @@ int main(int argc, char **argv, char **env_vars)
     //-Free allocated mem
     return (0);
 }
-/*
-echo okay; cd $MY_DIR; pwd | cat | grep $VAR
-*/

@@ -34,7 +34,7 @@ typedef struct s_array
 typedef struct 	s_token
 {
 	char		*tok;	//"cd" ";"
-	char		*type; 	//BUILTIN, ARG, SEP,  "PIPE" (macors are better)
+	char		*type; 	//BUILTIN, ARG, SEP, "PIPE" (macors are better)
 	size_t		*len;
 	int			order;
 	t_bool		quoted;
@@ -70,6 +70,6 @@ typedef struct s_env
 	t_file		*history;
 	t_input		*input;
 	t_node		*commands;
-} t_env;
+}				t_env;
 
 #endif

@@ -25,6 +25,16 @@
 # define EOL                '\n'
 # define SEP                ';'
 
+// Token types
+# define CMD                0
+# define ARG                1
+# define PIPE               2
+# define GREATER            3  // >
+# define LESSER             4   // <
+# define APPEND             5   // >>
+# define HEREDOC            6  // <<
+# define FILE               7
+
 // Colors
 # define RED                "\033[1;31m"
 # define GREEN              "\033[1;32m"
@@ -33,7 +43,6 @@
 # define ERR_MALLOC         "Couldn't allocate memory"
 # define ERR_SYNTAX         "invalid syntax"
 # define ERR_INPUT          "invalid input"
-
 
 // Temporary macros
 //////////////////////////////////////////////////////////
