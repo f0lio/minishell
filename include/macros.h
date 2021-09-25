@@ -26,14 +26,14 @@
 # define SEP                ';'
 
 // Token types
-# define CMD                0
-# define ARG                1
-# define PIPE               2
-# define GREATER            3  // >
-# define LESSER             4   // <
-# define APPEND             5   // >>
-# define HEREDOC            6  // <<
-# define FILE               7
+# define TYPE_CMD                0
+# define TYPE_ARG                1
+# define TYPE_PIPE               2
+# define TYPE_GREATER            3  // >
+# define TYPE_LESSER             4   // <
+# define TYPE_APPEND             5   // >>
+# define TYPE_HEREDOC            6  // <<
+# define TYPE_FILE               7
 
 // Colors
 # define RED                "\033[1;31m"
