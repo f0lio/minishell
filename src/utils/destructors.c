@@ -3,8 +3,14 @@
 
 void    reset_data(ENV)
 {
+    return;
+    
     safe_free ((void**)&env->input->line);
-    list_iter(&env->commands, destroy_command);
+    while (env->cmds_count >= 0)
+    {
+        destroy_command(env->commands[env->cmds_count]);
+        env->cmds_count--;
+    }
     safe_free((void**)&env->commands);
     env->commands = NULL;
     env->input->i = 0;

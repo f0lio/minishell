@@ -69,7 +69,8 @@ typedef struct s_env
 	char 		**env_var;
 	t_file		*history;
 	t_input		*input;
-	t_node		*commands;
+	t_command	**commands;
+	int			cmds_count;
 }				t_env;
 
 #endif

@@ -82,16 +82,16 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
 t_bool tokenize_commands(ENV)
 {
     t_command   *cmd;
-    t_node      *iter;
+    int         i;
 
-    iter = env->commands;
-    while (iter)
+    i = 0;
+    while (i < env->cmds_count)
     {
-        cmd = (t_command*)iter->data;
+        cmd = env->commands[i];
         env->input->i = 0;
         env->input->len = str_len(cmd->cmd);
         tokenize_cmd(env, cmd);
-        iter = iter->next;
+        i++;
     }
     return 0;
 }

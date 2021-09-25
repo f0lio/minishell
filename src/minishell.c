@@ -66,7 +66,7 @@ int repl(t_env *env)
         return 0;
     if (tokenize_commands(env) == -1)
         return 0;
-    //ret = lex_tokens(env);
+    ret = lex_tokens(env);
     //ret = parse_tokens();
     //ret = execute();
     return (0);

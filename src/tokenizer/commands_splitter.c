@@ -99,11 +99,13 @@ t_bool split_commands(ENV)
 {
     t_token     *token;
     t_command   *cmd;
+    t_node      *list;
     char        *line;
     int         i;
-    int         j;
 
+    list = NULL;
     line = env->input->line;
+    env->cmds_count = 0;
     i = 0;
     while (i < env->input->len)
     {
@@ -116,13 +118,16 @@ t_bool split_commands(ENV)
                 cmd = get_command(env);
             i = env->input->i;
             if (command_is_valid(env, cmd))
-                push_back(&env->commands, cmd);
+            {
+                push_back(&list, cmd);
+                env->cmds_count++;
+            }
             else
                 return raise_error(env, ERR_SYNTAX);
-            // printf("CMD:[%s]\n", cmd->cmd);
         }
         else
             i++;
     }
+    env->commands = create_commands_array(list, env->cmds_count);
     return 0;
 }
