@@ -3,7 +3,7 @@
 
 void    reset_data(ENV)
 {
-    return;
+    // return;
     
     safe_free ((void**)&env->input->line);
     while (env->cmds_count >= 0)

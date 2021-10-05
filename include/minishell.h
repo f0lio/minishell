@@ -6,6 +6,10 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <string.h>
+# include <errno.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 # include "macros.h"
 # include "structs.h"
 # include "functions.h"
