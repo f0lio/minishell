@@ -66,6 +66,9 @@ int repl(t_env *env)
         return 0;
     if (tokenize_commands(env) == -1)
         return 0;
+	//this func starts execution
+	cast_cmd(env->commands, env->cmds_count);
+	printf("%d\n", env->cmds_count);
     ret = lex_tokens(env);
     //ret = parse_tokens();
     //ret = execute();

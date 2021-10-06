@@ -65,17 +65,17 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
     
     cmd->tokens = create_tokens_array(list, cmd->tokens_count);
     
-    // test
-    printf("###################\n");
-    printf("# Tokens count: %d\n", cmd->tokens_count);
-    printf("###################\n");
-    i = 0;
-    while (i < cmd->tokens_count)
-    {
-        printf("%2.2d: [%s]\n", i, cmd->tokens[i]->tok);
-        i++;
-    }
-    printf("###################\n");
+    // // test
+    // printf("###################\n");
+    // printf("# Tokens count: %d\n", cmd->tokens_count);
+    // printf("###################\n");
+    // i = 0;
+    // while (i < cmd->tokens_count)
+    // {
+    //     printf("%2.2d: [%s]\n", i, cmd->tokens[i]->tok);
+    //     i++;
+    // }
+    // printf("###################\n");
     return 0;
 }
 

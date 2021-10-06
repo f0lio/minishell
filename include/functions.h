@@ -37,6 +37,14 @@ t_command       *double_quoted_cmd(ENV);
 t_command       *get_command(ENV);
 t_bool          command_is_valid(ENV, t_command *cmd);
 
+// Execution
+void	cast_cmd(t_command **commands, int cmdcout);
+void	redirect_commands(t_command *command);
+// Apex strtools
+char	*ft_substr(char *s, int start, size_t len);
+char	**ft_split(char *s, char c);
+int		c_w(char *str, char c);
+
 // Lexer
 int             lex_tokens(ENV);
 

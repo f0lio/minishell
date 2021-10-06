@@ -21,7 +21,7 @@ TOKENIZER			=	tokenize.c\
 						utils.c
 LEXER				=	lexer.c
 PARSER				=	
-EXECUTER			=	
+EXECUTER			=	redirect.c apex_strtools.c
 
 DBG					=	MY_DBG.C
 
@@ -31,6 +31,7 @@ SRC					=	src/minishell.c\
 						$(LEXER:%.c=./src/lexer/%.c)\
 						$(PARSER:%.c=./src/parser/%.c)\
 						$(UTILS:%.c=./src/utils/%.c)\
+						$(EXECUTER:%.c=./src/execution/%.c)\
 						$(HISTORY:%.c=./src/history/%.c)
 
 COMPILE	= $(CC) $(SRC) -I include -o $(NAME) -g #-I dbg
