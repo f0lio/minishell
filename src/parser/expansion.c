@@ -48,7 +48,7 @@ void expand_tokens(t_env *env, t_token *token)
             // printf("-> [%d]: [%d]\n", start, i);
             var = sub_str(token->tok, start, i);
             value = getenv(var);
-            // printf("[%s]: [%s]\n", var, value);
+            printf("[%s]: [%s]\n", var, value);
         }
         i++;
     }

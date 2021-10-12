@@ -21,7 +21,9 @@ TOKENIZER			=	tokenize.c\
 						utils.c
 LEXER				=	lexer.c
 PARSER				=	expansion.c
-EXECUTER			=	redirect.c apex_strtools.c
+EXECUTER			=	redirect.c\
+						apex_strtools.c\
+						pipe.c
 
 DBG					=	MY_DBG.C
 

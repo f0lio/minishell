@@ -46,11 +46,21 @@ typedef struct 	s_token
 ** -ret		return value of the command,
 **			if (ret == ZERO && sep == "&&") then stop executing.
 */
+
+typedef struct	s_pipe
+{
+	char		**tokarr;
+}				t_pipe;
+
 typedef struct	s_command
 {
 	char		*cmd;
 	t_token		**tokens;
+	t_pipe		**pipes;
 	int			tokens_count;
+	char		**tokarr;
+	int			pipe_count;
+	int			*pipe_location;
 	t_bool		ret;
 	t_bool		sep;
 }				t_command;

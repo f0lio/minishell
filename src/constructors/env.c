@@ -35,6 +35,7 @@ t_command *new_cmd(void)
     if (!cmd)
         return (NULL);
     cmd->cmd = NULL;
+	cmd->pipe_count = -1;
     cmd->tokens = NULL;
     return (cmd);
 }

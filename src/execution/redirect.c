@@ -1,14 +1,5 @@
 #include "minishell.h"
 
-void	cast_cmd(t_command **commands, int cmdcout)
-{
-	int	i;
-
-	i = 0;
-	while (i < cmdcout)
-		redirect_commands(commands[i++]);
-}
-
 char	**token_to_arr(t_token **tokens, int tokcout)
 {
 	int		i;
@@ -31,7 +22,7 @@ void	exec(t_command *command, char *path)
 
 	pid = fork();
 	if (!pid)
-		execve(path, token_to_arr(command->tokens, command->tokens_count), 0);
+		execve(path, command->tokarr, 0);
 	else
 		wait(NULL);
 }
@@ -67,21 +58,40 @@ char	*search_cmd(char *cmd, char **paths)
 	return (str);
 }
 
-void	redirect_commands(t_command *command)
+void	redirect_commands(t_command *command, char **paths)
 {
-	char	*envv;
 	char	*path;
+
+	construct_pipes(command);
+	// printf("ppcout%d\n", command->pipe_count);
+	// for (int i = 0; i < command->pipe_count; i++)
+	// 	printf("pploc %d\n",command->pipe_location[i]);
+	command->tokarr = token_to_arr(command->tokens, command->tokens_count);
+	if (command->pipe_location[0] == -1)
+	{
+		path = search_cmd(command->tokens[0]->tok, paths);
+		if (path)
+			exec(command, path);
+		else
+			printf("%s: command not found\n", command->tokens[0]->tok);
+	}
+	else
+		pipe_this(command);
+}
+
+void	cast_cmd(t_command **commands, int cmdcout)
+{
+	int	i;
+	char	*envv;
 	char	**paths;
 
+	i = 0;
+
 	envv = getenv("PATH");
-	// todo: piping
-	if (!path)
+	if (!envv)
 	// idk what to do when no $PATH
 		return ;
 	paths = ft_split(envv, ':');
-	path = search_cmd(command->tokens[0]->tok, paths);
-	if (path)
-		exec(command, path);
-	else
-		printf("command not found\n");
+	while (i < cmdcout)
+		redirect_commands(commands[i++], paths);
 }
