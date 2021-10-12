@@ -95,6 +95,12 @@ void        delete_lst(LIST);
 t_bool      split_by_type(char *buff, t_node **tokens);
 int         tokenize(char *buff, ENV);
 
+// Expansion
+
+void expand_command_tokens(t_env *env);
+void expand_tokens(t_env *env, t_token *token);
+
+
 // Errors
 t_bool      raise_error(ENV, char *msg);
 void        destroy_env(ENV);

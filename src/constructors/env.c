@@ -9,6 +9,7 @@ t_env   *init_env(int argc, char **argv, char **env_var)
     MALLOC(env);
     MALLOC(env->history);
     MALLOC(env->input);
+    env->env_var = env_var;
     env->commands = NULL;
     return (env);
 }
@@ -19,7 +20,7 @@ t_token *new_token(char *tok)
 
     MALLOC(token);
     token->tok = NULL;
-    token->type = NULL;
+    token->type = -1;
     token->len = NULL;
     if (tok)
         token->tok = tok;

@@ -27,7 +27,6 @@ int read_input(char **input)
     return (0);
 }
 
-
 void    show_prompt(char *msg)
 {
     put_str(msg);
@@ -66,10 +65,12 @@ int repl(t_env *env)
         return 0;
     if (tokenize_commands(env) == -1)
         return 0;
-	//this func starts execution
+    expand_command_tokens(env);
+    lex_tokens(env);
+    
+    //this func starts execution
 	cast_cmd(env->commands, env->cmds_count);
-	printf("%d\n", env->cmds_count);
-    ret = lex_tokens(env);
+	// printf("%d\n", env->cmds_count);
     //ret = parse_tokens();
     //ret = execute();
     return (0);

@@ -6,11 +6,17 @@ t_token     *tokenize_quoted_cmd(ENV, t_command *cmd)
     t_token     *token;
 
     if (env->input->line[env->input->i] == SINGLE_QT)
+    {
         token = tokenize_single_quoted(env, cmd);
+        if (token)
+            token->quoted = TYPE_SINGLE_QT;
+    }
     else
+    {
         token = tokenize_double_quoted(env, cmd);
-    if (token)
-        token->quoted = TRUE;
+        if (token)
+            token->quoted = TYPE_DOUBLE_QT;
+    }
     return (token);
     //Should be cleaned from backSlashes
 }
@@ -30,9 +36,6 @@ t_token    *tokenize_single_quoted(ENV, t_command *cmd)
             break;
         }
     char *tok = sub_str(line, env->input->i, j);
-    print("TOK------------");
-    print(tok);
-    print("---------------");
     token = new_token(tok);
     env->input->i = j;
     return (token);

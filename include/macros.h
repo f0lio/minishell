@@ -34,6 +34,8 @@
 # define TYPE_APPEND             5   // >>
 # define TYPE_HEREDOC            6  // <<
 # define TYPE_FILE               7
+# define TYPE_SINGLE_QT          1
+# define TYPE_DOUBLE_QT          2
 
 // Colors
 # define RED                "\033[1;31m"

@@ -20,7 +20,7 @@ TOKENIZER			=	tokenize.c\
 						tokenize_quoted.c quotes_checker.c\
 						utils.c
 LEXER				=	lexer.c
-PARSER				=	
+PARSER				=	expansion.c
 EXECUTER			=	redirect.c apex_strtools.c
 
 DBG					=	MY_DBG.C

@@ -14,11 +14,11 @@ void    reset_data(ENV)
 void    destroy_command(void *ptr)
 {
     t_command *cmd;
- 
     cmd = ptr;
     if (!cmd)
         return ;
     safe_free((void**)&cmd->cmd);
+    printf("#[%d]\n", cmd->tokens_count);
     while (--cmd->tokens_count >= 0)
         destroy_token(cmd->tokens[cmd->tokens_count]);
     safe_free((void**)&cmd);
@@ -31,8 +31,8 @@ void    destroy_token(void *ptr)
     token = ptr;
     if (token == NULL)
         return ;
+    
     safe_free((void*)&token->tok);
-    safe_free((void*)&token->type);
     safe_free((void*)&token);
 }
 
