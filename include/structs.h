@@ -56,7 +56,7 @@ typedef struct	s_command
 {
 	char		*cmd;
 	t_token		**tokens;
-	t_pipe		**pipes;
+	t_pipe		*pipes;
 	int			tokens_count;
 	char		**tokarr;
 	int			pipe_count;

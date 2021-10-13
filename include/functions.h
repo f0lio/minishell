@@ -40,7 +40,7 @@ t_bool          command_is_valid(ENV, t_command *cmd);
 // Execution
 void	cast_cmd(t_command **commands, int cmdcout);
 // Pipage
-void	construct_pipes(t_command *command);
+void	search_pipes(t_command *command);
 void	pipe_this(t_command *command);
 // Apex strtools
 char	*ft_substr(char *s, int start, size_t len);

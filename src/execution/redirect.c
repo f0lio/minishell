@@ -62,12 +62,12 @@ void	redirect_commands(t_command *command, char **paths)
 {
 	char	*path;
 
-	construct_pipes(command);
+	search_pipes(command);
 	// printf("ppcout%d\n", command->pipe_count);
 	// for (int i = 0; i < command->pipe_count; i++)
 	// 	printf("pploc %d\n",command->pipe_location[i]);
 	command->tokarr = token_to_arr(command->tokens, command->tokens_count);
-	if (command->pipe_location[0] == -1)
+	if (!command->pipe_count)
 	{
 		path = search_cmd(command->tokens[0]->tok, paths);
 		if (path)

@@ -23,7 +23,7 @@ int		count_pipes(t_command *command)
 	return (c);
 }
 
-void	construct_pipes(t_command *command)
+void	search_pipes(t_command *command)
 {
     int     p;
     int     j;
@@ -44,10 +44,53 @@ void	construct_pipes(t_command *command)
 		j++;
 	}
 }
+char	**pipe_tokarr(t_command *command, int pipe_num)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**arr;
+
+	i = 0;
+	j = 0;
+	k = command->pipe_location[pipe_num];
+	if (k < 0)
+		k = command->tokens_count;
+	if (pipe_num)
+		j = command->pipe_location[pipe_num - 1] + 1;
+	arr = malloc(sizeof(char *) * (k - j + 1));
+	arr[k - j] = 0;
+	while (i < k - j)
+	{
+		arr[i] = command->tokarr[i + j];
+		i++;
+	}
+
+	return (arr);
+}
 
 void	pipe_this(t_command *command)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	command->pipes = malloc(sizeof(t_pipe) * (command->pipe_count + 2));
+	command->pipes[command->pipe_count + 1].tokarr = 0;
+	while (i <= command->pipe_count)
+	{
+		command->pipes[i].tokarr = pipe_tokarr(command, i);
+		i++;
+	}
+	i = 0;
+	while (i <= command->pipe_count)
+	{
+		j = 0;
+		while (command->pipes[i].tokarr[j])
+		{
+			printf("pipe[%d]tok[%d]: %s\n", i, j, command->pipes[i].tokarr[j]);
+			j++;
+		}
+		i++;
+	}
 }

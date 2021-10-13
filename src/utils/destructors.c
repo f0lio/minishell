@@ -19,9 +19,13 @@ void    destroy_command(void *ptr)
         return ;
     safe_free((void**)&cmd->cmd);
     safe_free((void**)&cmd->pipe_location);
+    safe_free((void**)&cmd->tokarr);
     // printf("#[%d]\n", cmd->tokens_count);
     while (--cmd->tokens_count >= 0)
         destroy_token(cmd->tokens[cmd->tokens_count]);
+    while (--cmd->pipe_count >= 0)
+        safe_free((void**)&cmd->pipes[cmd->pipe_count].tokarr);
+    safe_free((void**)&cmd->pipes);
     safe_free((void**)&cmd);
 }
 
