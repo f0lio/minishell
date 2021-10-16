@@ -1,4 +1,5 @@
 .vscode/
+*.dSYM
 .DS_*
 _*.py
 *.out
