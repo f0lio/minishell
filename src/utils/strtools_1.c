@@ -51,3 +51,14 @@ t_bool  str_ncmp(char *s1, char *s2, int max)
 			len++;
 	return (1);
 }
+
+BOOL is_alphanum(char c)
+{
+    if (c <= 'z' && c >= 'a')
+        return TRUE;
+    if (c <= 'Z' && c >= 'A')
+        return TRUE;
+    if (c <= '9' && c >= '0')
+        return TRUE;
+    return FALSE;
+}

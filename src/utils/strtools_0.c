@@ -32,4 +32,3 @@ void	put_str(const char *str)
 	fput_str(str, 1);
 }
 
-

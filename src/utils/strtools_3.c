@@ -94,6 +94,9 @@ char	*sub_str(char const *s, int start, int end)
 	if (start >= end)
 		return (str_dup(""));
 	start = start < 0 ? 0 : start;
+	
+	// (start < 0) && (start = 0);
+	
 	len = (end - start);
 	if (!(sub = malloc(len + 1)))
 		return (NULL);

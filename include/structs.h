@@ -35,7 +35,7 @@ typedef struct 	s_token
 {
 	char		*tok;	//"cd" ";"
 	char		type; 	//BUILTIN, ARG, SEP, "PIPE" (macors are better)
-	size_t		*len;
+	size_t		len;
 	int			order;
 	t_bool		quoted;
 } 				t_token;

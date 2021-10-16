@@ -39,7 +39,6 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
     t_node      *list;
     char        *line;
     int         i;
-    
 
     list = NULL;
     line = cmd->cmd;

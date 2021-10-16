@@ -66,7 +66,7 @@ int repl(t_env *env)
     if (tokenize_commands(env) == -1)
         return 0;
     expand_command_tokens(env);
-    
+
     //this func starts execution
 	cast_cmd(env->commands, env->cmds_count);
 	// printf("%d\n", env->cmds_count);

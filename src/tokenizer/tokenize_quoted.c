@@ -35,7 +35,7 @@ t_token    *tokenize_single_quoted(ENV, t_command *cmd)
             j++;
             break;
         }
-    char *tok = sub_str(line, env->input->i, j);
+    char *tok = sub_str(line, env->input->i + 1, j);
     token = new_token(tok);
     env->input->i = j;
     return (token);
@@ -55,7 +55,7 @@ t_token    *tokenize_double_quoted(ENV, t_command *cmd)
             j++;
             break;
         }
-    token = new_token(sub_str(line, env->input->i, j));
+    token = new_token(sub_str(line, env->input->i + 1, j));
     env->input->i = j;
     return (token);
 }
