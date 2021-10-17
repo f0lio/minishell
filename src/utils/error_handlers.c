@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_bool    raise_error(ENV, char *msg)
+BOOL    raise_error(ENV, char *msg)
 {
     put_str("Error\n");
     put_str(msg);

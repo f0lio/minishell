@@ -95,7 +95,7 @@ t_command   *get_command(ENV)
     return cmd;
 }
 
-t_bool split_commands(ENV)
+BOOL split_commands(ENV)
 {
     t_token     *token;
     t_command   *cmd;

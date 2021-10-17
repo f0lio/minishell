@@ -62,3 +62,14 @@ BOOL is_alphanum(char c)
         return TRUE;
     return FALSE;
 }
+
+BOOL	is_included(char c, char *s)
+{
+	while (*s)
+	{
+		if (*s == c)
+			return TRUE;
+		s++;
+	}
+	return FALSE;
+}

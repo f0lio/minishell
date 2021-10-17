@@ -4,10 +4,10 @@
 /* TODO:
 **  -if file creation failed, choose a different path.
 */
-t_bool  set_history(ENV)
+BOOL  set_history(ENV)
 {
     t_file *history;
-    t_bool ret;
+    BOOL ret;
 
     ret = TRUE;
     history = env->history;
@@ -34,6 +34,9 @@ void  saveto_history(ENV)
 {
     int fd;
 
+    /* TODO:
+    **  fd should be opened one time on startup, and closed on end.
+    */
     fd = open(env->history->path, O_APPEND | O_WRONLY);
     write_line(fd, env->input->line);
     write(fd, "\n", 1);
@@ -43,14 +46,14 @@ void  saveto_history(ENV)
     env->history->curr_line = env->history->last_line;
 }
 
-t_bool  is_arrow(ENV)
+BOOL  is_arrow(ENV)
 {
     if (str_cmp(env->input->line, "UP"))
         return TRUE;
     return FALSE;
 }
 
-t_bool  get_history(ENV)
+BOOL  get_history(ENV)
 {
     
     print(env->history->curr_line->data);

@@ -10,12 +10,16 @@ t_token *get_token(ENV, t_command *cmd)
     size_t  j;
     short   k;
     char    *line;
-    
+    BOOL    double_q;
+    BOOL    single_q;
+
     //To handle:
     //  +[ cd d\ ir]
     //  -[echo okay \\ > file]
     //  -[echo okay \ > file]
 
+    single_q = FALSE;
+    double_q = FALSE;
     skip = new_array(ARR_SIZE);
     k = 0;
     j = env->input->i + 1;
@@ -24,7 +28,7 @@ t_token *get_token(ENV, t_command *cmd)
     {
         if (line[j] == BACK_SLASH)
             skip->arr[k++] = j;
-        else if (line[j] == ' ' && line[j - 1] != BACK_SLASH)
+        else if (line[j - 1] != BACK_SLASH && is_included(line[j], "\"' "))
             break ;
         j++;
     }
@@ -33,7 +37,7 @@ t_token *get_token(ENV, t_command *cmd)
     return token;
 }
 
-t_bool tokenize_cmd(ENV, t_command *cmd)
+BOOL tokenize_cmd(ENV, t_command *cmd)
 {
     t_token     *token;
     t_node      *list;
@@ -46,6 +50,7 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
     i = 0;
     while (i < env->input->len)
     {
+        // if line[i] == B_SLASH => skip..?
         env->input->i = i;
         if (line[i] != SPACE)
         {
@@ -60,25 +65,11 @@ t_bool tokenize_cmd(ENV, t_command *cmd)
         else
             i++;
     }
-    // print_tokens(cmd->tokens);
-    
     cmd->tokens = create_tokens_array(list, cmd->tokens_count);
-    
-    // // test
-    // printf("###################\n");
-    // printf("# Tokens count: %d\n", cmd->tokens_count);
-    // printf("###################\n");
-    // i = 0;
-    // while (i < cmd->tokens_count)
-    // {
-    //     printf("%2.2d: [%s]\n", i, cmd->tokens[i]->tok);
-    //     i++;
-    // }
-    // printf("###################\n");
     return 0;
 }
 
-t_bool tokenize_commands(ENV)
+BOOL tokenize_commands(ENV)
 {
     t_command   *cmd;
     int         i;

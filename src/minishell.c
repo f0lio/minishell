@@ -56,22 +56,11 @@ int repl(t_env *env)
     if (is_arrow(env)) //tmp condition
         return get_history(env);
     saveto_history(env);
-    /* TODO:
-        +> Split commands
-        +> then tokenize.
-    */
     env->input->len = str_len(env->input->line);
-    if (split_commands(env) == -1)
-        return 0;
-    if (tokenize_commands(env) == -1)
-        return 0;
+    split_commands(env);
+    tokenize_commands(env);
     expand_command_tokens(env);
-
-    //this func starts execution
 	cast_cmd(env->commands, env->cmds_count);
-	// printf("%d\n", env->cmds_count);
-    //ret = parse_tokens();
-    //ret = execute();
     return (0);
 }
 

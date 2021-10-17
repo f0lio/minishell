@@ -20,11 +20,10 @@ void    destroy_command(void *ptr)
     safe_free((void**)&cmd->cmd);
     safe_free((void**)&cmd->pipe_location);
     safe_free((void**)&cmd->tokarr);
-    // printf("#[%d]\n", cmd->tokens_count);
     while (--cmd->tokens_count >= 0)
         destroy_token(cmd->tokens[cmd->tokens_count]);
-	printf("%d\n", cmd->pipe_count);
-	if (cmd->pipe_count)
+	// printf("pipes: %d\n", cmd->pipe_count);
+	if (cmd->pipe_count > 0)
 	{
 		while (--cmd->pipe_count >= 0)
 			safe_free((void**)&cmd->pipes[cmd->pipe_count].tokarr);
@@ -52,7 +51,3 @@ void safe_free(void **ptr)
     free(*ptr);
     *ptr = NULL;
 }
-
-/* 
-echo okay; cd dir; pwd | cat | grep *
-*/

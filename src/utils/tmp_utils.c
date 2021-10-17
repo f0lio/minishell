@@ -12,16 +12,12 @@ void    print_array(t_array *arr, t_bool minus)
             DN(arr->arr[i]);
 }
 
-void    print_tokens(t_node *tokens_list)
+void    print_tokens(t_token **tokens, int count)
 {
-    t_node  *iter;
-    t_token *token;
-
-    iter = tokens_list;  //head
-    while (iter)
+    
+    for (size_t i = 0; i < count; i++)
     {
-        token = (t_token*)iter->data;
-        printf("@> [%s]\n", (char*)(token->tok));
-        iter = iter->next;
+        printf("@> [%s]\n", (char*)(tokens[i]->tok));
     }
+    
 }
