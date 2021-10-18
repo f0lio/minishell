@@ -19,7 +19,6 @@ t_token **create_tokens_array(t_node *list, int size)
     return tokens;
 }
 
-
 t_command **create_commands_array(t_node *list, int size)
 {
     t_command   **cmds;

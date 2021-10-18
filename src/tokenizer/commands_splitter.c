@@ -1,6 +1,12 @@
 
 #include "minishell.h"
 
+
+/* NOTE: 
+**  -This file is going to be removed. As the commands splitting
+      will happen on the tokenizer itself.
+*/
+
 t_command *get_quoted_command(ENV)
 {
     t_command *cmd;

@@ -106,3 +106,13 @@ char	*sub_str(char const *s, int start, int end)
 		sub[i++] = s[start++];
 	return (sub);
 }
+
+int skip_char(char *s, char c)
+{
+	int i;
+
+	i = 0;
+	while (s[i] == c)
+		i++;
+	return 0;
+}

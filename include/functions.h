@@ -8,12 +8,13 @@ int             repl(ENV);
 int             read_input(char **input);
 void            show_prompt(char *msg);
 
-// Constructos
+// Constructors
 t_token         *new_token(char *tok);
 t_array         *new_array(int size);
 t_env           *init_env(int argc, char **argv, char **env_var);
 t_command       **create_commands_array(t_node *list, int size);
 t_token         **create_tokens_array(t_node *list, int size);
+
 // Destructors 
 void            reset_data(ENV);
 void            destroy_command(void *command);
@@ -74,6 +75,7 @@ char            *sub_str(
                     char const *s, int start, int end);
 char            *clean_sub_str(
                     char const *s, int start, int end, t_array *arr );
+int             skip_char(char *s, char c);
 
 // Quotes stuff
 BOOL            check_quotes(char *str);
@@ -89,8 +91,8 @@ void            push_front(LIST, void  *data);
 
 size_t          list_size(t_node *list);
 void            list_iter(LIST, void(*fun)(void *));
-void            destroy_lst(LIST);
-void            delete_lst(LIST);
+void            destroy_list(LIST);
+void            delete_list(LIST);
 
 
 // Parser

@@ -98,7 +98,7 @@ size_t  list_size(t_node    *list)
     return (i);
 }
 
-void    destroy_lst(LIST)
+void    destroy_list(LIST)
 {
     t_node      *p1;
     t_node      *p2;
@@ -114,7 +114,7 @@ void    destroy_lst(LIST)
     }
 }
 
-void	delete_lst(LIST) 
+void	delete_list(LIST) 
 { 
    t_node *current;
    t_node *next;
