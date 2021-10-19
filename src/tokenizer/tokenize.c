@@ -1,15 +1,29 @@
 
 #include "minishell.h"
 
-# define ARR_SIZE 256
+t_command *create_command(t_node *tokens, int count)
+{
+    t_command   *cmd;
+    int         i;
 
-/* NOTE: 
-**  -The following function will handle semicolons as well.
-     When it finds one, with no active quotation mark, it will
-     call create_command()
-*/
+    cmd = malloc(sizeof(t_command));
+    if (!cmd)
+        return NULL;
+    cmd->cmd = NULL;
+	cmd->pipes  = NULL;
+	cmd->tokarr = NULL;
+	cmd->pipe_count = 0;
+	cmd->pipe_location = NULL;
+	cmd->sep = 0;
+	cmd->ret = 0;
+    cmd->tokens_count = count;
+    cmd->tokens = create_tokens_array(tokens, count);
+    return cmd;
+}
 
-t_token *get_token(ENV, t_command *cmd)
+# define    ARR_SIZE   256
+
+t_token *get_token(ENV)
 {
     t_token *token;
     t_array *skip;
@@ -18,17 +32,17 @@ t_token *get_token(ENV, t_command *cmd)
     char    *line;
 
     BOOL flag = FALSE;
+    
     //To handle:
     //  +[ cd d\ ir]
     //  -[echo okay \\ > file]
     //  -[echo okay \ > file]
 
     BOOL dq = 0, sq = 0;
-
     skip = new_array(ARR_SIZE);
     k = 0;
     j = env->input->i;
-    line = cmd->cmd;
+    line = env->input->line;
     j += skip_char(&line[j], SPACE);
     while (j < env->input->len)
     {
@@ -56,7 +70,7 @@ t_token *get_token(ENV, t_command *cmd)
             }
         }
         //   'ec'h"o" 'ab cd' "ef" 'g"h"'
-        if (line[j] == SPACE && !sq && !dq)
+        if ((line[j] == SPACE || line[j] == SEP) && !sq && !dq)
         {
             flag = 1;
             break ;
@@ -64,7 +78,6 @@ t_token *get_token(ENV, t_command *cmd)
         if ((dq == 2 || sq == 2) && line[j] == SPACE)
         {
             flag = 2;
-            
             break ;
         }
         j++;
@@ -74,16 +87,20 @@ t_token *get_token(ENV, t_command *cmd)
     return token;
 }
 
-BOOL tokenize_cmd(ENV, t_command *cmd)
+void tokenize_input(ENV)
 {
     t_token     *token;
-    t_node      *list;
+    t_node      *tokens_list;
+    t_node      *cmds_list;
     char        *line;
     int         i;
 
-    list = NULL;
-    line = cmd->cmd;
-    cmd->tokens_count = 0;
+    int         tokens_count;
+
+    tokens_count = 0;
+    tokens_list = NULL;
+    cmds_list = NULL;
+    line = env->input->line;
     i = 0;
     while (i < env->input->len)
     {
@@ -91,32 +108,33 @@ BOOL tokenize_cmd(ENV, t_command *cmd)
         env->input->i = i;
         if (line[i] != SPACE)
         {
-            token = get_token(env, cmd);
+            if (line[i] == SEP)
+            {
+                push_back(
+                    &cmds_list,
+                    create_command(tokens_list, tokens_count));
+                // destroy_list(&tokens_list);
+                tokens_list = NULL;
+                tokens_count = 0;
+                env->cmds_count++;
+                i++;
+                continue ;
+            }
+            token = get_token(env);
             i = env->input->i;
-            push_back(&list, token);
-            cmd->tokens_count++;
+            push_back(&tokens_list, token);
+            tokens_count++;
         }
         else
             i++;
     }
-    cmd->tokens = create_tokens_array(list, cmd->tokens_count);
-    // destroy_list(&list);
-    return 0;
-}
-
-BOOL tokenize_commands(ENV)
-{
-    t_command   *cmd;
-    int         i;
-
-    i = 0;
-    while (i < env->cmds_count)
+    if (tokens_list)
     {
-        cmd = env->commands[i];
-        env->input->i = 0;
-        env->input->len = str_len(cmd->cmd);
-        tokenize_cmd(env, cmd);
-        i++;
+        push_back(
+            &cmds_list, create_command(tokens_list, tokens_count));
+        // destroy_list(&tokens_list);
+        env->cmds_count++;
+        tokens_list = NULL;
     }
-    return 0;
+    env->commands = create_commands_array(cmds_list, env->cmds_count);
 }

@@ -29,8 +29,10 @@ int read_input(char **input)
 
 void    show_prompt(char *msg)
 {
+    put_str(GREEN);
     put_str(msg);
     put_str("$ ");
+    put_str(NO_COLOR);
 }
 
 //This is the shell loop.
@@ -57,8 +59,21 @@ int repl(t_env *env)
         return get_history(env);
     saveto_history(env);
     env->input->len = str_len(env->input->line);
-    split_commands(env);
-    tokenize_commands(env);
+    tokenize_input(env);
+    
+
+    // put_str(GREEN);
+    // printf("-- COUNT -- : %d\n", env->cmds_count);
+    // for (int i = 0; i < env->cmds_count; i++)
+    // {
+    //     put_str(RED);
+    //     printf("-- Command: %d\n", i);
+    //     put_str(NO_COLOR);
+    //     // put_str();
+    //     print_tokens(env->commands[i]->tokens, env->commands[i]->tokens_count);
+    // }
+    // return 0;
+    
     expand_command_tokens(env);
 	cast_cmd(env->commands, env->cmds_count);
     return (0);

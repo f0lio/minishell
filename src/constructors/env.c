@@ -11,6 +11,7 @@ t_env   *init_env(int argc, char **argv, char **env_var)
     MALLOC(env->input);
     env->env_var = env_var;
     env->commands = NULL;
+    env->cmds_count = 0;
     return (env);
 }
 
@@ -19,7 +20,11 @@ t_token *new_token(char *tok)
     t_token *token;
 
     MALLOC(token);
+    if (!token)
+        return NULL;
     token->tok = NULL;
+    token->len = 0;
+    token->quoted = FALSE;
     token->type = -1;
     if (tok)
     {

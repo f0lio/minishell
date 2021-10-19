@@ -40,6 +40,8 @@
 // Colors
 # define RED                "\033[1;31m"
 # define GREEN              "\033[1;32m"
+# define WHITE              "\033[1;37m"
+# define NO_COLOR           "\033[0m"
 
 // Error messages must have "ERR_" as a prefix
 # define ERR_MALLOC         "Couldn't allocate memory"

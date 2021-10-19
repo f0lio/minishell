@@ -4,11 +4,12 @@
 void    reset_data(ENV)
 {
     safe_free ((void**)&env->input->line);
-    while (--env->cmds_count >= 0)
+    while (--env->cmds_count > -1)
         destroy_command(env->commands[env->cmds_count]);
     safe_free((void**)&env->commands);
     env->commands = NULL;
     env->input->i = 0;
+    env->cmds_count = 0;
 }
 
 void    destroy_command(void *ptr)
@@ -20,12 +21,12 @@ void    destroy_command(void *ptr)
     safe_free((void**)&cmd->cmd);
     safe_free((void**)&cmd->pipe_location);
     safe_free((void**)&cmd->tokarr);
-    while (--cmd->tokens_count >= 0)
+    while (--cmd->tokens_count > -1)
         destroy_token(cmd->tokens[cmd->tokens_count]);
 	// printf("pipes: %d\n", cmd->pipe_count);
 	if (cmd->pipe_count > 0)
 	{
-		while (--cmd->pipe_count >= 0)
+		while (--cmd->pipe_count > -1)
 			safe_free((void**)&cmd->pipes[cmd->pipe_count].tokarr);
 		safe_free((void**)&cmd->pipes);
 	}

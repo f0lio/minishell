@@ -22,14 +22,16 @@ void            destroy_token(void *token);
 void            safe_free(void **ptr);
 
 // Tokenizer
-BOOL            tokenize_commands(ENV);
-BOOL            tokenize_cmd(ENV, t_command *cmd);
-t_token         *get_token(ENV, t_command *cmd);
+void            tokenize_input(ENV);
+t_token         *get_token(ENV);
 t_token         *tokenize_quoted_cmd(ENV, t_command *cmd);
 t_token         *tokenize_single_quoted(ENV, t_command *cmd);
 t_token         *tokenize_double_quoted(ENV, t_command *cmd);
 
+t_command       *create_command(t_node *tokens, int count);
+
 // Commands
+
 BOOL            split_commands(ENV);
 t_command       *new_cmd(void);
 t_command       *get_quoted_command(ENV);

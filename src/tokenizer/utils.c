@@ -8,6 +8,8 @@ t_token **create_tokens_array(t_node *list, int size)
     int     i;
 
     tokens = (t_token**)malloc(size * sizeof(t_token*));
+    if (!tokens)
+        return NULL;
     i = 0;
     it = list;
     while (i < size && it)
