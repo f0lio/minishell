@@ -6,16 +6,9 @@ t_command *create_command(t_node *tokens, int count)
     t_command   *cmd;
     int         i;
 
-    cmd = malloc(sizeof(t_command));
+    cmd = new_cmd();
     if (!cmd)
         return NULL;
-    cmd->cmd = NULL;
-	cmd->pipes  = NULL;
-	cmd->tokarr = NULL;
-	cmd->pipe_count = 0;
-	cmd->pipe_location = NULL;
-	cmd->sep = 0;
-	cmd->ret = 0;
     cmd->tokens_count = count;
     cmd->tokens = create_tokens_array(tokens, count);
     return cmd;
@@ -32,7 +25,7 @@ t_token *get_token(ENV)
     char    *line;
 
     BOOL flag = FALSE;
-    
+
     //To handle:
     //  +[ cd d\ ir]
     //  -[echo okay \\ > file]

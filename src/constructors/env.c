@@ -42,6 +42,13 @@ t_command *new_cmd(void)
     if (!cmd)
         return (NULL);
     cmd->cmd = NULL;
+	cmd->pipes  = NULL;
+	cmd->tokarr = NULL;
+	cmd->pipe_count = 0;
+	cmd->pipe_location = NULL;
+	cmd->sep = 0;
+	cmd->ret = 0;
+    cmd->cmd = NULL;
 	cmd->pipe_count = -1;
     cmd->tokens = NULL;
     return (cmd);

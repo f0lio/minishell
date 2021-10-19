@@ -16,7 +16,7 @@ UTILS				=	strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
 CONSTRUCTORS		=	env.c
 HISTORY				=	history.c 
 TOKENIZER			=	tokenize.c\
-						commands_splitter.c command_checker.c\
+						 command_checker.c\
 						tokenize_quoted.c quotes_checker.c\
 						utils.c
 LEXER				=	lexer.c
