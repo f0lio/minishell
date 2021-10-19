@@ -22,7 +22,7 @@ void            destroy_token(void *token);
 void            safe_free(void **ptr);
 
 // Tokenizer
-void            tokenize_input(ENV);
+BOOL            tokenize_input(ENV);
 t_token         *get_token(ENV);
 t_token         *tokenize_quoted_cmd(ENV, t_command *cmd);
 t_token         *tokenize_single_quoted(ENV, t_command *cmd);

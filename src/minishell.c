@@ -59,7 +59,8 @@ int repl(t_env *env)
         return get_history(env);
     saveto_history(env);
     env->input->len = str_len(env->input->line);
-    tokenize_input(env);
+    if (tokenize_input(env))
+        return 0;
     
 
     // put_str(GREEN);

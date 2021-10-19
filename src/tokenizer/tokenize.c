@@ -87,7 +87,7 @@ t_token *get_token(ENV)
     return token;
 }
 
-void tokenize_input(ENV)
+BOOL tokenize_input(ENV)
 {
     t_token     *token;
     t_node      *tokens_list;
@@ -101,7 +101,9 @@ void tokenize_input(ENV)
     tokens_list = NULL;
     cmds_list = NULL;
     line = env->input->line;
-    i = 0;
+    i = skip_char(line, ' ');
+    if (line[i] == SEP)
+        return raise_error(env, ERR_SYNTAX);
     while (i < env->input->len)
     {
         // if line[i] == B_SLASH => skip..?
@@ -137,4 +139,5 @@ void tokenize_input(ENV)
         tokens_list = NULL;
     }
     env->commands = create_commands_array(cmds_list, env->cmds_count);
+    return (0);
 }
