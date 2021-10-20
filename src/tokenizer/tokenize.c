@@ -18,13 +18,9 @@ t_command *create_command(t_node *tokens, int count)
 
 t_token *get_token(ENV)
 {
-    t_token *token;
-    t_array *skip;
-    size_t  j;
-    short   k;
     char    *line;
-
-    BOOL flag = FALSE;
+    t_token *token;
+    size_t  j;
 
     //To handle:
     //  +[ cd d\ ir]
@@ -32,50 +28,27 @@ t_token *get_token(ENV)
     //  -[echo okay \ > file]
 
     BOOL dq = 0, sq = 0;
-    skip = new_array(ARR_SIZE);
-    k = 0;
-    j = env->input->i;
     line = env->input->line;
-    j += skip_char(&line[j], SPACE);
+    j = env->input->i + skip_char(&line[env->input->i], SPACE);
     while (j < env->input->len)
     {
-        if (j == 0 || (j > 0 && line[j - 1] != BACK_SLASH))
+        if (j == 0 || line[j - 1] != BACK_SLASH)
         {
-            //haha branchlessness
-            // sq += (((sq == 1 && dq != 1) | 1) * -1) * (line[j] == SINGLE_QT);
-            // dq += (((dq == 1 && sq != 1) | 1) * -1) * (line[j] == DOUBLE_QT);
-            // (line[j] == DOUBLE_QT) && (dq += (((dq == 1 && sq != 1) | 1) * -1));
-            // (line[j] == SINGLE_QT) && (sq += (((sq == 1 && dq != 1) | 1) * -1));
-
-            if (line[j] == SINGLE_QT)
-            {
-                if (sq == 1 && dq != 1) // single is not inside double
-                    sq--;
-                else
-                    sq++;
-            }
-            else if (line[j] == DOUBLE_QT)
-            {
-                if (dq == 1 && sq != 1) // single is not inside double
-                    dq--;
-                else
-                    dq++;
-            }
+            sq += (line[j] == SINGLE_QT);
+            sq -= (sq == 1 && dq != 1) * 2 * (line[j] == SINGLE_QT);
+            dq += (line[j] == DOUBLE_QT);
+            dq -= (dq == 1 && sq != 1) * 2 * (line[j] == DOUBLE_QT);
         }
-        //   'ec'h"o" 'ab cd' "ef" 'g"h"'
-        if ((line[j] == SPACE || line[j] == SEP) && !sq && !dq)
+        if (line[j] == SPACE || line[j] == SEP)
         {
-            flag = 1;
-            break ;
-        }
-        if ((dq == 2 || sq == 2) && line[j] == SPACE)
-        {
-            flag = 2;
-            break ;
+            if (!sq && !dq)
+                break ;
+            else if ((dq == 2 || sq == 2) && line[j] == SPACE)
+                break ;
         }
         j++;
     }
-    token = new_token(clean_sub_str(line, env->input->i, j, skip));
+    token = new_token(sub_str(line, env->input->i, j));
     env->input->i = j;
     return token;
 }

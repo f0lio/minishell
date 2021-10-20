@@ -24,6 +24,7 @@
 # define BACK_SLASH         '\\'
 # define EOL                '\n'
 # define SEP                ';'
+# define DOLLAR             '$'
 
 // Token types
 # define TYPE_CMD                0
