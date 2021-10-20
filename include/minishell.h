@@ -19,4 +19,6 @@
 
 // {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 
+char	**g_paths;
+
 #endif

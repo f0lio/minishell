@@ -75,20 +75,22 @@ void	pipe_this(t_command *command)
 	int	j;
 
 	i = 0;
-	command->pipes = malloc(sizeof(t_pipe) * (command->pipe_count + 2));
-	command->pipes[command->pipe_count + 1].tokarr = 0;
+	command->scmd = malloc(sizeof(t_simpcmd) * (command->pipe_count + 2));
+	command->scmd[command->pipe_count + 1].tokarr = 0;
+	if (!command->pipe_count)
+			command->scmd[0].tokarr = command->tokarr;
 	while (i <= command->pipe_count)
 	{
-		command->pipes[i].tokarr = pipe_tokarr(command, i);
+		command->scmd[i].tokarr = pipe_tokarr(command, i);
 		i++;
 	}
 	i = 0;
 	while (i <= command->pipe_count)
 	{
 		j = 0;
-		while (command->pipes[i].tokarr[j])
+		while (command->scmd[i].tokarr[j])
 		{
-			printf("pipe[%d]tok[%d]: %s\n", i, j, command->pipes[i].tokarr[j]);
+			printf("pipe[%d]tok[%d]: %s\n", i, j, command->scmd[i].tokarr[j]);
 			j++;
 		}
 		i++;

@@ -48,6 +48,7 @@
 # define ERR_MALLOC         "Couldn't allocate memory"
 # define ERR_SYNTAX         "invalid syntax"
 # define ERR_INPUT          "invalid input"
+# define ERR_CMD_NOT_FOUND	"command not found"
 
 // Temporary macros
 //////////////////////////////////////////////////////////
