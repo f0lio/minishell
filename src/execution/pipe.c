@@ -84,15 +84,15 @@ void	pipe_this(t_command *command)
 		command->scmd[i].tokarr = pipe_tokarr(command, i);
 		i++;
 	}
-	i = 0;
-	while (i <= command->pipe_count)
-	{
-		j = 0;
-		while (command->scmd[i].tokarr[j])
-		{
-			printf("pipe[%d]tok[%d]: %s\n", i, j, command->scmd[i].tokarr[j]);
-			j++;
-		}
-		i++;
-	}
+	// i = 0;
+	// while (i <= command->pipe_count)
+	// {
+	// 	j = 0;
+	// 	while (command->scmd[i].tokarr[j])
+	// 	{
+	// 		printf("pipe[%d]tok[%d]: %s\n", i, j, command->scmd[i].tokarr[j]);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 }

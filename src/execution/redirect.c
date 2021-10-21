@@ -74,47 +74,93 @@ int		search_path(char *path)
 		printf("%s: %s: %s\n",SHELL_NAME, path, strerror(errno));
 		return (127);
 	}
-	// printf("%d, %d, %d, %d\n", ret, buf.st_mode, S_IXUSR, buf.st_mode & S_IXUSR);
+	printf("%d, %d, %d, %d\n", ret, buf.st_mode, S_IXUSR, buf.st_mode & S_IXUSR);
 	return (0);
 }
 
-void	exec(t_simpcmd scmd)
+int		treat_exec_token(char **path, t_simpcmd scmd)
 {
-	pid_t	pid;
 	int		ret;
-	char	*path;
 
 	ret = search_path(scmd.tokarr[0]);
 	if (ret == 1)
-		path = search_cmd(scmd.tokarr[0]);
+		*path = search_cmd(scmd.tokarr[0]);
 	else
-		path = scmd.tokarr[0];
-	if (!path)
+		*path = str_dup(scmd.tokarr[0]);
+	if (!*path)
 		printf("%s: %s: %s\n", SHELL_NAME, scmd.tokarr[0], ERR_CMD_NOT_FOUND);
-	if (!path || ret == 127)
-		return ;
-	pid = fork();
-	if (!pid)
+	if (!*path || ret == 127)
+		return (ret);
+	return (0);
+}
+
+void	closeallpipes(t_simpcmd *scmd, int ppcout)
+{
+	int	j;
+
+	j = -1;
+	while (++j <= ppcout)
 	{
-		// printf("%s, %s\n", path , scmd.tokarr[0]);
-		execve(path, scmd.tokarr, 0);
-		printf("%s: %s: %s\n",SHELL_NAME, scmd.tokarr[0], strerror(errno));
+		close(scmd[j].pipe[0]);
+		close(scmd[j].pipe[1]);
+	}
+}
+
+void	free_closepipes(char **path, t_simpcmd *scmd, int ppcout)
+{
+	safe_free((void **)path);
+	closeallpipes(scmd, ppcout);
+}
+
+void	redirect_stdio(t_simpcmd *scmd, int i, int ppcout)
+{
+	// echo hi | tr 'x'
+	if (i)
+		dup2(scmd[i].pipe[0], STDIN_FILENO);
+	if (i != ppcout)
+		dup2(scmd[i + 1].pipe[1], STDOUT_FILENO);
+}
+
+void	exec(char *path, t_command *command, int i)
+{
+	command->scmd[i].pid = fork();
+	if (!command->scmd[i].pid)
+	{
+		redirect_stdio(command->scmd, i, command->pipe_count);
+		closeallpipes(command->scmd, command->pipe_count);
+		execve(path, command->scmd[i].tokarr, 0);
+		printf("WHAT THE FUCK HAPPENED\n");
 		exit(1);
 	}
-	else
-		wait(NULL);
 }
 
 void	redirect_commands(t_command *command)
 {
+	int		i;
+	char	*path;
 
+	i = -1;
+	path = 0;
 	search_pipes(command);
 	// printf("ppcout%d\n", command->pipe_count);
 	// for (int i = 0; i < command->pipe_count; i++)
 	// 	printf("pploc %d\n",command->pipe_location[i]);
 	command->tokarr = token_to_arr(command->tokens, command->tokens_count);
 	pipe_this(command);
-	exec(command->scmd[0]);
+	while (++i <= command->pipe_count)
+		pipe(command->scmd[i].pipe);
+	i = -1;
+	while (++i <= command->pipe_count)
+	{
+		if (!treat_exec_token(&path, command->scmd[i]))
+			// return (free_closepipes(&path, command->scmd, command->pipe_count));
+			exec(path, command, i);
+		safe_free((void **)&path);
+	}
+	closeallpipes(command->scmd, command->pipe_count);
+	i = -1;
+	while (++i <= command->pipe_count)
+		waitpid(command->scmd[i].pid, NULL, 0);
 }
 
 void	cast_cmd(t_command **commands, int cmdcout)
