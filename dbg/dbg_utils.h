@@ -48,5 +48,7 @@ static size_t  dbg_i = 0;
 void        exitfunc(int sig);
 void        ft_exitTime(int argc, char **argv);
 void        debugMem(void *mem);
+void        setmemlimit(int mb);
+
 
 #endif
