@@ -12,6 +12,7 @@ t_env   *init_env(int argc, char **argv, char **env_var)
     MALLOC(env->input);
     env->env_var = env_var;
     env->commands = NULL;
+    env->cmds_count = 0;
 	envv = getenv("PATH");
 	g_paths = ft_split(envv, ':');
     return (env);

@@ -1,86 +1,77 @@
 #include "minishell.h"
 
-void expand_command_tokens(t_env *env)
+// Warning! This a black box! Don't try to read it. 
+
+void expand_input(t_env *env)
 {
-    int i;
-    int j;
+	char	*va;
+	char	*p;
+	char	*new_input;
+	char	*input;
+	char	*buf;
+	int		i;
 
-    i = -1;
-    while (++i < env->cmds_count)
-    {
-        j = -1;
-        while (++j < env->commands[i]->tokens_count)
-            expand_tokens(env, env->commands[i]->tokens[j]);
-    }
-}
+	BOOL	dq = 0;
+	BOOL	sq = 0;
 
-void expand_tokens(t_env *env, t_token *token)
-{
-    char    *var;
-    char    *val;
-    char    *new_tok;
-    int     i;
+	input = env->input->line;
+	new_input = str_dup("");
+	i = 0;
+	while (i < env->input->len)
+	{
+		sq += (i == 0 || input[i - 1] != BACK_SLASH) * (input[i] == SINGLE_QT);
+		dq += (i == 0 || input[i - 1] != BACK_SLASH) * (input[i] == DOUBLE_QT);
+		if (sq)
+		{
+			i += (input[i] == SINGLE_QT);
+			va = sub_until_chars(input, &i, "'");
+			str_fjoin(&new_input, va);
+			if (input[i] == SINGLE_QT)
+				sq = FALSE;
+			i += (input[i] == SINGLE_QT);
+		}
+		else if (dq)
+		{
+			i += (input[i] == DOUBLE_QT);
+			p = va;
+			va = sub_until_chars(input, &i, "\"");
+			i += (input[i] == DOUBLE_QT);
+			va = expand_token(env, va);	
+			str_fjoin(&new_input, va);
+			dq = FALSE;
+		}
+		if (input[i] == DOLLAR && (i == 0 || input[i - 1] != BACK_SLASH))
+		{
+			if (input[i + 1] == DOLLAR)
+			{
+				str_fjoin(&new_input, int_to_str(getpid()));
+				i++;
+			}
+			else
+			{
+			va = parse_variable_name(input, &i);
+			va = getenv(va); //TODO: should get from my own envv
+			i -= (va != NULL);
+			if (va)
+				str_fjoin(&new_input, va);
+			}
+		}
+		else
+		{
+			va = sub_until_chars(input, &i, "$\"'");
+			new_input = str_join(
+				(const char*)new_input,
+				(const char*)va);
+			sq = 0;//(input[i] == SINGLE_QT);
+			dq = 0;//(input[i] == DOUBLE_QT);
+			continue;
+		}
+		i++;
+	}
 
-    if (token->quoted == TYPE_SINGLE_QT)
-        return ;
-    new_tok = str_dup("");
-    i = 0;
-    while (i < token->len)
-    {
-        if (token->tok[i] == '$' && (i == token->len - 1))
-        {
-            new_tok = str_join((const char*)new_tok, "$");
-            break ;
-        }
-        else if (token->tok[i] == '$' && token->tok[i - 1] != '\\')
-        {
-            var = parse_variable_name(token, &i);
-            val = getenv(var);
-            i -= (val != NULL);
-            if (val)
-                new_tok = str_join((const char*)new_tok, (const char*)val);
-            // printf("[%s] -> [%s]\n", var, val);
-        }
-        else
-        {
-            var = new_tok;
-            val = parse_simple_chars(token, &i);
-            new_tok = str_join(
-                (const char*)new_tok,
-                (const char*)val);
-            i--;
-            // continue ;
-        }
-        i++;
-    }
-    // if (token->tok) free(token->tok);
-    token->tok = new_tok;
-}
-// echo "hi $USER"
-
-char    *parse_variable_name(t_token *token, int *i)
-{
-    int     start;
-    size_t     j;
-
-    j = *i + 1;
-    start = j;
-    while (j < token->len && 
-    (is_alphanum(token->tok[j]) || token->tok[j] == '_'))
-        j++;
-    *i = j;
-    return (sub_str(token->tok, start, j));
-}
-
-char    *parse_simple_chars(t_token *token, int *i)
-{
-    int         start;
-    size_t      j;
-
-    start = *i;
-    j = *i;
-    while (j < token->len && token->tok[j] != '$')
-        j++;
-    *i = j;
-    return (sub_str(token->tok, start, j));
+	if (sq || dq)
+		raise_error(env, ERR_SYNTAX);
+	safe_free((void **)&env->input->line);
+	env->input->line = new_input;
+	env->input->len = str_len(new_input);
 }

@@ -1,14 +1,13 @@
 
 #include "minishell.h"
 
-
 char	*str_join(char const *s1, char const *s2)
 {
 	unsigned int	i;
 	unsigned int	l;
 	char			*s3;
 
-	if (!s1 || !s2)
+	if (!s1 || !s2) //meh, better to make a dup; no need to return NULL
 		return (NULL);
 	i = str_len(s1) + str_len(s2);
 	if (!(s3 = (char *)malloc((i + 1) * sizeof(char))))
@@ -28,6 +27,22 @@ char	*str_join(char const *s1, char const *s2)
 	}
 	return (s3);
 }
+
+/*
+**	Wrapper of str_join(), it frees the old buffer after joining
+*/
+
+void str_fjoin(char **dst, char *src)
+{
+    char *p;
+
+	if (dst == NULL || src == NULL)
+		return ;
+    p = *dst;
+    *dst = str_join((const char*)*dst, (const char*)src);
+    free(p);
+}
+
 
 t_bool	is_index_in_array(int index, t_array *array)
 {
