@@ -60,22 +60,20 @@ int repl(t_env *env)
     saveto_history(env);
     env->input->len = str_len(env->input->line);
     expand_input(env);
-    printf("-->[%s]\n", env->input->line);
     if (tokenize_input(env))
         return 0;
-
-    put_str(GREEN);
-    printf("-- COUNT -- : %d\n", env->cmds_count);
-    for (int i = 0; i < env->cmds_count; i++)
-    {
-        put_str(RED);
-        printf("-- Command: %d\n", i);
-        put_str(NO_COLOR);
-        print_tokens(env->commands[i]->tokens, env->commands[i]->tokens_count);
-    }
-    return 0;
     
-	// cast_cmd(env->commands, env->cmds_count);
+    // put_str(GREEN);
+    // printf("-- COUNT -- : %d\n", env->cmds_count);
+    // for (int i = 0; i < env->cmds_count; i++)
+    // {
+    //     put_str(RED);
+    //     printf("-- Command: %d\n", i);
+    //     put_str(NO_COLOR);
+    //     print_tokens(env->commands[i]->tokens, env->commands[i]->tokens_count);
+    // }
+
+	cast_cmd(env->commands, env->cmds_count);
     return (0);
 }
 
@@ -83,7 +81,7 @@ int main(int argc, char **argv, char **env_vars)
 {
     t_env   *env;
 
-    setmemlimit(1); // (supposedly) limits memory to avoid stupid crashes
+    // setmemlimit(1); // (supposedly) limits memory to avoid stupid crashes
 
     env = init_env(argc, argv, env_vars);
     set_history(env);

@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-
 char	*str_join(char const *s1, char const *s2)
 {
 	unsigned int	i;
@@ -30,14 +29,14 @@ char	*str_join(char const *s1, char const *s2)
 }
 
 /*
-**	Wrapper of str_join(), it frees the old buf after joining
+**	Wrapper of str_join(), it frees the old buffer after joining
 */
 
 void str_fjoin(char **dst, char *src)
 {
     char *p;
 
-	if (dst == NULL)
+	if (dst == NULL || src == NULL)
 		return ;
     p = *dst;
     *dst = str_join((const char*)*dst, (const char*)src);

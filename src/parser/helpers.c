@@ -19,9 +19,9 @@ char    *parse_variable_name(char *buf, int *i)
 	return (sub_str(buf, start, j));
 }
 
-char    *sub_until_chars(char *buf, int *i, char *chars)
+char	*sub_until_chars(char *buf, int *i, char *chars)
 {
-	int         start;
+	int		start;
 
 	start = *i;
 	while (buf[*i] && is_included(buf[*i], chars) == FALSE)
@@ -32,41 +32,28 @@ char    *sub_until_chars(char *buf, int *i, char *chars)
 char    *expand_token(ENV, char *tok)
 {
 	char	*new_tok;
-	char	*p;
-	char	*va;
+	char	*val;
 	int		i;
 	int		len;
 
-	new_tok = str_dup("");
-	va = str_dup("");
-	len = str_len(tok);
 	i = 0;
+	val = NULL;
+	new_tok = str_dup("");
+	len = str_len(tok);
 	while (i < len)
 	{
-		va = sub_until_chars(tok, &i, "$");
-		str_fjoin(&new_tok, va);
-		
-		if (i >= len)
-			break ;
-		
-		printf ("(%c, %c)\n", tok[i], tok[i + 1]);
-
-		if (tok[i + 1] == DOLLAR)
+		if (tok[i] == DOLLAR)
+			val = handle_dollar_sign(tok, &i);
+		else
 		{
-			printf ("$$$$$$$$$$$$$ %d [%s]\n", i, &tok[i]);
-			va = int_to_str(getpid());
-			i += 1;
+			val = sub_until_chars(tok, &i, "$");
+			i -= (tok[i] == DOLLAR);
 		}
-		else if (tok[i] == DOLLAR)
+		if (val)
 		{
-		
-			p = va;
-			va = getenv(va); // TODO: should get from my own envv
-			safe_free((void**)&p);
+			str_fjoin(&new_tok, val);
+			safe_free((void **)&val);
 		}
-		if (va)
-			str_fjoin(&new_tok, va);
-		// safe_free((void**)&va);
 		i++;
 	}
 	return new_tok;
@@ -75,4 +62,31 @@ char    *expand_token(ENV, char *tok)
 char *parse_pid()
 {
 	return (int_to_str(getpid()));
+}
+
+char *handle_dollar_sign(char *tok, int *i)
+{
+	char *val;
+	char *var;
+
+	val = NULL;
+	var = NULL;
+	if (tok[*i + 1] == DOLLAR)
+	{
+		val = int_to_str(getpid());
+		(*i)++;
+	}
+	else if (!is_alphanum(tok[*i + 1]) && tok[*i + 1] != '_')
+		val = strdup("$");	
+	else
+	{
+		var = parse_variable_name(tok, i);
+		*i -= (tok[*i] != 0);
+		if (var)
+		{
+			val = str_dup(getenv(var)); //does not allocate? so i shud str_dup it?
+			safe_free((void **)&var);
+		}
+	}
+	return val;
 }

@@ -22,11 +22,6 @@ t_token *get_token(ENV)
     size_t      j;
     char        *line;
 
-    //To handle:
-    //  +[ cd d\ ir]
-    //  -[echo okay \\ > file]
-    //  -[echo okay \ > file]
-
     BOOL dq = 0, sq = 0;
     line = env->input->line;
     j = env->input->i + skip_char(&line[env->input->i], SPACE);
