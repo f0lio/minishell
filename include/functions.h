@@ -106,7 +106,12 @@ int             tokenize(char *buff, ENV);
 // Expansion
 
 void            expand_input(t_env *env);
-char            *expand_token(ENV, char *tok);
+void            handle_unquoted_token(char *input, char **new_input, int *i);
+void            handle_unquoted_dollar(char *input, char **new_input, int *i);
+BOOL	        handle_sinqle_quote(char *input, char **new_input, int *i);
+BOOL	        handle_double_quote(
+                    t_env *env, char *input, char **new_input, int *i);
+char            *expand_dquoted_token(ENV, char *tok);
 char            *handle_dollar_sign(char *tok, int *i);
 char            *parse_variable_name(char *buf, int *i);
 char            *sub_until_chars(char *buf, int *i, char *chars);

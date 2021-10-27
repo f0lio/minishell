@@ -131,3 +131,13 @@ int skip_char(char *s, char c)
 		i++;
 	return 0;
 }
+
+char	*sub_until_chars(char *buf, int *i, char *chars)
+{
+	int		start;
+
+	start = *i;
+	while (buf[*i] && is_included(buf[*i], chars) == FALSE)
+		(*i)++;
+	return (sub_str(buf, start, *i));
+}

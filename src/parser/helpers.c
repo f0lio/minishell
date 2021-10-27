@@ -1,92 +1,67 @@
+#include "minishell.h"
 
-# include "minishell.h"
-
-char    *parse_variable_name(char *buf, int *i)
+BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
 {
-	int     start;
-	size_t     j;
+	BOOL	ret;
+	char	*va;
 
-	if (buf[*i + 1] == DOLLAR)
-	{
-		*i += 1;
-		return (str_dup("$"));
-	}
-	j = *i + 1;
-	start = j;
-	while (is_alphanum(buf[j]) || buf[j] == '_')
-		j++;
-	*i = j;
-	return (sub_str(buf, start, j));
+	ret = TRUE;
+	*i += (input[*i] == SINGLE_QT);
+	va = sub_until_chars(input, i, "'");
+	str_fjoin(new_input, va);	
+	if (input[*i] == SINGLE_QT)
+		ret = FALSE;
+	*i += (input[*i] == SINGLE_QT);
+	return (ret);
 }
 
-char	*sub_until_chars(char *buf, int *i, char *chars)
+BOOL	handle_double_quote(t_env *env, char *input, char **new_input, int *i)
 {
-	int		start;
+	char *va;
+	char *p;
 
-	start = *i;
-	while (buf[*i] && is_included(buf[*i], chars) == FALSE)
+	*i += (input[*i] == DOUBLE_QT);
+	va = sub_until_chars(input, i, "\"");
+	*i += (input[*i] == DOUBLE_QT);
+	if (va)
+	{
+		p = va;
+		va = expand_dquoted_token(env, va);	
+		str_fjoin(new_input, va);
+		safe_free((void **)&p);
+		safe_free((void **)&va);
+	}
+	return (FALSE);
+}
+
+void	handle_unquoted_dollar(char *input, char **new_input, int *i)
+{
+	char *va;
+	char *p;
+
+	if (input[*i + 1] == DOLLAR)
+	{
+		str_fjoin(new_input, int_to_str(getpid()));
 		(*i)++;
-	return (sub_str(buf, start, *i));
+		return ;
+	}
+	va = parse_variable_name(input, i);
+	p = va;
+	va = getenv(va); //should get from my own envv; cuz this is forbidden
+	safe_free((void **)&p);
+	*i -= (va != NULL);
+	if (va)
+		str_fjoin(new_input, va);
 }
 
-char    *expand_token(ENV, char *tok)
+void	handle_unquoted_token(char *input, char **new_input, int *i)
 {
-	char	*new_tok;
-	char	*val;
-	int		i;
-	int		len;
+	char *va;
 
-	i = 0;
-	val = NULL;
-	new_tok = str_dup("");
-	len = str_len(tok);
-	while (i < len)
+	va = sub_until_chars(input, i, "$\"'");
+	if (va)
 	{
-		if (tok[i] == DOLLAR)
-			val = handle_dollar_sign(tok, &i);
-		else
-		{
-			val = sub_until_chars(tok, &i, "$");
-			i -= (tok[i] == DOLLAR);
-		}
-		if (val)
-		{
-			str_fjoin(&new_tok, val);
-			safe_free((void **)&val);
-		}
-		i++;
-	}
-	return new_tok;
-}
-
-char *parse_pid()
-{
-	return (int_to_str(getpid()));
-}
-
-char *handle_dollar_sign(char *tok, int *i)
-{
-	char *val;
-	char *var;
-
-	val = NULL;
-	var = NULL;
-	if (tok[*i + 1] == DOLLAR)
-	{
-		val = int_to_str(getpid());
-		(*i)++;
-	}
-	else if (!is_alphanum(tok[*i + 1]) && tok[*i + 1] != '_')
-		val = strdup("$");	
-	else
-	{
-		var = parse_variable_name(tok, i);
-		*i -= (tok[*i] != 0);
-		if (var)
-		{
-			val = str_dup(getenv(var)); //does not allocate? so i shud str_dup it?
-			safe_free((void **)&var);
-		}
-	}
-	return val;
+		str_fjoin(new_input, va);
+		free(va);
+	}	
 }
