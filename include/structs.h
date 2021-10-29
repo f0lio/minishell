@@ -76,6 +76,7 @@ typedef struct	s_input
 
 typedef struct s_env
 {
+	BOOL		state;
 	int 		argc;
 	char 		**argv;
 	char 		**env_var;

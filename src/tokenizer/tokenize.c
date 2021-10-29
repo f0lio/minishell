@@ -18,27 +18,23 @@ t_command *create_command(t_node *tokens, int count)
 
 t_token *get_token(ENV)
 {
-    char    *line;
-    t_token *token;
-    size_t  j;
-
-    //To handle:
-    //  +[ cd d\ ir]
-    //  -[echo okay \\ > file]
-    //  -[echo okay \ > file]
+    t_token     *token;
+    size_t      j;
+    char        *line;
 
     BOOL dq = 0, sq = 0;
     line = env->input->line;
     j = env->input->i + skip_char(&line[env->input->i], SPACE);
     while (j < env->input->len)
     {
-        if (j == 0 || line[j - 1] != BACK_SLASH)
+        if (j == 0 || (line[j - 1] != BACK_SLASH))
         {
             sq += (line[j] == SINGLE_QT);
             sq -= (sq == 1 && dq != 1) * 2 * (line[j] == SINGLE_QT);
             dq += (line[j] == DOUBLE_QT);
             dq -= (dq == 1 && sq != 1) * 2 * (line[j] == DOUBLE_QT);
         }
+        
         if (line[j] == SPACE || line[j] == SEP)
         {
             if (!sq && !dq)

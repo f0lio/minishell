@@ -5,12 +5,10 @@ NAME				= 	minishell
 CC					=	clang
 FLAGS				= 	-Werror -Wextra -Wall
 
-#Source Files
 UTILS				=	strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
-						file_tools.c get_line.c\
-						linked_list.c  destructors.c\
+						file_tools.c get_line.c linked_list.c  destructors.c\
 						error_handlers.c signals_handlers.c exit_handlers.c\
-						tmp_utils.c
+						itoa.c tmp_utils.c
 						
 
 CONSTRUCTORS		=	env.c
@@ -20,14 +18,15 @@ TOKENIZER			=	tokenize.c\
 						tokenize_quoted.c quotes_checker.c\
 						utils.c
 LEXER				=	lexer.c
-PARSER				=	expansion.c
+PARSER				=	expansion.c helpers.c double_quoted_tokens.c
 EXECUTER			=	redirect.c\
 						apex_strtools.c\
 						pipe.c
 
-DBG					=	MY_DBG.C
+DBG					=	dbg_utils.c mem-limit.c
 
 SRC					=	src/minishell.c\
+						$(DBG:%.c=./dbg/%.c)\
 						$(CONSTRUCTORS:%.c=./src/constructors/%.c)\
 						$(TOKENIZER:%.c=./src/tokenizer/%.c)\
 						$(LEXER:%.c=./src/lexer/%.c)\
@@ -36,7 +35,7 @@ SRC					=	src/minishell.c\
 						$(EXECUTER:%.c=./src/execution/%.c)\
 						$(HISTORY:%.c=./src/history/%.c)
 
-COMPILE	= $(CC) $(SRC) -I include -o $(NAME) -g #-I dbg
+COMPILE	= $(CC) $(SRC) -I include -o $(NAME) -g #-I dbg #-fsanitize=address 
 
 all: $(NAME)
 
@@ -56,3 +55,7 @@ fclean: clean
 	@-rm -rf ./*.d*
 
 re: fclean all
+
+sandbox:
+	@$(NAME)
+	@sh ./start.sh

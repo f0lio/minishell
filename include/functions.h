@@ -73,11 +73,13 @@ BOOL            is_included(char c, char *s);
 // strtools_2
 char            *str_dup(const char *str);
 char            *str_join(const char *s1, const char *s2);
+void            str_fjoin(char **dst, char *src);
 char            *sub_str(
                     char const *s, int start, int end);
 char            *clean_sub_str(
                     char const *s, int start, int end, t_array *arr );
 int             skip_char(char *s, char c);
+char			*int_to_str(int n);
 
 // Quotes stuff
 BOOL            check_quotes(char *str);
@@ -103,10 +105,16 @@ int             tokenize(char *buff, ENV);
 
 // Expansion
 
-void            expand_command_tokens(t_env *env);
-void            expand_tokens(t_env *env, t_token *token);
-char            *parse_variable_name(t_token *token, int *i);
-char            *parse_simple_chars(t_token *token, int *i);
+void            expand_input(t_env *env);
+void            handle_unquoted_token(char *input, char **new_input, int *i);
+void            handle_unquoted_dollar(char *input, char **new_input, int *i);
+BOOL	        handle_sinqle_quote(char *input, char **new_input, int *i);
+BOOL	        handle_double_quote(
+                    t_env *env, char *input, char **new_input, int *i);
+char            *expand_dquoted_token(ENV, char *tok);
+char            *handle_dollar_sign(char *tok, int *i);
+char            *parse_variable_name(char *buf, int *i);
+char            *sub_until_chars(char *buf, int *i, char *chars);
 
 // Errors
 BOOL            raise_error(ENV, char *msg);
@@ -138,5 +146,6 @@ void            exit_program(ENV, int exit_code);
 void            print_array(t_array *arr, BOOL minus);
 void            print_tokens(t_token **tokens, int count);
 void            print_linked_list(t_node *list);
+void            setmemlimit(int mb);
 
 #endif

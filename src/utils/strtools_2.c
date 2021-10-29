@@ -33,10 +33,13 @@ char	*str_dup(const char *str)
 	size_t			len;
 	char			*dup;
 
-	len = str_len(str);
+	if (str == NULL)
+		len = 0;
+	else
+		len = str_len(str);
 	dup = (char *)malloc(len + 1);
 	if (!dup)
-		return (0);
+		return (NULL);
 	dup[len] = 0;
 	i = -1;
 	while (++i < len)

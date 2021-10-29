@@ -1,8 +1,5 @@
-///////////////////////////
 
 # include "dbg_utils.h"
-
-///////////////////////////
 
 void exitfunc(int sig)
 {
