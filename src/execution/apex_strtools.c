@@ -1,12 +1,11 @@
-# include "minishell.h"
+#include "minishell.h"
 
 // temporary file because existing split func needed some tweaks
-
-int		ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	i;
 
-	i  = 0;
+	i = 0;
 	while (str[i])
 		i++;
 	return (i);
@@ -22,8 +21,7 @@ char	*ft_substr(char *s, int start, size_t len)
 		return (0);
 	if (start > ft_strlen(s))
 		len = 0;
-	if (!(ret = (char*)malloc(len + 1)))
-		return (0);
+	ret = (char *)malloc(len + 1);
 	while (s[start] && i < (int)len)
 		ret[i++] = s[start++];
 	ret[i] = '\0';
@@ -32,8 +30,8 @@ char	*ft_substr(char *s, int start, size_t len)
 
 int	c_w(char *str, char c)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 0;
 	i = 0;
@@ -51,7 +49,7 @@ int	c_w(char *str, char c)
 
 char	**freemem(char **s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -65,7 +63,7 @@ char	**freemem(char **s)
 
 int	s_p(char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] == c && s[i])
@@ -75,7 +73,7 @@ int	s_p(char *s, char c)
 
 int	len_str(char *s, int i, char c)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (s[i] != c && s[i])
@@ -96,8 +94,9 @@ char	**ft_split(char *s, char c)
 
 	k = -1;
 	i = 0;
-	if (!s || !(cpy = malloc(sizeof(char *) * (c_w(s, c) + 1))))
+	if (!s)
 		return (0);
+	cpy = malloc(sizeof(char *) * (c_w(s, c) + 1));
 	while (s[i])
 	{
 		len = 0;

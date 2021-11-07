@@ -11,7 +11,7 @@ int read_input(char **input)
     *input = str_dup("");
     if (!*input || !buff)
         return (-1);
-    while ((read_ret = read(0, buff, 1)) != -1)
+    while ((read_ret = read(g_stdin, buff, 1)) != -1)
     {
         buff[read_ret] = 0;
         if (*buff == EOL)
@@ -73,7 +73,7 @@ int repl(t_env *env)
     //     print_tokens(env->commands[i]->tokens, env->commands[i]->tokens_count);
     // }
 
-	cast_cmd(env->commands, env->cmds_count);
+	cast_cmd(env->commands, env->cmds_count, env);
     return (0);
 }
 

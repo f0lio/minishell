@@ -9,6 +9,7 @@
 
 # define SHELL_NAME         "minishell"
 # define HISTORY_FILE       ".minishell_history"
+# define BUILTINS			((char *[]){"echo", "pwd", "cd", "env", "unset", "export", "exit", 0})
 
 # define BOOL               char
 # define FALSE              0

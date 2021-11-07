@@ -27,9 +27,15 @@ typedef struct	s_file
 
 typedef struct s_array
 {
-	int *arr;
-	int size;
+	int	*arr;
+	int	size;
 } t_array;
+
+typedef struct s_envvar
+{
+	char	*name;
+	char	*content;
+} t_envvar;
 
 typedef struct 	s_token
 {
@@ -49,7 +55,13 @@ typedef struct 	s_token
 
 typedef struct	s_simpcmd
 {
+	int			isbuiltin;
+	int			biexitstatus;
 	char		**tokarr;
+	char		*infile;
+	char		*outfile;
+	int			isappend;
+	int			stdio[2];
 	int			pipe[2];
 	pid_t		pid;
 }				t_simpcmd;
@@ -59,6 +71,7 @@ typedef struct	s_command
 	char		*cmd;
 	t_token		**tokens;
 	t_simpcmd	*scmd;
+	int			origio[2];
 	int			tokens_count;
 	char		**tokarr;
 	int			pipe_count;
@@ -80,6 +93,7 @@ typedef struct s_env
 	int 		argc;
 	char 		**argv;
 	char 		**env_var;
+	t_node		*envll;
 	t_file		*history;
 	t_input		*input;
 	t_command	**commands;
