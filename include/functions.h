@@ -72,6 +72,7 @@ BOOL            is_included(char c, char *s);
 
 // strtools_2
 char            *str_dup(const char *str);
+char            **str_dup_2d(char **src);
 char            *str_join(const char *s1, const char *s2);
 void            str_fjoin(char **dst, char *src);
 char            *sub_str(
@@ -105,20 +106,23 @@ int             tokenize(char *buff, ENV);
 
 // Expansion
 
-void            expand_input(t_env *env);
-void            handle_unquoted_token(char *input, char **new_input, int *i);
-void            handle_unquoted_dollar(char *input, char **new_input, int *i);
-BOOL	        handle_sinqle_quote(char *input, char **new_input, int *i);
-BOOL	        handle_double_quote(
-                    t_env *env, char *input, char **new_input, int *i);
-char            *expand_dquoted_token(ENV, char *tok);
-char            *handle_dollar_sign(char *tok, int *i);
-char            *parse_variable_name(char *buf, int *i);
-char            *sub_until_chars(char *buf, int *i, char *chars);
+BOOL			expand_input(t_env *env);
+void			handle_unquoted_token(char *input, char **new_input, int *i);
+void			handle_unquoted_dollar(char *input, char **new_input, int *i);
+BOOL			handle_sinqle_quote(char *input, char **new_input, int *i);
+BOOL			handle_double_quote(
+					t_env *env, char *input, char **new_input, int *i);
+char			*expand_dquoted_token(ENV, char *tok);
+char			*handle_dollar_sign(char *tok, int *i);
+char			*parse_variable_name(char *buf, int *i);
+char			*sub_until_chars(char *buf, int *i, char *chars);
+
+void			handle_backslash(
+					t_env *env, const char *input, char **new_input, int *i);
 
 // Errors
-BOOL            raise_error(ENV, char *msg);
-void            destroy_env(ENV);
+BOOL			raise_error(ENV, char *msg);
+void			destroy_env(ENV);
 
 // File tools
 BOOL            create_file(char *path);

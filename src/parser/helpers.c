@@ -1,3 +1,4 @@
+
 #include "minishell.h"
 
 BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
@@ -15,14 +16,17 @@ BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
 	return (ret);
 }
 
-BOOL	handle_double_quote(t_env *env, char *input, char **new_input, int *i)
+BOOL	handle_double_quote(
+	t_env *env, char *input, char **new_input, int *i)
 {
 	char *va;
 	char *p;
+	BOOL	ret;
 
 	*i += (input[*i] == DOUBLE_QT);
 	va = sub_until_chars(input, i, "\"");
-	*i += (input[*i] == DOUBLE_QT);
+	ret = (input[*i] == DOUBLE_QT);
+	*i += ret;
 	if (va)
 	{
 		p = va;
@@ -31,7 +35,7 @@ BOOL	handle_double_quote(t_env *env, char *input, char **new_input, int *i)
 		safe_free((void **)&p);
 		safe_free((void **)&va);
 	}
-	return (FALSE);
+	return (!ret);
 }
 
 void	handle_unquoted_dollar(char *input, char **new_input, int *i)
@@ -47,7 +51,7 @@ void	handle_unquoted_dollar(char *input, char **new_input, int *i)
 	}
 	va = parse_variable_name(input, i);
 	p = va;
-	va = getenv(va); //should get from my own envv; cuz this is forbidden
+	va = getenv(va); //should get from my own envv; cuz this is forbidden-ish
 	safe_free((void **)&p);
 	*i -= (va != NULL);
 	if (va)

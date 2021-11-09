@@ -34,7 +34,7 @@ t_token *get_token(ENV)
             dq += (line[j] == DOUBLE_QT);
             dq -= (dq == 1 && sq != 1) * 2 * (line[j] == DOUBLE_QT);
         }
-        
+        // echo "hi"'bye'"ok'ay'      x"
         if (line[j] == SPACE || line[j] == SEP)
         {
             if (!sq && !dq)
@@ -77,7 +77,7 @@ BOOL tokenize_input(ENV)
                 push_back(
                     &cmds_list,
                     create_command(tokens_list, tokens_count));
-                // destroy_list(&tokens_list);
+                // destroy_list(&tokens_list);	
                 tokens_list = NULL;
                 tokens_count = 0;
                 env->cmds_count++;

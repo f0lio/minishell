@@ -46,3 +46,26 @@ char	*str_dup(const char *str)
 		dup[i] = str[i];
 	return (dup);
 }
+
+char	**str_dup_2d(char **src)
+{
+	char	**dup;
+	int		len;
+	int		i;
+
+	if (src == NULL)
+		return NULL;
+	len = 0;
+	while (src[len])
+		len++;
+	if (len == 0)
+		return NULL;
+	dup = (char**)malloc(len + 1);
+	if (!dup)
+		return NULL;
+	dup[len] = NULL;
+	while (--len > -1)
+		dup[len] = str_dup(src[len]);
+	return dup;
+}
+

@@ -18,7 +18,7 @@ TOKENIZER			=	tokenize.c\
 						tokenize_quoted.c quotes_checker.c\
 						utils.c
 LEXER				=	lexer.c
-PARSER				=	expansion.c helpers.c double_quoted_tokens.c
+PARSER				=	expansion.c helpers.c double_quoted_tokens.c escaping.c
 EXECUTER			=	redirect.c\
 						apex_strtools.c\
 						pipe.c

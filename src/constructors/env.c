@@ -5,12 +5,21 @@
 t_env   *init_env(int argc, char **argv, char **env_var)
 {
     t_env   *env;
-	char	*envv;
+	char    *envv;
 
     MALLOC(env);
     MALLOC(env->history);
     MALLOC(env->input);
-    env->env_var = env_var;
+    env->env_var = str_dup_2d(env_var);
+    
+    // printf("[%s]\n","OKAY");
+    // //idk
+    // for (size_t i = 0; env->env_var[i] != NULL; i++)
+    // {
+    //     printf("[%d][%s]\n", i, env->env_var[i]);
+
+    // }
+    
     env->commands = NULL;
     env->cmds_count = 0;
 	envv = getenv("PATH");
