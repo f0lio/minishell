@@ -44,6 +44,11 @@ static size_t  dbg_i = 0;
                             func(iter->data)\
                             NEXT(iter);\
                           }
+#ifdef __APPLE__
+# define	CHECK_LEAKS system("leaks ./minishell")
+# else
+# define	CHECK_LEAKS (void)(0)
+#endif
 
 void        exitfunc(int sig);
 void        ft_exitTime(int argc, char **argv);

@@ -5,16 +5,17 @@ NAME				= 	minishell
 CC					=	clang
 FLAGS				= 	-Werror -Wextra -Wall
 
+INCLUDES			=	-I include -I /usr/include/readline/readline.h
+
 UTILS				=	strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
 						file_tools.c get_line.c linked_list.c  destructors.c\
 						error_handlers.c signals_handlers.c exit_handlers.c\
 						itoa.c tmp_utils.c
-						
 
 CONSTRUCTORS		=	env.c
 HISTORY				=	history.c 
 TOKENIZER			=	tokenize.c\
-						 command_checker.c\
+						command_checker.c\
 						tokenize_quoted.c quotes_checker.c\
 						utils.c
 LEXER				=	lexer.c
@@ -37,7 +38,7 @@ SRC					=	src/minishell.c\
 						$(EXECUTER:%.c=./src/execution/%.c)\
 						$(HISTORY:%.c=./src/history/%.c)
 
-COMPILE	= $(CC) $(SRC) -I include -o $(NAME) -g #-I dbg #-fsanitize=address 
+COMPILE	= $(CC) $(SRC) $(INCLUDES) -lreadline -o $(NAME) -g #-I dbg #-fsanitize=address 
 
 all: $(NAME)
 

@@ -39,14 +39,14 @@ void	show_prompt(char *msg)
 //repl => Read-Eval-Print-Loop
 int repl(t_env *env)
 {
-	int	 ret;
+	int	 ret = 0;
 	char	*input;
 	size_t  len;
 
-	show_prompt(SHELL_NAME);
+	// show_prompt(SHELL_NAME);
 	signal(SIGINT, handle_interuption);
-	ret = read_input(&env->input->line);
-	if (ret == -1)
+	env->input->line = readline(PROMPT);
+	if (env->input->line == NULL)
 		raise_error(env, ERR_INPUT);
 	else if (ret == 1) //CTRL+D
 		exit_program(env, EXIT_SUCCESS);
@@ -90,6 +90,7 @@ int main(int argc, char **argv, char **env_vars)
 		if (repl(env))
 			break;
 		reset_data(env);
+		CHECK_LEAKS;
 	}
 	//-Free allocated mem
 	return (0);
