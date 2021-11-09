@@ -21,7 +21,9 @@ LEXER				=	lexer.c
 PARSER				=	expansion.c helpers.c double_quoted_tokens.c escaping.c
 EXECUTER			=	redirect.c\
 						apex_strtools.c\
-						pipe.c
+						pipe.c\
+						builtins.c\
+						tools.c
 
 DBG					=	dbg_utils.c mem-limit.c
 

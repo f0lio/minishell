@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <stdlib.h>
 # include <signal.h>
 # include <string.h>
@@ -19,6 +20,7 @@
 
 // {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 
-char	**g_paths;
+char	*g_cwd;
+int		g_stdin;
 
 #endif

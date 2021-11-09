@@ -16,7 +16,7 @@ char	**token_to_arr(t_token **tokens, int tokcout)
 	return (arr);
 }
 
-char	*search_cmd(char *cmd)
+char	*search_cmd(char *cmd, char **paths)
 {
 	char		*str;
 	int			i;
@@ -30,21 +30,22 @@ char	*search_cmd(char *cmd)
 	str[1] = 0;
 	cmd = str_join(str, cmd);
 	// probably leaks idk
-	while (ret && g_paths[++i])
+	while (ret && paths[++i])
 	{
-		free(str);
-		str = str_join(g_paths[i], cmd);
+		safe_free((void **)&str);
+		str = str_join(paths[i], cmd);
 		ret = stat(str, &buf);
 	}
-	if (!g_paths[i])
+	safe_free((void **)&cmd);
+	if (!paths[i])
 	{
-		free(str);
+		safe_free((void **)&str);
 		return (NULL);
 	}
 	return (str);
 }
 
-int		search_path(char *path)
+int	search_path(char *path)
 {
 	int			i;
 	int			j;
@@ -71,20 +72,37 @@ int		search_path(char *path)
 		errno = EISDIR;
 	if (ret || !(buf.st_mode & S_IXUSR) || (buf.st_mode & S_IFDIR))
 	{
-		printf("%s: %s: %s\n",SHELL_NAME, path, strerror(errno));
+		printf("%s: %s: %s\n", SHELL_NAME, path, strerror(errno));
 		return (127);
 	}
-	printf("%d, %d, %d, %d\n", ret, buf.st_mode, S_IXUSR, buf.st_mode & S_IXUSR);
+	// printf("%d, %d, %d, %d\n", ret, buf.st_mode,
+	// S_IXUSR, buf.st_mode & S_IXUSR);
 	return (0);
 }
 
-int		treat_exec_token(char **path, t_simpcmd scmd)
+int	isbuiltin(char *cmd)
 {
-	int		ret;
+	int	i;
 
+	i = -1;
+	while (BUILTINS[++i])
+		if (str_cmp(cmd, BUILTINS[i]))
+			return (TRUE);
+	return (FALSE);
+}
+
+int	treat_exec_token(char **path, t_simpcmd scmd, char **paths)
+{
+	int	ret;
+
+	if (scmd.isbuiltin)
+	{
+		*path = 0;
+		return (0);
+	}
 	ret = search_path(scmd.tokarr[0]);
 	if (ret == 1)
-		*path = search_cmd(scmd.tokarr[0]);
+		*path = search_cmd(scmd.tokarr[0], paths);
 	else
 		*path = str_dup(scmd.tokarr[0]);
 	if (!*path)
@@ -94,31 +112,49 @@ int		treat_exec_token(char **path, t_simpcmd scmd)
 	return (0);
 }
 
-void	closeallpipes(t_simpcmd *scmd, int ppcout)
+void	closeallpipes(t_command *command)
 {
 	int	j;
 
 	j = -1;
-	while (++j <= ppcout)
+	while (++j <= command->pipe_count)
 	{
-		close(scmd[j].pipe[0]);
-		close(scmd[j].pipe[1]);
+		close(command->scmd[j].pipe[0]);
+		close(command->scmd[j].pipe[1]);
+		close(command->scmd[j].stdio[0]);
+		close(command->scmd[j].stdio[1]);
 	}
+	close(command->origio[0]);
+	close(command->origio[1]);
 }
 
-void	free_closepipes(char **path, t_simpcmd *scmd, int ppcout)
+void	closefdfree(t_command *command, char ***paths)
 {
-	safe_free((void **)path);
-	closeallpipes(scmd, ppcout);
+	int	i;
+
+	dup2(command->origio[0], STDIN_FILENO);
+	dup2(command->origio[1], STDOUT_FILENO);
+	closeallpipes(command);
+	i = -1;
+	while (*paths && (*paths)[++i])
+	{
+		// printf("%X\n", (int)((*paths)[i]));
+		safe_free((void **)(&((*paths)[i])));
+		// printf("%X\n", (int)((*paths)[i]));
+	}
+	// printf("%X\n", (int)*paths);
+	safe_free((void **)paths);
+	// printf("%X\n", (int)*paths);
 }
 
-void	redirect_stdio(t_simpcmd *scmd, int i, int ppcout)
+void	redirect_stdio(t_command *command, int i)
 {
-	// echo hi | tr 'x'
+	dup2(command->scmd[i].stdio[0], STDIN_FILENO);
+	dup2(command->scmd[i].stdio[1], STDOUT_FILENO);
 	if (i)
-		dup2(scmd[i].pipe[0], STDIN_FILENO);
-	if (i != ppcout)
-		dup2(scmd[i + 1].pipe[1], STDOUT_FILENO);
+		dup2(command->scmd[i].pipe[0], STDIN_FILENO);
+	if (i != command->pipe_count)
+		dup2(command->scmd[i + 1].pipe[1], STDOUT_FILENO);
 }
 
 void	exec(char *path, t_command *command, int i)
@@ -126,20 +162,42 @@ void	exec(char *path, t_command *command, int i)
 	command->scmd[i].pid = fork();
 	if (!command->scmd[i].pid)
 	{
-		redirect_stdio(command->scmd, i, command->pipe_count);
-		closeallpipes(command->scmd, command->pipe_count);
+		closeallpipes(command);
 		execve(path, command->scmd[i].tokarr, 0);
 		printf("WHAT THE FUCK HAPPENED\n");
 		exit(1);
 	}
 }
 
-void	redirect_commands(t_command *command)
+int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
+{
+
+	// closeallpipes(command);
+	// printf("builtin not yet built in\n");
+	if (str_cmp(scmd->tokarr[0], "echo"))
+		echo(scmd);
+	if (str_cmp(scmd->tokarr[0], "cd"))
+		cd(scmd);
+	if (str_cmp(scmd->tokarr[0], "pwd"))
+		pwd(scmd);
+	if (str_cmp(scmd->tokarr[0], "env"))
+		env(en->env_var);
+	if (str_cmp(scmd->tokarr[0], "unset"))
+		unset(&(en->env_var), scmd);
+	if (str_cmp(scmd->tokarr[0], "export"))
+		export(&(en->env_var), scmd);
+	// if (str_cmp(scmd->tokarr[0], "exit"))
+	// 	my_exit();
+	return (1);
+}
+
+void	redirect_commands(t_command *command, t_env *env)
 {
 	int		i;
 	char	*path;
+	char	**paths;
+	char	*envv;
 
-	i = -1;
 	path = 0;
 	search_pipes(command);
 	// printf("ppcout%d\n", command->pipe_count);
@@ -147,27 +205,33 @@ void	redirect_commands(t_command *command)
 	// 	printf("pploc %d\n",command->pipe_location[i]);
 	command->tokarr = token_to_arr(command->tokens, command->tokens_count);
 	pipe_this(command);
-	while (++i <= command->pipe_count)
-		pipe(command->scmd[i].pipe);
+	envv = getenv("PATH");
+	paths = ft_split(envv, ':');
 	i = -1;
 	while (++i <= command->pipe_count)
 	{
-		if (!treat_exec_token(&path, command->scmd[i]))
-			// return (free_closepipes(&path, command->scmd, command->pipe_count));
-			exec(path, command, i);
+		command->scmd[i].isbuiltin = isbuiltin(command->scmd[i].tokarr[0]);
+		if (!treat_exec_token(&path, command->scmd[i], paths))
+		{
+			redirect_stdio(command, i);
+			if (!command->scmd[i].isbuiltin)
+				exec(path, command, i);
+			else
+				execbuiltins(&command->scmd[i], command, env);
+		}
 		safe_free((void **)&path);
 	}
-	closeallpipes(command->scmd, command->pipe_count);
+	closefdfree(command, &paths);
 	i = -1;
 	while (++i <= command->pipe_count)
 		waitpid(command->scmd[i].pid, NULL, 0);
 }
 
-void	cast_cmd(t_command **commands, int cmdcout)
+void	cast_cmd(t_command **commands, int cmdcout, t_env *env)
 {
 	int	i;
 
 	i = 0;
 	while (i < cmdcout)
-		redirect_commands(commands[i++]);
+		redirect_commands(commands[i++], env);
 }

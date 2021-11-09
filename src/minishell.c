@@ -73,7 +73,7 @@ int repl(t_env *env)
 	// 	put_str(NO_COLOR);
 	// 	print_tokens(env->commands[i]->tokens, env->commands[i]->tokens_count);
 	// }
-	cast_cmd(env->commands, env->cmds_count);
+	cast_cmd(env->commands, env->cmds_count, env);
 	return (0);
 }
 

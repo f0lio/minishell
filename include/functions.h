@@ -41,14 +41,24 @@ t_command       *get_command(ENV);
 BOOL            command_is_valid(ENV, t_command *cmd);
 
 // Execution
-void            cast_cmd(t_command **commands, int cmdcout);
+void			cast_cmd(t_command **commands, int cmdcout, t_env *env);
 // Pipage
-void            search_pipes(t_command *command);
-void            pipe_this(t_command *command);
+void			search_pipes(t_command *command);
+void			pipe_this(t_command *command);
 // Apex strtools
-char            *ft_substr(char *s, int start, size_t len);
-char            **ft_split(char *s, char c);
-int	            c_w(char *str, char c);
+char			*ft_substr(char *s, int start, size_t len);
+char			**ft_split(char *s, char c);
+int				c_w(char *str, char c);
+void			initscmd(t_simpcmd *scmd);
+char			**arrdup(char ***arr, int rm, int free, char *new_elem);
+void			arr_to_ll(char **arr, t_node **node);
+// Builtins
+void			echo(t_simpcmd *scmd);
+void			pwd(t_simpcmd *scmd);
+void			cd(t_simpcmd *scmd);
+void			env(char **env_vars);
+void			unset(char ***env_var, t_simpcmd *scmd);
+void			export(char ***env_vars, t_simpcmd *scmd);
 
 // Lexer
 // int             lex_tokens(t_command **commands, int cmds_count);

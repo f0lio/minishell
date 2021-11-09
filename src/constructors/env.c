@@ -5,25 +5,19 @@
 t_env   *init_env(int argc, char **argv, char **env_var)
 {
     t_env   *env;
-	char    *envv;
 
     MALLOC(env);
     MALLOC(env->history);
     MALLOC(env->input);
-    env->env_var = str_dup_2d(env_var);
-    
-    // printf("[%s]\n","OKAY");
-    // //idk
-    // for (size_t i = 0; env->env_var[i] != NULL; i++)
-    // {
-    //     printf("[%d][%s]\n", i, env->env_var[i]);
-
-    // }
-    
+    env->env_var = env_var;
+	arr_to_ll(env_var, &env->envll);
+	printf("%s=%s\n", ((t_envvar *)env->envll->data)->name, ((t_envvar *)env->envll->data)->content);
     env->commands = NULL;
     env->cmds_count = 0;
-	envv = getenv("PATH");
-	g_paths = ft_split(envv, ':');
+	// this global variable g_stdin is a temporary fix
+	// TODO: pass this variable whenever you read from stdin instead of 0.
+	g_stdin = dup(STDIN_FILENO);
+	g_cwd = getcwd(0, 0);
     return (env);
 }
 
