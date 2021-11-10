@@ -23,3 +23,16 @@ void    debugMem(void *mem)
 {
     ;
 }
+
+void debug_commands(ENV)
+{
+	put_str(GREEN);
+	printf("-- COUNT -- : %d\n", env->cmds_count);
+	for (int i = 0; i < env->cmds_count; i++)
+	{
+		put_str(RED);
+		printf("-- Command: %d\n", i);
+		put_str(NO_COLOR);
+		print_tokens(env->commands[i]->tokens, env->commands[i]->tokens_count);
+	}
+}

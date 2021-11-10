@@ -8,7 +8,7 @@
 # endif
 
 # define SHELL_NAME			"minishell"
-# define PROMPT				"minishell $ "
+# define PROMPT				"minishell$ "
 # define HISTORY_FILE       ".minishell_history"
 # define BUILTINS			((char *[]){"echo", "pwd", "cd", "env", "unset", "export", "exit", 0})
 

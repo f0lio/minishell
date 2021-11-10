@@ -50,10 +50,11 @@ static size_t  dbg_i = 0;
 # define	CHECK_LEAKS (void)(0)
 #endif
 
-void        exitfunc(int sig);
-void        ft_exitTime(int argc, char **argv);
-void        debugMem(void *mem);
-void        setmemlimit(int mb);
+void		exitfunc(int sig);
+void		ft_exitTime(int argc, char **argv);
+void		debugMem(void *mem);
+void		setmemlimit(int mb);
+void		debug_commands(ENV);
 
 
 #endif

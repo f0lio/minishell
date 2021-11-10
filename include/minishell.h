@@ -13,6 +13,8 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+// # include <curses.h>
+// # include <term.h>
 # include "macros.h"
 # include "structs.h"
 # include "functions.h"

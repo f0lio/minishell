@@ -71,13 +71,14 @@ void            fput_char(char c, int fd);
 void            fput_str(const char *str, int fd);
 
 // strtools_1
-size_t          line_len(const char *str);
-BOOL            find_eol(char *buff);
-BOOL            line_isempty(char *line);
-BOOL            str_cmp(char *s1, char *s2);
-BOOL            str_ncmp(char *s1, char *s2, int max);
-BOOL            is_alphanum(char c);
-BOOL            is_included(char c, char *s);
+size_t			line_len(const char *str);
+BOOL			find_eol(char *buff);
+BOOL			line_is_empty(char *line);
+BOOL			line_is_whitespaces(char *line);
+BOOL			str_cmp(char *s1, char *s2);
+BOOL			str_ncmp(char *s1, char *s2, int max);
+BOOL			is_alphanum(char c);
+BOOL			is_included(char c, char *s);
 //char        *char_addr(char c, char **buff);
 
 // strtools_2

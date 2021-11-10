@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-t_bool	find_eol(char *buff)
+BOOL	find_eol(char *buff)
 {
 	if (!buff)
 		return (FALSE);
@@ -19,13 +19,31 @@ size_t	line_len(const char *line)
 	return 0;
 }
 
-t_bool	line_isempty(char *line)
+BOOL	line_is_empty(char *line)
 {
 	// if (line[0] == EOL && line[1] == 0)
 	if (line[0] == 0)
 		return (TRUE);
 	return (FALSE);
 }
+
+BOOL	line_is_whitespaces(char *line)
+{
+	unsigned i;
+
+	if (line_is_empty(line))
+		return TRUE;
+	i = 0;
+	while (line[i])
+	{
+		if (is_included(line[i], WHITESPACES))
+			return TRUE;
+		i++;
+	}
+	return (FALSE);
+}
+
+
 
 char	*str_dup(const char *str)
 {
