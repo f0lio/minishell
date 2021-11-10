@@ -181,11 +181,11 @@ int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
 	if (str_cmp(scmd->tokarr[0], "pwd"))
 		pwd(scmd);
 	if (str_cmp(scmd->tokarr[0], "env"))
-		env(en->env_var);
+		env(en->envll);
 	if (str_cmp(scmd->tokarr[0], "unset"))
-		unset(&(en->env_var), scmd);
+		unset(en->envll, scmd);
 	if (str_cmp(scmd->tokarr[0], "export"))
-		export(&(en->env_var), scmd);
+		export(en->envll, scmd);
 	// if (str_cmp(scmd->tokarr[0], "exit"))
 	// 	my_exit();
 	return (1);
