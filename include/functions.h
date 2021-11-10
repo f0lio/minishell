@@ -51,14 +51,16 @@ char			**ft_split(char *s, char c);
 int				c_w(char *str, char c);
 void			initscmd(t_simpcmd *scmd);
 char			**arrdup(char ***arr, int rm, int free, char *new_elem);
-void			arr_to_ll(char **arr, t_node **node);
+void			arr_to_ll(char **arr, t_envvar **node);
+t_envvar		*str_to_envv(char *str);
+char			**strcut(char *str, char c);
 // Builtins
 void			echo(t_simpcmd *scmd);
 void			pwd(t_simpcmd *scmd);
 void			cd(t_simpcmd *scmd);
-void			env(char **env_vars);
-void			unset(char ***env_var, t_simpcmd *scmd);
-void			export(char ***env_vars, t_simpcmd *scmd);
+void			env(t_envvar *en);
+void			unset(t_envvar *en, t_simpcmd *scmd);
+void			export(t_envvar *en, t_simpcmd *scmd);
 
 // Lexer
 // int             lex_tokens(t_command **commands, int cmds_count);

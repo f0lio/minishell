@@ -25,78 +25,127 @@ void	pwd(t_simpcmd *scmd)
 	write(1, "\n", 1);
 }
 
-void	env(char **env_vars)
+void	env(t_envvar *env)
 {
-	int		i;
-
-	i = -1;
-	while (env_vars[++i])
+	while (env)
 	{
-		write(1, env_vars[i], str_len(env_vars[i]));
-		write(1, "\n", 1);
+		if (env->content)
+			printf("%s=%s\n", env->name, env->content);
+		env = env->next;
 	}
 }
 
-// placeholder export
-void	export(char ***env_vars, t_simpcmd *scmd)
+int		go_to_envv(t_envvar **env, char *str)
 {
-	int		i;
+	while ((*env)->next)
+	{
+		if (str_ncmp((*env)->name, str, str_len((*env)->name)))
+			return (TRUE);
+		*env = (*env)->next;
+	}
+	if (str_ncmp((*env)->name, str, str_len((*env)->name)))
+		return (TRUE);
+	return (FALSE);
+}
 
-	i = -1;
+void	new_envv(t_envvar *env, char *str)
+{
+	env->next = str_to_envv(str);
+	env->next->prev = env;
+	env = env->next;
+	env->next = 0;
+}
+
+void	reassign_envv(t_envvar *env, char *str)
+{
+	char	**arr;
+
+	arr = strcut(str, '=');
+	safe_free((void **)&arr[0]);
+	if (arr[1])
+	{
+		safe_free((void **)&env->content);
+		env->content = arr[1];
+	}
+	safe_free((void **)&arr);
+}
+
+void	export(t_envvar *env, t_simpcmd *scmd)
+{
+	t_envvar	*start;
+	int			i;
+
+	i = 0;
+	start = env;
 	if (!scmd->tokarr[1])
 	{
-		while ((*env_vars)[++i])
-			if (!str_ncmp("_=", (*env_vars)[i], 2))
-			{
-				write(1, (*env_vars)[i], str_len((*env_vars)[i]));
-				write(1, "\n", 1);
-			}
+		while (env)
+		{
+			if (!str_cmp(env->name, "_"))
+				printf("declare -x %s=\"%s\"\n", env->name, env->content);
+			env = env->next;
+		}
 	}
 	else
 	{
-		i = 0;
 		while (scmd->tokarr[++i])
 		{
-
-			if (!scmd->tokarr[i][0])
-				// bash: export: `': not a valid identifier
-				;
-			else if (!is_included('=',scmd->tokarr[i]))
-				;
+			if (!go_to_envv(&env, scmd->tokarr[i]))
+				new_envv(env, scmd->tokarr[i]);
 			else
-				;
+				reassign_envv(env, scmd->tokarr[i]);
+			env = start;
 		}
 	}
-	// int		i;
-	// char	**new_var;
-
-	// i = 0;
-	// while (*env_vars[i])
-	// 	i++;
-	// new_var = malloc(sizeof(char *) * (i + 2));
-	// new_var[i + 1] = 0;
-	// i = -1;
-	// while (*env_vars[++i])
-	// 	new_var[i] = *env_vars[i];
-	// new_var[i] = scmd;
 }
 
-void	unset(char ***envv, t_simpcmd *scmd)
+void	rm_link_iter(t_envvar **env, t_envvar **start)
 {
-	int	i;
-	int	j;
+	t_envvar	*tmp;
 
-	j = -1;
+	if ((*env)->prev)
+		(*env)->prev->next = (*env)->next;
+	else
+		*start = (*env)->next;
+	if ((*env)->next)
+		(*env)->next->prev = (*env)->prev;
+	safe_free((void **)&((*env)->name));
+	safe_free((void **)&((*env)->content));
+	tmp = (*env)->next;
+	safe_free((void **)env);
+	*env = tmp;
+}
+
+void	unset(t_envvar *env, t_simpcmd *scmd)
+{
+	int			j;
+	t_envvar	*start;
+
+	start = env;
+	// while (env)
+	// {
+	// 	printf("%s=%s\n", env->name, env->content);
+	// 	env = env->next;
+	// }
+	j = 0;
 	while (scmd->tokarr[++j])
 	{
-		i = -1;
-		while (*envv[++i])
-			if (str_ncmp(*envv[i], scmd->tokarr[j], str_len(scmd->tokarr[j])))
-			{
-				*envv = arrdup(envv, i, 1, 0);
-
-			}
+		env = start;
+		while (env)
+		{
+			if (str_cmp(env->name, scmd->tokarr[j]))
+				rm_link_iter(&env, &start);
+			else
+				env = env->next;
+		}
 	}
+	env = start;
+	// printf("#######\n");
+	// while (env)
+	// {
+	// 	printf("%s=%s\n", env->name, env->content);
+	// 	env = env->next;
+	// }
 }
 
 void	cd(t_simpcmd *scmd)

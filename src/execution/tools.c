@@ -63,34 +63,73 @@ void	initscmd(t_simpcmd *scmd)
 	scmd->pipe[1] = 0;
 }
 
+char		**strcut(char *str, char c)
+{
+	char	**arr;
+	int		i;
+	int		j;
+	int		len;
+
+	len = 0;
+	while (str[len] != c && str[len])
+		len++;
+	if (!len)
+	// bash: export: `=test': not a valid identifier
+		return (0);
+	arr = malloc(sizeof(char *) * 2);
+	arr[0] = malloc(sizeof(char) * (len + 1));
+	arr[0][len] = 0;
+	if (str[len])
+	{
+		// '=' sign found
+		arr[1] = malloc(sizeof(char) * (str_len(str) - len));
+		arr[1][str_len(str) - len - 1] = 0;
+	}
+	else
+		arr[1] = 0;
+	j = -1;
+	i = 0;
+	while (str[++j])
+	{
+		if (!i && (str[j] == c))
+			i++;
+		arr[i][j - len * i] = str[j + i];
+	}
+	return (arr);
+}
+
 t_envvar	*str_to_envv(char *str)
 {
 	t_envvar	*ev;
 	char		**tmp;
 
 	ev = malloc(sizeof(t_envvar));
-	tmp = ft_split(str, '=');
+	tmp = strcut(str, '=');
 	ev->name = tmp[0];
 	ev->content = tmp[1];
+	safe_free((void **)&tmp);
 	return (ev);
 }
 
-void	arr_to_ll(char **arr, t_node **node)
+void	arr_to_ll(char **arr, t_envvar **node)
 {
 	int	i;
+	t_envvar	*start;
 
 	if (!arr)
 		return ;
-	*node = new_node(str_to_envv(arr[0]));
+	*node = str_to_envv(arr[0]);
+	start = *node;
+	(*node)->prev = 0;
+	(*node)->next = 0;
 	i = 0;
 	while (arr[++i])
 	{
-		(*node)->next = new_node(str_to_envv(arr[i]));
+		(*node)->next = str_to_envv(arr[i]);
 		(*node)->next->prev = *node;
 		*node = (*node)->next;
 	}
-	while ((*node)->prev)
-		*node = (*node)->prev;
+	*node = start;
 }
 
 void	free_arr(char ***adr)

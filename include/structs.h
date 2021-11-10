@@ -33,8 +33,10 @@ typedef struct s_array
 
 typedef struct s_envvar
 {
-	char	*name;
-	char	*content;
+	struct s_envvar	*prev;
+	char			*name;
+	char			*content;
+	struct s_envvar	*next;
 } t_envvar;
 
 typedef struct 	s_token
@@ -93,7 +95,7 @@ typedef struct s_env
 	int 		argc;
 	char 		**argv;
 	char 		**env_var;
-	t_node		*envll;
+	t_envvar	*envll;
 	t_file		*history;
 	t_input		*input;
 	t_command	**commands;
