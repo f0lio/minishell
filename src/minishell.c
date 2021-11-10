@@ -24,6 +24,14 @@ int repl(t_env *env)
 		return 0;
 	if (tokenize_input(env))
 		return 0;
+	
+	/* 
+	** NOTE:
+	** 	when a syntax_error is raised, reset_data() tries
+	** 	to free some non-allocated pointers, thus it segfaults!
+	*/
+	if (analyse_syntax(env))
+		return 0;
 	// debug_commands(env);
 	cast_cmd(env->commands, env->cmds_count, env);
 	return (0);
