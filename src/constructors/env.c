@@ -51,11 +51,11 @@ t_command *new_cmd(void)
     cmd->cmd = NULL;
 	cmd->scmd  = NULL;
 	cmd->tokarr = NULL;
-	cmd->pipe_count = 0;
 	cmd->pipe_location = NULL;
 	cmd->sep = 0;
 	cmd->ret = 0;
     cmd->cmd = NULL;
+    cmd->scmd = NULL;
     cmd->tokens = NULL;
     return (cmd);
 }

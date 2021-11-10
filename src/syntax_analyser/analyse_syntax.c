@@ -39,7 +39,7 @@ BOOL	analyse_syntax(t_env *env)
 			flag && (flag += token_is(cmd->tokens[j + 1], "<<"));
 			flag && (flag += token_is(cmd->tokens[j + 1], ";"));
 			if (flag == 2)
-				raise_error(env, ERR_SYNTAX);
+				return raise_error(env, ERR_SYNTAX);
 			flag = FALSE;
 		}
 	}

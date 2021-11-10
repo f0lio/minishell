@@ -24,7 +24,7 @@ int repl(t_env *env)
 		return 0;
 	if (tokenize_input(env))
 		return 0;
-	
+
 	/* 
 	** NOTE:
 	** 	when a syntax_error is raised, reset_data() tries
@@ -48,7 +48,7 @@ int main(int argc, char **argv, char **env_vars)
 		if (repl(env))
 			break;
 		reset_data(env);
-		CHECK_LEAKS;
+		// CHECK_LEAKS;
 	}
 	//-Free allocated mem
 	return (0);

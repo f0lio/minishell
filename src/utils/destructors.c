@@ -17,22 +17,23 @@ void    reset_data(ENV)
 
 void    destroy_command(void *ptr)
 {
-    t_command *cmd;
-    cmd = ptr;
-    if (!cmd)
-        return ;
-    safe_free((void**)&cmd->cmd);
-    safe_free((void**)&cmd->pipe_location);
-    safe_free((void**)&cmd->tokarr);
-    while (--cmd->tokens_count > -1)
-        destroy_token(cmd->tokens[cmd->tokens_count]);
+	t_command *cmd;
+
+	cmd = ptr;
+	if (!cmd)
+		return ;
+	safe_free((void**)&cmd->cmd);
+	safe_free((void**)&cmd->pipe_location);
+	safe_free((void**)&cmd->tokarr);
+	while (--cmd->tokens_count > -1)
+		destroy_token(cmd->tokens[cmd->tokens_count]);
 	while (--cmd->pipe_count >= -1)
 		safe_free((void**)&cmd->scmd[cmd->pipe_count + 1].tokarr);
 	safe_free((void**)&cmd->scmd);
-    safe_free((void**)&cmd);
+	safe_free((void**)&cmd);
 }
 
-void    destroy_token(void *ptr)
+void	destroy_token(void *ptr)
 {
     t_token *token;
 
