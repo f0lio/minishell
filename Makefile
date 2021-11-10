@@ -1,9 +1,9 @@
 
 .PHONEY: all clean fclean re bonus
 
-NAME				= 	minishell
+NAME				=	minishell
 CC					=	clang
-FLAGS				= 	-Werror -Wextra -Wall
+FLAGS				=	-Werror -Wextra -Wall
 
 INCLUDES			=	-I include -I /usr/include/readline/readline.h
 
@@ -13,13 +13,12 @@ UTILS				=	strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
 						itoa.c tmp_utils.c
 
 CONSTRUCTORS		=	env.c
-TOKENIZER			=	tokenize.c\
-						command_checker.c\
-						tokenize_quoted.c quotes_checker.c\
-						utils.c
-LEXER				=	lexer.c
-PARSER				=	expansion.c helpers.c double_quoted_tokens.c escaping.c
-EXECUTER			=	redirect.c\
+
+EXPANSION			=	expand.c helpers.c double_quoted_tokens.c
+TOKENIZER			=	tokenize.c tokenize_quoted.c utils.c
+SYNTAX_ANALYSER			= analyse_syntax.c
+
+EXECUTION			=	redirect.c\
 						apex_strtools.c\
 						pipe.c\
 						builtins.c\
@@ -31,11 +30,10 @@ SRC					=	src/minishell.c\
 						$(DBG:%.c=./dbg/%.c)\
 						$(CONSTRUCTORS:%.c=./src/constructors/%.c)\
 						$(TOKENIZER:%.c=./src/tokenizer/%.c)\
-						$(LEXER:%.c=./src/lexer/%.c)\
-						$(PARSER:%.c=./src/parser/%.c)\
+						$(SYNTAX_ANALYSER:%.c=./src/syntax_analyser/%.c)\
+						$(EXPANSION:%.c=./src/expansion/%.c)\
 						$(UTILS:%.c=./src/utils/%.c)\
-						$(EXECUTER:%.c=./src/execution/%.c)\
-						$(HISTORY:%.c=./src/history/%.c)
+						$(EXECUTION:%.c=./src/execution/%.c)
 
 COMPILE	= $(CC) $(SRC) $(INCLUDES) -lreadline -o $(NAME) -g #-I dbg #-fsanitize=address 
 
@@ -58,6 +56,10 @@ fclean: clean
 
 re: fclean all
 
+#dev rules
 sandbox:
 	@$(NAME)
 	@sh ./start.sh
+
+check_leaks: $(NAME)
+	valgrind --leak-check=full ./$(NAME)

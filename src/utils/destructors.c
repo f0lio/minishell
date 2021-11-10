@@ -7,6 +7,9 @@ void    reset_data(ENV)
     while (--env->cmds_count > -1)
         destroy_command(env->commands[env->cmds_count]);
     safe_free((void**)&env->commands);
+	
+	// TODO: recursively_free(env->envll)
+	
     env->commands = NULL;
     env->input->i = 0;
     env->cmds_count = 0;

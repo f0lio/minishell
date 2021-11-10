@@ -131,6 +131,9 @@ char			*sub_until_chars(char *buf, int *i, char *chars);
 void			handle_backslash(
 					t_env *env, const char *input, char **new_input, int *i);
 
+// Syntaxer
+BOOL		analyse_syntax(t_env *env);
+
 // Errors
 BOOL			raise_error(ENV, char *msg);
 void			destroy_env(ENV);

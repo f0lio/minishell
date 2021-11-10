@@ -13,6 +13,7 @@ int repl(t_env *env)
 	env->input->line = readline(PROMPT);
 	if (env->input->line == NULL)
 	{
+		reset_data(env);
 		put_str("exit");
 		return -1;
 	}

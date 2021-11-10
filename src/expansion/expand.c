@@ -39,8 +39,6 @@ BOOL expand_input(t_env *env)
 	sq = 0;
 	new_input = get_new_input(env, &sq, &dq);
 	ret = 0;
-	// printf("sq: %d | dq: %d\n", sq, dq);
-
 	if (sq || dq)
 		ret = raise_error(env, ERR_SYNTAX);
 	safe_free((void **)&env->input->line);
