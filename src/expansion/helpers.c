@@ -30,8 +30,10 @@ BOOL	handle_double_quote(
 	if (va)
 	{
 		p = va;
-		va = expand_dquoted_token(env, va);	
+		va = expand_dquoted_token(env, va);
+		str_fjoin(new_input, "\"");
 		str_fjoin(new_input, va);
+		str_fjoin(new_input, "\"");
 		safe_free((void **)&p);
 		safe_free((void **)&va);
 	}

@@ -45,6 +45,11 @@ $(NAME): $(SRC)
 run: all
 	@./$(NAME)
 
+#install readline on debian based OS
+install:
+	@echo "Installing dependencies.."
+	@apt-get install libreadline6 libreadline6-dev
+
 clean:
 	@rm -rf *.o
 

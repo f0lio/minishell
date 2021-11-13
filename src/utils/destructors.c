@@ -47,8 +47,9 @@ void	destroy_token(void *ptr)
 
 void safe_free(void **ptr)
 {
-    if (*ptr == NULL)
-        return ;
-    free(*ptr);
-    *ptr = NULL;
+	if (*ptr == NULL)
+		return ;
+	free(*ptr);
+	*ptr = NULL;
+
 }

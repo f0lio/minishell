@@ -12,21 +12,22 @@
 # define HISTORY_FILE       ".minishell_history"
 # define BUILTINS			((char *[]){"echo", "pwd", "cd", "env", "unset", "export", "exit", 0})
 
-# define BOOL               char
-# define FALSE              0
-# define TRUE               1
-# define DIGITS             "0123456789"
-# define ASCII_LOWER        "abcdefghijklmnopqrstuvwxyz"
-# define ASCII_UPPER        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-# define PUNCTS             "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"
-# define WHITESPACES        " \t\n\r\x0b\x0c"
-# define SPACE              ' '
-# define SINGLE_QT          '\''
-# define DOUBLE_QT          '"'
-# define BACK_SLASH         '\\'
-# define EOL                '\n'
-# define SEP                ';'
-# define DOLLAR             '$'
+# define BOOL				char
+# define FALSE				0
+# define TRUE				1
+# define DIGITS				"0123456789"
+# define ASCII_LOWER		"abcdefghijklmnopqrstuvwxyz"
+# define ASCII_UPPER		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+# define PUNCTS				"!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"
+# define WHITESPACES		" \t\n\r\x0b\x0c"
+# define SPACE				' '
+# define SINGLE_QT			'\''
+# define DOUBLE_QT			'"'
+# define BACK_SLASH			'\\'
+# define EOL				'\n'
+# define SEP				';'
+# define PIPE				'|'
+# define DOLLAR				'$'
 
 // Token types
 # define TYPE_CMD                0

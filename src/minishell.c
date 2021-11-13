@@ -9,7 +9,6 @@ int repl(t_env *env)
 	char	*input;
 	size_t	len;
 
-	signal(SIGINT, handle_interuption);
 	env->input->line = readline(PROMPT);
 	if (env->input->line == NULL)
 	{
@@ -24,12 +23,6 @@ int repl(t_env *env)
 		return 0;
 	if (tokenize_input(env))
 		return 0;
-
-	/* 
-	** NOTE:
-	** 	when a syntax_error is raised, reset_data() tries
-	** 	to free some non-allocated pointers, thus it segfaults!
-	*/
 	if (analyse_syntax(env))
 		return 0;
 	// debug_commands(env);
@@ -43,6 +36,7 @@ int main(int argc, char **argv, char **env_vars)
 
 	// setmemlimit(1); // (supposedly) limits memory to avoid stupid crashes
 	env = init_env(argc, argv, env_vars);
+	signal(SIGINT, handle_interuption);
 	while (1)
 	{
 		if (repl(env))
@@ -53,4 +47,3 @@ int main(int argc, char **argv, char **env_vars)
 	//-Free allocated mem
 	return (0);
 }
-
