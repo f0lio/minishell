@@ -32,11 +32,12 @@ t_token *get_token(ENV)
 			j += line[j] == line[j - 1];
 			break ;
 		}
-		else if (line[j] == SINGLE_QT || line[j] == DOUBLE_QT)
+		else if (line[j] == SINGLE_QT || line[j] == DOUBLE_QT) // "hi ' X "
 		{
 			if (line[j] == quote && ++j)
 				break ;
-			quote = line[j];
+			if (quote == 0)
+				quote = line[j];
 		}
 		else if (!quote && is_included(line[j + 1], "|> <") && ++j)
 			break ;
@@ -81,18 +82,6 @@ BOOL tokenize_input(ENV)
 				i++;
 				continue ;
 			}
-			// else if (line[i] == PIPE)
-			// {
-			// 	token = new_token(str_dup("|"));
-			// 	push_back(&tokens_list, token);
-			// 	i++;
-			// 	continue ;
-			// }
-			// else if (line[i] == '>' || line[i] == '<')
-			// {
-			// 	;
-			// }
-			
 			token = get_token(env);
 			i = env->input->i;
 			push_back(&tokens_list, token);

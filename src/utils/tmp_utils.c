@@ -17,7 +17,7 @@ void    print_tokens(t_token **tokens, int count)
     
     for (size_t i = 0; i < count; i++)
     {
-        printf("@> [%s]\t[%d]\n", (char*)(tokens[i]->tok), tokens[i]->quoted);
+        printf("@> [%s]\t\t[%d]\n", (char*)(tokens[i]->tok), tokens[i]->quoted);
     }
     
 }
