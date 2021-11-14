@@ -133,7 +133,10 @@ void	arr_to_ll(char **arr, t_envvar **node)
 	t_envvar	*start;
 
 	if (!arr || !arr[0])
+	{
+		printf("No envp\n");
 		return ;
+	}
 	*node = str_to_envv(arr[0]);
 	start = *node;
 	(*node)->prev = 0;
@@ -163,17 +166,18 @@ char	**ll_to_arr(t_envvar *node)
 	i = 1;
 	while (node->next && ++i)
 		node = node->next;
-	arr = malloc(sizeof(char *) * i);
-	arr[--i] = NULL;
-	while (--i)
+	arr = malloc(sizeof(char *) * (i + 1));
+	arr[i] = NULL;
+	while (i--)
 	{
-		node = node->prev;
 		// printf("teslksddsm;lmds;\n");
 		tmp = str_join("=", node->content);
 		arr[i] = str_join(node->name, tmp);
 		safe_free((void **)&tmp);
 		// printf("%s\n", arr[i]);
+		node = node->prev;
 	}
+	node = start;
 	return (arr);
 }
 

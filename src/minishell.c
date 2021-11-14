@@ -13,7 +13,7 @@ int repl(t_env *env)
 	if (env->input->line == NULL)
 	{
 		reset_data(env);
-		put_str("exit");
+		put_str("exit\n");
 		return -1;
 	}
 	if (!line_is_whitespaces(env->input->line))

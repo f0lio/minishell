@@ -166,7 +166,7 @@ void	exec(char *path, t_command *command, int i, t_envvar *env)
 	if (!command->scmd[i].pid)
 	{
 		closeallpipes(command);
-		execve(path, command->scmd[i].tokarr, 0);
+		execve(path, command->scmd[i].tokarr, arr);
 		printf("WHAT THE FUCK HAPPENED\n");
 		exit(1);
 	}
