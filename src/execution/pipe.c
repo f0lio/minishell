@@ -124,6 +124,8 @@ void	heredoc(char *eof, t_simpcmd *scmd)
 		}
 		safe_free((void **)&buffer);
 		buffer = readline("> ");
+		if (!buffer)
+			break ;
 	}
 	safe_free((void **)&buffer);
 	close(fd);
@@ -169,58 +171,3 @@ void	pipe_this(t_command *command)
 		}
 	}
 }
-
-// void	pipe_this(t_command *command)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	scmd_tokarr_loop(command);
-// 	i = -1;
-// 	command->origio[0] = dup(STDIN_FILENO);
-// 	command->origio[1] = dup(STDOUT_FILENO);
-// 	while (++i <= command->pipe_count)
-// 	{
-// 		pipe(command->scmd[i].pipe);
-// 		j = -1;
-// 		while (command->scmd[i].tokarr[++j])
-// 		{
-// 			if (command->tokens[!!i * (command->pipe_location[i - 1] + 1) + j]->quoted) // check if token is quoted
-// 			{
-// 				printf("%s\n", command->scmd[i].tokarr[j]);
-// 				continue ;
-// 			}
-// 			if (str_cmp(command->scmd[i].tokarr[j], "<"))
-// 				command->scmd[i].infile = command->scmd[i].tokarr[j + 1];
-// 			else if ((str_cmp(command->scmd[i].tokarr[j], ">")
-// 					|| str_cmp(command->scmd[i].tokarr[j], ">>")))
-// 			{
-// 				command->scmd[i].isappend = str_len(command->scmd[i].tokarr[j]) - 1;
-// 				command->scmd[i].outfile = command->scmd[i].tokarr[j + 1];
-// 			}
-// 			else
-// 				continue ;
-// 			command->scmd[i].tokarr[j] = 0;
-// 			j++;
-// 		}
-// 		if (command->scmd[i].infile)
-// 		{
-// 			if (((command->scmd[i].stdio[0] = open(command->scmd[i].infile, O_RDONLY | O_CREAT)) < 0))
-// 				printf("%s\n", strerror(errno));
-// 			// printf("infile: %s\nfd:%d\n", command->scmd[i].infile, command->scmd[i].stdio[0]);
-// 		}
-// 		else
-// 			command->scmd[i].stdio[0] = dup(command->origio[0]);
-// 		command->scmd[i].isappend *= (int)O_APPEND;
-// 		if (!command->scmd[i].isappend)
-// 			command->scmd[i].isappend = (int)O_TRUNC;
-// 		if (command->scmd[i].outfile)
-// 		{
-// 			// printf("append mode: %d\noutfile: %s\n", command->scmd[i].isappend, command->scmd[i].outfile);
-// 			if ((command->scmd[i].stdio[1] = open(command->scmd[i].outfile, O_WRONLY | command->scmd[i].isappend | O_CREAT, 0644)) < 0)
-// 				printf("%s\n", strerror(errno));
-// 		}
-// 		else
-// 			command->scmd[i].stdio[1] = dup(command->origio[1]);
-// 	}
-// }

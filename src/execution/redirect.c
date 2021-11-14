@@ -157,8 +157,11 @@ void	redirect_stdio(t_command *command, int i)
 		dup2(command->scmd[i + 1].pipe[1], STDOUT_FILENO);
 }
 
-void	exec(char *path, t_command *command, int i)
+void	exec(char *path, t_command *command, int i, t_envvar *env)
 {
+	char **arr;
+	
+	arr = ll_to_arr(env);
 	command->scmd[i].pid = fork();
 	if (!command->scmd[i].pid)
 	{
@@ -215,7 +218,7 @@ void	redirect_commands(t_command *command, t_env *env)
 		{
 			redirect_stdio(command, i);
 			if (!command->scmd[i].isbuiltin)
-				exec(path, command, i);
+				exec(path, command, i, env->envll);
 			else
 				execbuiltins(&command->scmd[i], command, env);
 		}

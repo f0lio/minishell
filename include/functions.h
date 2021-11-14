@@ -52,6 +52,7 @@ int				c_w(char *str, char c);
 void			initscmd(t_simpcmd *scmd);
 char			**arrdup(char ***arr, int rm, int free, char *new_elem);
 void			arr_to_ll(char **arr, t_envvar **node);
+char			**ll_to_arr(t_envvar *node);
 t_envvar		*str_to_envv(char *str);
 char			**strcut(char *str, char c);
 char			*randname(void);

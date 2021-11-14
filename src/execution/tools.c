@@ -148,6 +148,35 @@ void	arr_to_ll(char **arr, t_envvar **node)
 	*node = start;
 }
 
+char	**ll_to_arr(t_envvar *node)
+{
+	int			i;
+	char		**arr;
+	char		*tmp;
+	t_envvar	*start;
+
+	if (!node)
+		return 0;
+	while (node->prev)
+		node = node->prev;
+	start = node;
+	i = 1;
+	while (node->next && ++i)
+		node = node->next;
+	arr = malloc(sizeof(char *) * i);
+	arr[--i] = NULL;
+	while (--i)
+	{
+		node = node->prev;
+		// printf("teslksddsm;lmds;\n");
+		tmp = str_join("=", node->content);
+		arr[i] = str_join(node->name, tmp);
+		safe_free((void **)&tmp);
+		// printf("%s\n", arr[i]);
+	}
+	return (arr);
+}
+
 void	free_arr(char ***adr)
 {
 	char	**array;
