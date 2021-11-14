@@ -70,6 +70,7 @@ void	initscmd(t_simpcmd *scmd)
 	scmd->biexitstatus = -1;
 	scmd->pid = 0;
 	scmd->isappend = 0;
+	scmd->heredoc = 0;
 	scmd->infile = 0;
 	scmd->outfile = 0;
 	scmd->stdio[0] = 0;

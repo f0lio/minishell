@@ -66,7 +66,7 @@ typedef struct	s_simpcmd
 	int			isappend;
 	int			stdio[2];
 	int			pipe[2];
-	char		*heredoc;
+	int			heredoc;
 	pid_t		pid;
 }				t_simpcmd;
 

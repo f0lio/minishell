@@ -110,9 +110,9 @@ void	heredoc(char *eof, t_simpcmd *scmd)
 {
 	int		fd;
 	char	*buffer;
-	scmd->heredoc = randname();
-	printf("%s\n", scmd->heredoc);
-	if ((fd = open(scmd->heredoc, O_WRONLY | O_CREAT, 0644)) < 0)
+
+	scmd->heredoc = 1;
+	if ((fd = open(HERE_DOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644)) < 0)
 		printf("asdasdk%s\n", strerror(errno));
 	buffer = 0;
 	while (!str_cmp(eof, buffer))
@@ -127,6 +127,7 @@ void	heredoc(char *eof, t_simpcmd *scmd)
 	}
 	safe_free((void **)&buffer);
 	close(fd);
+	rediri(HERE_DOC_FILE, scmd);
 }
 
 void	pipe_this(t_command *command)
