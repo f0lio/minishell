@@ -8,7 +8,7 @@ void    reset_data(ENV)
         destroy_command(env->commands[env->cmds_count]);
     safe_free((void**)&env->commands);
 	
-	// TODO: recursively_free(env->envll)
+	// TODO: 3awdia_free(env->envll)
 	
     env->commands = NULL;
     env->input->i = 0;

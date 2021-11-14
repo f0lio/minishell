@@ -54,6 +54,8 @@ char			**arrdup(char ***arr, int rm, int free, char *new_elem);
 void			arr_to_ll(char **arr, t_envvar **node);
 t_envvar		*str_to_envv(char *str);
 char			**strcut(char *str, char c);
+char			*randname(void);
+
 // Builtins
 void			echo(t_simpcmd *scmd);
 void			pwd(t_simpcmd *scmd);
@@ -61,6 +63,7 @@ void			cd(t_simpcmd *scmd);
 void			env(t_envvar *en);
 void			unset(t_envvar *en, t_simpcmd *scmd);
 void			export(t_envvar *en, t_simpcmd *scmd);
+void			my_exit(t_env **env, int pipenum);
 
 // Lexer
 // int             lex_tokens(t_command **commands, int cmds_count);

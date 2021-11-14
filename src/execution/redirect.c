@@ -30,14 +30,14 @@ char	*search_cmd(char *cmd, char **paths)
 	str[1] = 0;
 	cmd = str_join(str, cmd);
 	// probably leaks idk
-	while (ret && paths[++i])
+	while (ret && paths && paths[++i])
 	{
 		safe_free((void **)&str);
 		str = str_join(paths[i], cmd);
 		ret = stat(str, &buf);
 	}
 	safe_free((void **)&cmd);
-	if (!paths[i])
+	if (!paths || !paths[i])
 	{
 		safe_free((void **)&str);
 		return (NULL);

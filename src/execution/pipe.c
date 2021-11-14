@@ -43,6 +43,7 @@ void	search_pipes(t_command *command)
 		}
 		j++;
 	}
+	// printf("%d, %d, %d\n", command->pipe_location[0], command->pipe_location[1], command->pipe_location[2]);
 }
 
 char	**scmd_tokarr(t_command *command, int pipe_num)
@@ -86,10 +87,54 @@ void	scmd_tokarr_loop(t_command *command)
 	}
 }
 
-void	pipe_this(t_command *command)
+void	rediro(char *tok, int j, t_simpcmd *scmd)
 {
 	int	i;
-	int	j;
+
+	close(scmd->stdio[1]);
+	i = str_cmp(">", scmd->tokarr[j]);
+	scmd->isappend = !i * (int)O_APPEND + i * (int)O_TRUNC;
+	if ((scmd->stdio[1] = open(tok, O_WRONLY | scmd->isappend
+	| O_CREAT, 0644)) < 0)
+		printf("%s\n", strerror(errno));
+}
+
+void	rediri(char *tok, t_simpcmd *scmd)
+{
+	close(scmd->stdio[0]);
+	if ((scmd->stdio[0] = open(tok, O_RDONLY)) < 0)
+		printf("%s\n", strerror(errno));
+}
+
+void	heredoc(char *eof, t_simpcmd *scmd)
+{
+	int		fd;
+	char	*buffer;
+	scmd->heredoc = randname();
+	printf("%s\n", scmd->heredoc);
+	if ((fd = open(scmd->heredoc, O_WRONLY | O_CREAT, 0644)) < 0)
+		printf("asdasdk%s\n", strerror(errno));
+	buffer = 0;
+	while (!str_cmp(eof, buffer))
+	{
+		if (buffer)
+		{
+			write(fd, buffer, str_len(buffer));
+			write(fd, "\n", 1);
+		}
+		safe_free((void **)&buffer);
+		buffer = readline("> ");
+	}
+	safe_free((void **)&buffer);
+	close(fd);
+}
+
+void	pipe_this(t_command *command)
+{
+	int		i;
+	int		j;
+	char	*tok;
+	t_token	*tk;
 
 	scmd_tokarr_loop(command);
 	i = -1;
@@ -97,43 +142,84 @@ void	pipe_this(t_command *command)
 	command->origio[1] = dup(STDOUT_FILENO);
 	while (++i <= command->pipe_count)
 	{
+		command->scmd[i].stdio[0] = dup(command->origio[0]);
+		command->scmd[i].stdio[1] = dup(command->origio[1]);
 		pipe(command->scmd[i].pipe);
 		j = -1;
 		while (command->scmd[i].tokarr[++j])
 		{
-			if (str_cmp(command->scmd[i].tokarr[j], "<")
-					&& command->scmd[i].tokarr[j + 1])
-				command->scmd[i].infile = command->scmd[i].tokarr[j + 1];
-			else if ((str_cmp(command->scmd[i].tokarr[j], ">")
-					|| str_cmp(command->scmd[i].tokarr[j], ">>"))
-					&& command->scmd[i].tokarr[j + 1])
+			tk = command->tokens[!!i * (command->pipe_location[i - 1] + 1) + j];
+			tok = command->scmd[i].tokarr[j];
+			if (tk->quoted) // check if token is quoted
 			{
-				command->scmd[i].isappend = str_len(command->scmd[i].tokarr[j]) - 1;
-				command->scmd[i].outfile = command->scmd[i].tokarr[j + 1];
+				printf("%s\n", command->scmd[i].tokarr[j]);
+				continue ;
 			}
-			else
+			if (str_cmp(tok, ">") || str_cmp(tok, ">>"))
+				rediro(command->scmd[i].tokarr[j + 1], j, &command->scmd[i]);
+			else if (str_cmp(tok, "<"))
+				rediri(command->scmd[i].tokarr[j + 1], &command->scmd[i]);
+			else if (str_cmp(tok, "<<"))
+				heredoc(command->scmd[i].tokarr[j + 1], &command->scmd[i]);
+			else // none of them
 				continue ;
 			command->scmd[i].tokarr[j] = 0;
 			j++;
 		}
-		if (command->scmd[i].infile)
-		{
-			if (((command->scmd[i].stdio[0] = open(command->scmd[i].infile, O_RDONLY | O_CREAT)) < 0))
-				printf("%s\n", strerror(errno));
-			// printf("infile: %s\nfd:%d\n", command->scmd[i].infile, command->scmd[i].stdio[0]);
-		}
-		else
-			command->scmd[i].stdio[0] = dup(command->origio[0]);
-		command->scmd[i].isappend *= (int)O_APPEND;
-		if (!command->scmd[i].isappend)
-			command->scmd[i].isappend = (int)O_TRUNC;
-		if (command->scmd[i].outfile)
-		{
-			// printf("append mode: %d\noutfile: %s\n", command->scmd[i].isappend, command->scmd[i].outfile);
-			if ((command->scmd[i].stdio[1] = open(command->scmd[i].outfile, O_WRONLY | command->scmd[i].isappend | O_CREAT, 0644)) < 0)
-				printf("%s\n", strerror(errno));
-		}
-		else
-			command->scmd[i].stdio[1] = dup(command->origio[1]);
 	}
 }
+
+// void	pipe_this(t_command *command)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	scmd_tokarr_loop(command);
+// 	i = -1;
+// 	command->origio[0] = dup(STDIN_FILENO);
+// 	command->origio[1] = dup(STDOUT_FILENO);
+// 	while (++i <= command->pipe_count)
+// 	{
+// 		pipe(command->scmd[i].pipe);
+// 		j = -1;
+// 		while (command->scmd[i].tokarr[++j])
+// 		{
+// 			if (command->tokens[!!i * (command->pipe_location[i - 1] + 1) + j]->quoted) // check if token is quoted
+// 			{
+// 				printf("%s\n", command->scmd[i].tokarr[j]);
+// 				continue ;
+// 			}
+// 			if (str_cmp(command->scmd[i].tokarr[j], "<"))
+// 				command->scmd[i].infile = command->scmd[i].tokarr[j + 1];
+// 			else if ((str_cmp(command->scmd[i].tokarr[j], ">")
+// 					|| str_cmp(command->scmd[i].tokarr[j], ">>")))
+// 			{
+// 				command->scmd[i].isappend = str_len(command->scmd[i].tokarr[j]) - 1;
+// 				command->scmd[i].outfile = command->scmd[i].tokarr[j + 1];
+// 			}
+// 			else
+// 				continue ;
+// 			command->scmd[i].tokarr[j] = 0;
+// 			j++;
+// 		}
+// 		if (command->scmd[i].infile)
+// 		{
+// 			if (((command->scmd[i].stdio[0] = open(command->scmd[i].infile, O_RDONLY | O_CREAT)) < 0))
+// 				printf("%s\n", strerror(errno));
+// 			// printf("infile: %s\nfd:%d\n", command->scmd[i].infile, command->scmd[i].stdio[0]);
+// 		}
+// 		else
+// 			command->scmd[i].stdio[0] = dup(command->origio[0]);
+// 		command->scmd[i].isappend *= (int)O_APPEND;
+// 		if (!command->scmd[i].isappend)
+// 			command->scmd[i].isappend = (int)O_TRUNC;
+// 		if (command->scmd[i].outfile)
+// 		{
+// 			// printf("append mode: %d\noutfile: %s\n", command->scmd[i].isappend, command->scmd[i].outfile);
+// 			if ((command->scmd[i].stdio[1] = open(command->scmd[i].outfile, O_WRONLY | command->scmd[i].isappend | O_CREAT, 0644)) < 0)
+// 				printf("%s\n", strerror(errno));
+// 		}
+// 		else
+// 			command->scmd[i].stdio[1] = dup(command->origio[1]);
+// 	}
+// }

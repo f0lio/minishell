@@ -60,11 +60,13 @@ typedef struct	s_simpcmd
 	int			isbuiltin;
 	int			biexitstatus;
 	char		**tokarr;
+	int			*tokquoted;
 	char		*infile;
 	char		*outfile;
 	int			isappend;
 	int			stdio[2];
 	int			pipe[2];
+	char		*heredoc;
 	pid_t		pid;
 }				t_simpcmd;
 

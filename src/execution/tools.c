@@ -32,6 +32,21 @@ int		numlen(long num, int i)
 		return (numlen(num / 10, ++i));
 }
 
+char	*randname(void)
+{
+	int		fd;
+	char	*str;
+	char	*ret;
+
+	fd = open("/dev/random", O_RDONLY);
+	str = malloc(sizeof(char) * 10);
+	read(fd, str, 10);
+	ret = str_join("/tmp/", str);
+	safe_free((void **)&str);
+	close(fd);
+	return (ret);
+}
+
 char	*my_itoa(long num)
 {
 	char	*out;
@@ -116,7 +131,7 @@ void	arr_to_ll(char **arr, t_envvar **node)
 	int	i;
 	t_envvar	*start;
 
-	if (!arr)
+	if (!arr || !arr[0])
 		return ;
 	*node = str_to_envv(arr[0]);
 	start = *node;

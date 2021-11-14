@@ -77,6 +77,8 @@ void	export(t_envvar *env, t_simpcmd *scmd)
 
 	i = 0;
 	start = env;
+	if (!env)
+		return ;
 	if (!scmd->tokarr[1])
 	{
 		while (env)
@@ -128,6 +130,8 @@ void	unset(t_envvar *env, t_simpcmd *scmd)
 	// 	env = env->next;
 	// }
 	j = 0;
+	if (!env)
+		return ;
 	while (scmd->tokarr[++j])
 	{
 		env = start;

@@ -11,6 +11,7 @@
 # define PROMPT				"minishell$ "
 # define HISTORY_FILE       ".minishell_history"
 # define BUILTINS			((char *[]){"echo", "pwd", "cd", "env", "unset", "export", "exit", 0})
+# define HERE_DOC_FILE		"/tmp/msh_heredoc"
 
 # define BOOL				char
 # define FALSE				0
