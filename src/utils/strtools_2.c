@@ -36,11 +36,11 @@ BOOL	line_is_whitespaces(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (is_included(line[i], WHITESPACES))
-			return TRUE;
+		if (!is_included(line[i], WHITESPACES))
+			return FALSE;
 		i++;
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
 
