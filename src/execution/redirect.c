@@ -161,10 +161,10 @@ void	exec(char *path, t_command *command, int i, t_envvar *env)
 {
 	char **arr;
 	
-	arr = ll_to_arr(env);
 	command->scmd[i].pid = fork();
 	if (!command->scmd[i].pid)
 	{
+		arr = ll_to_arr(env);
 		closeallpipes(command);
 		execve(path, command->scmd[i].tokarr, arr);
 		printf("WHAT THE FUCK HAPPENED\n");

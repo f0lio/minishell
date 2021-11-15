@@ -1,6 +1,8 @@
 
 #include "minishell.h"
 
+
+
 void    reset_data(ENV)
 {
     safe_free ((void**)&env->input->line);

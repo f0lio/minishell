@@ -13,19 +13,17 @@ int repl(t_env *env)
 	env->input->line = readline(PROMPT);
 	if (env->input->line == NULL)
 	{
-		reset_data(env);
 		put_str("exit\n");
-		return -1;
+		destroy_env(env);
+		// system("leaks minishell");
+		exit(EXIT_SUCCESS);
 	}
 	if (!line_is_whitespaces(env->input->line))
 		add_history(env->input->line);
 	env->input->len = str_len(env->input->line);
-	if (expand_input(env))
-		return 0;
-	if (tokenize_input(env))
-		return 0;
-	if (analyse_syntax(env))
-		return 0;
+	expand_input(env);
+	tokenize_input(env);
+	analyse_syntax(env);
 	// debug_commands(env);
 	cast_cmd(env->commands, env->cmds_count, env);
 	return (0);
@@ -40,11 +38,8 @@ int main(int argc, char **argv, char **env_vars)
 	signal(SIGINT, handle_interuption);
 	while (1)
 	{
-		if (repl(env))
-			break;
+		repl(env);
 		reset_data(env);
-		// CHECK_LEAKS;
 	}
-	//-Free allocated mem
 	return (0);
 }
