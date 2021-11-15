@@ -14,7 +14,7 @@ UTILS				=	strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
 
 CONSTRUCTORS		=	env.c
 
-EXPANSION			=	expand.c helpers.c double_quoted_tokens.c
+EXPANSION			=	expand.c helpers.c double_quoted_tokens.c get_env_var.c
 TOKENIZER			=	tokenize.c tokenize_quoted.c utils.c
 SYNTAX_ANALYSER			= analyse_syntax.c
 

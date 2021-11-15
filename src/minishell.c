@@ -1,8 +1,9 @@
 
 #include "minishell.h"
 
-//This is the shell loop.
-//repl => Read-Eval-Print-Loop
+/*
+** repl => Read-Eval-Print-Loop
+*/
 int repl(t_env *env)
 {
 	int		ret = 0;
@@ -21,7 +22,6 @@ int repl(t_env *env)
 	env->input->len = str_len(env->input->line);
 	if (expand_input(env))
 		return 0;
-	// printf("[%s]\n", env->input->line);
 	if (tokenize_input(env))
 		return 0;
 	if (analyse_syntax(env))

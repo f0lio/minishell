@@ -40,7 +40,7 @@ BOOL	handle_double_quote(
 	return (!ret);
 }
 
-void	handle_unquoted_dollar(char *input, char **new_input, int *i)
+void	handle_unquoted_dollar(t_env *env, char *input, char **new_input, int *i)
 {
 	char *va;
 	char *p;
@@ -53,11 +53,14 @@ void	handle_unquoted_dollar(char *input, char **new_input, int *i)
 	}
 	va = parse_variable_name(input, i);
 	p = va;
-	va = getenv(va); //should get from my own envv; cuz this is forbidden-ish
+	va = get_env(env, va);
 	safe_free((void **)&p);
 	*i -= (va != NULL);
 	if (va)
+	{
 		str_fjoin(new_input, va);
+		free(va);
+	}
 }
 
 void	handle_unquoted_token(char *input, char **new_input, int *i)

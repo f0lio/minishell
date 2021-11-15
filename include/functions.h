@@ -125,15 +125,15 @@ int             tokenize(char *buff, ENV);
 
 BOOL			expand_input(t_env *env);
 void			handle_unquoted_token(char *input, char **new_input, int *i);
-void			handle_unquoted_dollar(char *input, char **new_input, int *i);
+void		handle_unquoted_dollar(t_env *env, char *input, char **new_input, int *i);
 BOOL			handle_sinqle_quote(char *input, char **new_input, int *i);
 BOOL			handle_double_quote(
 					t_env *env, char *input, char **new_input, int *i);
 char			*expand_dquoted_token(ENV, char *tok);
-char			*handle_dollar_sign(char *tok, int *i);
+char			*handle_dollar_sign(t_env *env, char *tok, int *i);
 char			*parse_variable_name(char *buf, int *i);
 char			*sub_until_chars(char *buf, int *i, char *chars);
-
+char			*get_env(t_env *env, char *var_name);
 void			handle_backslash(
 					t_env *env, const char *input, char **new_input, int *i);
 

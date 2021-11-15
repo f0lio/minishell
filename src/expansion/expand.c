@@ -17,7 +17,7 @@ char 	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
 		else if (input[i] == DOUBLE_QT)
 			*dq = handle_double_quote(env, input, &new_input, &i);
 		if (input[i] == DOLLAR && (i == 0 || input[i - 1] != BACK_SLASH))
-			handle_unquoted_dollar(input, &new_input, &i);
+			handle_unquoted_dollar(env, input, &new_input, &i);
 		else
 		{
 			handle_unquoted_token(input, &new_input, &i);

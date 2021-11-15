@@ -38,7 +38,7 @@ char	*expand_dquoted_token(ENV, char *tok)
 	while (i < len)
 	{
 		if (tok[i] == DOLLAR)
-			val = handle_dollar_sign(tok, &i);
+			val = handle_dollar_sign(env, tok, &i);
 		else
 		{
 			val = sub_until_chars(tok, &i, "$");
@@ -54,14 +54,14 @@ char	*expand_dquoted_token(ENV, char *tok)
 	return (new_tok);
 }
 
-char *handle_dollar_sign(char *tok, int *i)
+char *handle_dollar_sign(t_env *env, char *tok, int *i)
 {
 	char *val;
 	char *var;
 
 	val = NULL;
 	var = NULL;
-	if (tok[*i + 1] == DOLLAR)
+	if (tok[*i + 1] == DOLLAR) //???????? getpid is forbidden.. in this case write it literally
 	{
 		val = int_to_str(getpid());
 		(*i)++;
@@ -74,7 +74,7 @@ char *handle_dollar_sign(char *tok, int *i)
 		*i -= (tok[*i] != 0);
 		if (var)
 		{
-			val = str_dup(getenv(var)); //does not allocate? so i shud str_dup it?
+			val = get_env(env, var);
 			safe_free((void **)&var);
 		}
 	}

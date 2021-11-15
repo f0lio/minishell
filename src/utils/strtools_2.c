@@ -43,8 +43,6 @@ BOOL	line_is_whitespaces(char *line)
 	return (TRUE);
 }
 
-
-
 char	*str_dup(const char *str)
 {
 	size_t			i;
