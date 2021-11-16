@@ -106,7 +106,11 @@ int	treat_exec_token(char **path, t_simpcmd scmd, char **paths)
 	else
 		*path = str_dup(scmd.tokarr[0]);
 	if (!*path)
+	{
+		// fprintf(stderr, "%s: %s: %s\n", SHELL_NAME, scmd.tokarr[0], ERR_CMD_NOT_FOUND);
 		printf("%s: %s: %s\n", SHELL_NAME, scmd.tokarr[0], ERR_CMD_NOT_FOUND);
+		// fflush(stdout);
+	}
 	if (!*path || ret == 127)
 		return (ret);
 	return (0);
@@ -213,6 +217,8 @@ void	redirect_commands(t_command *command, t_env *env)
 	i = -1;
 	while (++i <= command->pipe_count)
 	{
+		if (!command->scmd[i].tokarr[0])
+			break ;
 		command->scmd[i].isbuiltin = isbuiltin(command->scmd[i].tokarr[0]);
 		if (!treat_exec_token(&path, command->scmd[i], paths))
 		{
