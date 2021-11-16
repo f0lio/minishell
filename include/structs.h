@@ -97,6 +97,7 @@ typedef struct s_env
 	int 		argc;
 	char 		**argv;
 	char 		**env_var;
+	int			exitcode;
 	t_envvar	*envll;
 	t_file		*history;
 	t_input		*input;

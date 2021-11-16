@@ -44,27 +44,41 @@ BOOL            command_is_valid(ENV, t_command *cmd);
 void			cast_cmd(t_command **commands, int cmdcout, t_env *env);
 // Pipage
 void			search_pipes(t_command *command);
-void			pipe_this(t_command *command);
+int				pipe_this(t_command *command);
+void			redirect_stdio(t_command *command, int i);
+char			**token_to_arr(t_token **tokens, int tokcout);
+char			*search_cmd(char *cmd, char **paths);
+int				search_path(char *path);
+void			exec(char *path, t_command *command, int i, t_envvar *env);
+void			closefdfree(t_command *command, char ***paths);
+int				execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en);
+
 // Apex strtools
+int				ft_strlen(char *str);
 char			*ft_substr(char *s, int start, size_t len);
 char			**ft_split(char *s, char c);
 int				c_w(char *str, char c);
 void			initscmd(t_simpcmd *scmd);
-char			**arrdup(char ***arr, int rm, int free, char *new_elem);
 void			arr_to_ll(char **arr, t_envvar **node);
 char			**ll_to_arr(t_envvar *node);
 t_envvar		*str_to_envv(char *str);
 char			**strcut(char *str, char c);
 char			*randname(void);
+int				rediro(char *tok, int j, t_simpcmd *scmd);
+int				rediri(char *tok, t_simpcmd *scmd);
+int				heredoc(char *eof, t_simpcmd *scmd);
+void			print_err(char *s1, char *s2, char *s3, char *s4);
+void			ft_putnbr(long nbr, int base_len, char *base);
+long			my_atoi(char *str);
 
 // Builtins
-void			echo(t_simpcmd *scmd);
+void			echo(t_simpcmd *scmd, int exitcode);
 void			pwd(t_simpcmd *scmd);
 void			cd(t_simpcmd *scmd);
 void			env(t_envvar *en);
 void			unset(t_envvar *en, t_simpcmd *scmd);
-void			export(t_envvar *en, t_simpcmd *scmd);
-void			my_exit(t_env **env, int pipenum);
+int				export(t_envvar *en, t_simpcmd *scmd);
+int				my_exit(t_env *env, t_simpcmd *scmd, int pipenum, int ex);
 
 // Lexer
 // int             lex_tokens(t_command **commands, int cmds_count);

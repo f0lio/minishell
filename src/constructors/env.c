@@ -11,12 +11,8 @@ t_env   *init_env(int argc, char **argv, char **env_var)
     MALLOC(env->input);
     env->env_var = env_var;
 	arr_to_ll(env_var, &env->envll);
-	// printf("%s=%s\n", env->envll->name, env->envll->content);
     env->commands = NULL;
     env->cmds_count = 0;
-	// this global variable g_stdin is a temporary fix
-	// TODO: pass this variable whenever you read from stdin instead of 0.
-	g_stdin = dup(STDIN_FILENO);
 	g_cwd = getcwd(0, 0);
     return (env);
 }
@@ -72,4 +68,19 @@ t_array *new_array(int size)
     while (i < size)
         array->arr[i++] = -1;
     return (array);
+}
+
+void	initscmd(t_simpcmd *scmd)
+{
+	scmd->isbuiltin = 0;
+	scmd->biexitstatus = -1;
+	scmd->pid = 0;
+	scmd->isappend = 0;
+	scmd->heredoc = 0;
+	scmd->infile = 0;
+	scmd->outfile = 0;
+	scmd->stdio[0] = 0;
+	scmd->stdio[1] = 0;
+	scmd->pipe[0] = 0;
+	scmd->pipe[1] = 0;
 }

@@ -16,7 +16,7 @@ int repl(t_env *env)
 		put_str("exit\n");
 		destroy_env(env);
 		// system("leaks minishell");
-		exit(EXIT_SUCCESS);
+		exit(env->exitcode);
 	}
 	if (!line_is_whitespaces(env->input->line))
 		add_history(env->input->line);

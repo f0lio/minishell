@@ -25,6 +25,5 @@
 // {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
 
 char	*g_cwd;
-int		g_stdin;
 
 #endif

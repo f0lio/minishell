@@ -53,6 +53,9 @@
 # define ERR_SYNTAX         "invalid syntax"
 # define ERR_INPUT          "invalid input"
 # define ERR_CMD_NOT_FOUND	"command not found"
+# define ERR_TOO_MANY_ARGS	"too many arguments"
+# define ERR_NUM_WRONG		"numeric argument required"
+# define ERR_INVALID_ENVV	"not a valid identifier"
 
 // Temporary macros
 //////////////////////////////////////////////////////////
