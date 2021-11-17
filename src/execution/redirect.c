@@ -2,12 +2,18 @@
 
 int	isbuiltin(char *cmd)
 {
-	int	i;
+	int		i;
+	char	**fme;
 
 	i = -1;
-	while (BUILTINS[++i])
-		if (str_cmp(cmd, BUILTINS[i]))
+	fme = ft_split(BUILTINS, ':');
+	while (fme[++i])
+	{
+		if (str_cmp(cmd, fme[i]))
 			return (TRUE);
+		safe_free((void **)&fme[i]);
+	}
+	safe_free((void **)&fme);
 	return (FALSE);
 }
 

@@ -4,13 +4,13 @@
 # undef BUFF_SIZE
 # define BUFF_SIZE 32
 # ifndef OPEN_MAX
-#  define OPEN_MAX 512
+# define OPEN_MAX 512
 # endif
 
 # define SHELL_NAME			"minishell"
 # define PROMPT				"minishell$ "
 # define HISTORY_FILE       ".minishell_history"
-# define BUILTINS			((char *[]){"echo", "pwd", "cd", "env", "unset", "export", "exit", 0})
+# define BUILTINS			"echo:pwd:cd:env:unset:export:exit"
 # define HERE_DOC_FILE		"/tmp/msh_heredoc"
 
 # define BOOL				char

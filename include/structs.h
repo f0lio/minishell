@@ -1,22 +1,16 @@
 #ifndef STRUCTS_H
-#define STRUCTS_H
-typedef char t_bool;
+# define STRUCTS_H
 
-typedef struct		s_node
+typedef char	t_bool;
+
+typedef struct s_node
 {
 	struct s_node	*prev;
 	void			*data;
 	struct s_node	*next;
 }					t_node;
 
-typedef struct s_btree
-{
-	void *data;
-	struct s_btree *r;
-	struct s_btree *l;
-} t_btree;
-
-typedef struct	s_file
+typedef struct s_file
 {
 	int			fd;
 	char		*path;
@@ -29,7 +23,7 @@ typedef struct s_array
 {
 	int	*arr;
 	int	size;
-} t_array;
+}				t_array;
 
 typedef struct s_envvar
 {
@@ -37,16 +31,16 @@ typedef struct s_envvar
 	char			*name;
 	char			*content;
 	struct s_envvar	*next;
-} t_envvar;
+}				t_envvar;
 
-typedef struct 	s_token
+typedef struct s_token
 {
-	char		*tok;	//"cd" ";"
-	char		type; 	//BUILTIN, ARG, SEP, "PIPE" (macors are better)
+	char		*tok;
+	char		type;
 	size_t		len;
 	int			order;
 	t_bool		quoted;
-} 				t_token;
+}				t_token;
 
 /*
 ** -tokens:	list of command tokens ["ls", "-la", "file"]
@@ -55,7 +49,7 @@ typedef struct 	s_token
 **			if (ret == ZERO && sep == "&&") then stop executing.
 */
 
-typedef struct	s_simpcmd
+typedef struct s_simpcmd
 {
 	int			isbuiltin;
 	int			biexitstatus;
@@ -70,7 +64,7 @@ typedef struct	s_simpcmd
 	pid_t		pid;
 }				t_simpcmd;
 
-typedef struct	s_command
+typedef struct s_command
 {
 	char		*cmd;
 	t_token		**tokens;
@@ -84,7 +78,7 @@ typedef struct	s_command
 	t_bool		sep;
 }				t_command;
 
-typedef struct	s_input
+typedef struct s_input
 {
 	char		*line;
 	size_t		len;
@@ -94,9 +88,9 @@ typedef struct	s_input
 typedef struct s_env
 {
 	BOOL		state;
-	int 		argc;
-	char 		**argv;
-	char 		**env_var;
+	int			argc;
+	char		**argv;
+	char		**env_var;
 	int			exitcode;
 	t_envvar	*envll;
 	t_file		*history;
