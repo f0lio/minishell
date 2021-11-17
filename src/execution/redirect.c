@@ -95,7 +95,6 @@ void	redirect_commands(t_command *command, t_env *env)
 		if (WIFSIGNALED(j))
 			env->exitcode = WTERMSIG(j) + 128;
 	}
-	printf("%d\n", env->exitcode);
 }
 
 void	cast_cmd(t_command **commands, int cmdcout, t_env *env)
