@@ -1,33 +1,5 @@
 #include "minishell.h"
 
-// temporary file because existing split func needed some tweaks
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_substr(char *s, int start, size_t len)
-{
-	int		i;
-	char	*ret;
-
-	i = 0;
-	if (!s)
-		return (0);
-	if (start > ft_strlen(s))
-		len = 0;
-	ret = (char *)malloc(len + 1);
-	while (s[start] && i < (int)len)
-		ret[i++] = s[start++];
-	ret[i] = '\0';
-	return (ret);
-}
-
 int	c_w(char *str, char c)
 {
 	int	i;
@@ -87,7 +59,6 @@ int	len_str(char *s, int i, char c)
 char	**ft_split(char *s, char c)
 {
 	char	**cpy;
-	int		len;
 	int		k;
 	int		i;
 	int		start;
@@ -99,14 +70,15 @@ char	**ft_split(char *s, char c)
 	cpy = malloc(sizeof(char *) * (c_w(s, c) + 1));
 	while (s[i])
 	{
-		len = 0;
 		i += s_p(&s[i], c);
 		start = i;
-		len = len_str(s, i, c);
-		i += len;
-		if (len)
-			if (!(cpy[++k] = ft_substr(s, start, len)))
+		if (len_str(s, i, c))
+		{
+			cpy[++k] = ft_substr(s, start, len_str(s, i, c));
+			if (!(cpy[k]))
 				return (freemem(cpy));
+		}
+		i += len_str(s, i, c);
 	}
 	cpy[++k] = 0;
 	return (cpy);

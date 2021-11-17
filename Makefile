@@ -19,8 +19,17 @@ TOKENIZER			=	tokenize.c tokenize_quoted.c utils.c
 SYNTAX_ANALYSER			= analyse_syntax.c
 
 EXECUTION			=	redirect.c\
+						redirio.c\
+						prep.c\
+						exec.c\
 						apex_strtools.c\
+						strtools.c\
 						pipe.c\
+						pipe2.c\
+						error.c\
+						b_echo.c\
+						b_export.c\
+						b_unset.c\
 						builtins.c\
 						tools.c
 
