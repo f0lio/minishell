@@ -3,18 +3,20 @@
 int	isbuiltin(char *cmd)
 {
 	int		i;
+	int		j;
 	char	**fme;
 
 	i = -1;
+	j = FALSE;
 	fme = ft_split(BUILTINS, ':');
 	while (fme[++i])
 	{
 		if (str_cmp(cmd, fme[i]))
-			return (TRUE);
+			j = TRUE;
 		safe_free((void **)&fme[i]);
 	}
 	safe_free((void **)&fme);
-	return (FALSE);
+	return (j);
 }
 
 int	treat_exec_token(char **path, t_simpcmd scmd, char **paths)
@@ -82,11 +84,18 @@ void	redirect_commands(t_command *command, t_env *env)
 	paths = ft_split(envv, ':');
 	scmd_loop(command, env, paths);
 	i = -1;
-	j = 0;
 	while (++i <= command->pipe_count)
+	{
+		j = 0;
 		waitpid(command->scmd[i].pid, &j, 0);
+	}
 	if (j)
+	{
 		env->exitcode = WEXITSTATUS(j);
+		if (WIFSIGNALED(j))
+			env->exitcode = WTERMSIG(j) + 128;
+	}
+	printf("%d\n", env->exitcode);
 }
 
 void	cast_cmd(t_command **commands, int cmdcout, t_env *env)
