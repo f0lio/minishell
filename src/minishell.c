@@ -6,20 +6,17 @@
 */
 int repl(t_env *env)
 {
-	int		ret = 0;
-	char	*input;
-	size_t	len;
-
 	env->input->line = readline(PROMPT);
 	if (env->input->line == NULL)
 	{
-		put_str("exit\n");
+		put_str("exit");
 		destroy_env(env);
 		// system("leaks minishell");
 		exit(EXIT_SUCCESS);
 	}
-	if (!line_is_whitespaces(env->input->line))
-		add_history(env->input->line);
+	if (line_is_whitespaces(env->input->line))
+		return 0;
+	add_history(env->input->line);
 	env->input->len = str_len(env->input->line);
 	expand_input(env);
 	tokenize_input(env);
@@ -31,15 +28,14 @@ int repl(t_env *env)
 
 int main(int argc, char **argv, char **env_vars)
 {
-	t_env	*env;
+	t_env	env;
 
-	// setmemlimit(1); // (supposedly) limits memory to avoid stupid crashes
-	env = init_env(argc, argv, env_vars);
-	signal(SIGINT, handle_interuption);
+	init_env(&env, argc, argv, env_vars);
 	while (1)
 	{
-		repl(env);
-		reset_data(env);
+		signal(SIGINT, handle_interuption);
+		repl(&env);
+		reset_data(&env);
 	}
 	return (0);
 }

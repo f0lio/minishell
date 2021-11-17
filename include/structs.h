@@ -42,7 +42,7 @@ typedef struct s_envvar
 typedef struct 	s_token
 {
 	char		*tok;	//"cd" ";"
-	char		type; 	//BUILTIN, ARG, SEP, "PIPE" (macors are better)
+	char		type; 	//BUILTIN, ARG, CMD_SEP, "PIPE" (macors are better)
 	size_t		len;
 	int			order;
 	t_bool		quoted;
@@ -52,7 +52,7 @@ typedef struct 	s_token
 ** -tokens:	list of command tokens ["ls", "-la", "file"]
 ** -
 ** -ret		return value of the command,
-**			if (ret == ZERO && sep == "&&") then stop executing.
+**			if (ret == ZERO && CMD_SEP == "&&") then stop executing.
 */
 
 typedef struct	s_simpcmd
@@ -80,8 +80,8 @@ typedef struct	s_command
 	char		**tokarr;
 	int			pipe_count;
 	int			*pipe_location;
-	t_bool		ret;
-	t_bool		sep;
+	BOOL		ret;
+	BOOL		sep;
 }				t_command;
 
 typedef struct	s_input

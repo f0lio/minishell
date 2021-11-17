@@ -14,10 +14,6 @@ void    print_array(t_array *arr, t_bool minus)
 
 void    print_tokens(t_token **tokens, int count)
 {
-    
-    for (size_t i = 0; i < count; i++)
-    {
-        printf("@> [%s]\t\t[%d]\n", (char*)(tokens[i]->tok), tokens[i]->quoted);
-    }
-    
+	for (size_t i = 0; i < count; i++)
+		printf("@> [%s]%16.c[%d]\n", (char*)(tokens[i]->tok), ' ', tokens[i]->quoted);
 }

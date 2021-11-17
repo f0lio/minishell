@@ -123,6 +123,8 @@ t_envvar	*str_to_envv(char *str)
 	tmp = strcut(str, '=');
 	ev->name = tmp[0];
 	ev->content = tmp[1];
+	safe_free((void **)&tmp[0]);
+	safe_free((void **)&tmp[1]);
 	safe_free((void **)&tmp);
 	return (ev);
 }

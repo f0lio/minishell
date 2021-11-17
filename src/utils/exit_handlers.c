@@ -1,34 +1,36 @@
 
 #include "minishell.h"
 
-void    exit_program(ENV, int exit_code)
+void	exit_program(ENV, int exit_code)
 {
-    //free memory
-    exit(exit_code);
+	//free memory
+	exit(exit_code);
 }
 
-
-void    destroy_env_vars(t_envvar **vars)
+void	destroy_env_vars(t_envvar **vars)
 {
-    t_envvar      *p1;
-    t_envvar      *p2;
+	t_envvar	*it;
+	t_envvar	*p;
 
-    if (*vars == NULL)
-        return ;
-	p1 = *vars;
-    while (p1->prev)
-    	p1 = p1->prev;
-    while (p1)
-    {
-		p2 = p1->next;
-		safe_free((void **)&p1->content);
-		safe_free((void **)&p1->name);
-		safe_free((void **)&p1);
-		p1 = p2;
-    }
+	if (*vars == NULL)
+		return ;
+	it = *vars;
+	while (it->prev)
+		it = it->prev;
+	
+	return;
+	
+	while (it)
+	{
+		safe_free((void **)&it->content);
+		safe_free((void **)&it->name);
+		p = it->next;
+		safe_free((void **)&it);
+		it = p;
+	}
 }
 
-void    destroy_env(ENV)
+void	destroy_env(t_env *env)
 {
 	reset_data(env);
 	destroy_env_vars(&env->envll);

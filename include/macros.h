@@ -26,7 +26,7 @@
 # define DOUBLE_QT			'"'
 # define BACK_SLASH			'\\'
 # define EOL				'\n'
-# define SEP				';'
+# define CMD_SEP			';'
 # define PIPE				'|'
 # define DOLLAR				'$'
 

@@ -4,31 +4,41 @@
 # include "minishell.h"
 
 // main
-int             repl(ENV);
-int             read_input(char **input);
-void            show_prompt(char *msg);
+int				repl(ENV);
+int				read_input(char **input);
+void			show_prompt(char *msg);
 
 // Constructors
-t_token         *new_token(char *tok);
-t_array         *new_array(int size);
-t_env           *init_env(int argc, char **argv, char **env_var);
-t_command       **create_commands_array(t_node *list, int size);
-t_token         **create_tokens_array(t_node *list, int size);
+t_token			*new_token(char *tok);
+t_array			*new_array(int size);
+void			init_env(t_env *env, int argc, char **argv, char **env_var);
+t_command		**create_commands_array(t_node *list, int size);
+t_token			**create_tokens_array(t_node *list, int size);
 
 // Destructors 
-void            reset_data(ENV);
-void            destroy_command(void *command);
-void            destroy_token(void *token);
-void            safe_free(void **ptr);
+void			reset_data(ENV);
+void			destroy_command(void *command);
+void			destroy_token(void *token);
+void			safe_free(void **ptr);
 
 // Tokenizer
-BOOL            tokenize_input(ENV);
-t_token         *get_token(ENV);
-t_token         *tokenize_quoted_cmd(ENV, t_command *cmd);
-t_token         *tokenize_single_quoted(ENV, t_command *cmd);
-t_token         *tokenize_double_quoted(ENV, t_command *cmd);
+BOOL			tokenize_input(ENV);
+void			tokenizer(ENV,t_node **cmds_list, t_node **tokens_list);
+void			add_new_token(
+					ENV,
+					t_node **tokens_list,
+					int *tokens_count);
+void			add_new_cmd(
+					ENV,
+					t_node **cmds_list,
+					t_node **tokens_list,
+					int *tokens_count);
+t_token			*get_token(ENV);
+t_token			*tokenize_quoted_cmd(ENV, t_command *cmd);
+t_token			*tokenize_single_quoted(ENV, t_command *cmd);
+t_token			*tokenize_double_quoted(ENV, t_command *cmd);
 
-t_command       *create_command(t_node *tokens, int count);
+t_command		*create_command(t_node *tokens, int count);
 
 // Commands
 
@@ -142,7 +152,7 @@ BOOL		analyse_syntax(t_env *env);
 
 // Errors
 BOOL			raise_error(ENV, char *msg);
-void			destroy_env(ENV);
+void			destroy_env(t_env *env);
 
 // File tools
 BOOL            create_file(char *path);
