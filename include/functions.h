@@ -74,10 +74,10 @@ long			my_atoi(char *str);
 // Builtins
 void			echo(t_simpcmd *scmd, int exitcode);
 void			pwd(t_simpcmd *scmd);
-void			cd(t_simpcmd *scmd);
+int				cd(t_simpcmd *scmd);
 void			env(t_envvar *en);
-void			unset(t_envvar *en, t_simpcmd *scmd);
-int				export(t_envvar *en, t_simpcmd *scmd);
+void			unset(t_envvar *env, t_simpcmd *scmd, int *exitcode);
+void			exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode);
 int				my_exit(t_env *env, t_simpcmd *scmd, int pipenum, int ex);
 
 // Lexer

@@ -45,19 +45,24 @@ void	exec(char *path, t_command *command, int i, t_envvar *env)
 
 int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
 {
+	int	ret;
+
+	ret = 0;
 	if (str_cmp(scmd->tokarr[0], "echo"))
 		echo(scmd, en->exitcode);
 	if (str_cmp(scmd->tokarr[0], "cd"))
-		cd(scmd);
+		ret = cd(scmd);
 	if (str_cmp(scmd->tokarr[0], "pwd"))
 		pwd(scmd);
 	if (str_cmp(scmd->tokarr[0], "env"))
 		env(en->envll);
 	if (str_cmp(scmd->tokarr[0], "unset"))
-		unset(en->envll, scmd);
+		unset(en->envll, scmd, &en->exitcode);
 	if (str_cmp(scmd->tokarr[0], "export"))
-		export(en->envll, scmd);
+		exportt(en->envll, scmd, &en->exitcode);
 	if (str_cmp(scmd->tokarr[0], "exit"))
 		my_exit(en, scmd, command->pipe_count, en->exitcode);
+	if (ret)
+		en->exitcode = ret;
 	return (1);
 }

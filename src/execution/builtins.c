@@ -21,7 +21,7 @@ void	env(t_envvar *env)
 	}
 }
 
-void	cd(t_simpcmd *scmd)
+int	cd(t_simpcmd *scmd)
 {
 	char	*path;
 
@@ -30,9 +30,13 @@ void	cd(t_simpcmd *scmd)
 	else
 		path = scmd->tokarr[1];
 	if (chdir(path))
+	{
 		print_err(scmd->tokarr[0], scmd->tokarr[1], strerror(errno), 0);
+		return (1);
+	}
 	else
 		g_cwd = getcwd(0, 0);
+	return (0);
 }
 
 int	check_syntax(t_simpcmd *scmd, int *exitcode)

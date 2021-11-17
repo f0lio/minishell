@@ -10,6 +10,7 @@ int repl(t_env *env)
 	char	*input;
 	size_t	len;
 
+	// env->input->line = str_dup("cd aslkmd");
 	env->input->line = readline(PROMPT);
 	if (env->input->line == NULL)
 	{

@@ -17,7 +17,23 @@ void	rm_link_iter(t_envvar **env, t_envvar **start)
 	*env = tmp;
 }
 
-void	unset(t_envvar *env, t_simpcmd *scmd)
+int	check_valid_id(char *str, int *exitcode)
+{
+	int		len;
+
+	len = 0;
+	while ((str[len] != '=') && (str[len] != ' ') && str[len])
+		len++;
+	if (!len || (str[len] == ' ') || (str[len] == '='))
+	{
+		*exitcode = 1;
+		print_err("unset", str, ERR_INVALID_ENVV, 0);
+		return (1);
+	}
+	return (0);
+}
+
+void	unset(t_envvar *env, t_simpcmd *scmd, int *exitcode)
 {
 	int			j;
 	t_envvar	*start;
@@ -29,6 +45,8 @@ void	unset(t_envvar *env, t_simpcmd *scmd)
 	while (scmd->tokarr[++j])
 	{
 		env = start;
+		if (check_valid_id(scmd->tokarr[j], exitcode))
+			continue ;
 		while (env)
 		{
 			if (str_cmp(env->name, scmd->tokarr[j]))
