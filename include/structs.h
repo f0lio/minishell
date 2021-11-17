@@ -21,8 +21,8 @@ typedef struct s_file
 
 typedef struct s_array
 {
-	int	*arr;
-	int	size;
+	int			*arr;
+	int			size;
 }				t_array;
 
 typedef struct s_envvar
@@ -67,7 +67,7 @@ typedef struct s_simpcmd
 typedef struct s_command
 {
 	char		*cmd;
-	t_token		**tokens;
+	t_token		*tokens;
 	t_simpcmd	*scmd;
 	int			origio[2];
 	int			tokens_count;
@@ -94,8 +94,8 @@ typedef struct s_env
 	int			exitcode;
 	t_envvar	*envll;
 	t_file		*history;
-	t_input		*input;
-	t_command	**commands;
+	t_input		input;
+	t_command	*commands;
 	int			cmds_count;
 }				t_env;
 

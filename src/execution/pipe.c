@@ -47,7 +47,7 @@ int	norm_topple(t_command *command, int i, int j)
 {
 	int	ret;
 
-	if (command->tokens[!!i * (command->pipe_location[i - 1] + 1) + j]->quoted)
+	if (command->tokens[!!i * (command->pipe_location[i - 1] + 1) + j].quoted)
 		return (0);
 	if (str_cmp(command->scmd[i].tokarr[j], ">")
 		|| str_cmp(command->scmd[i].tokarr[j], ">>"))

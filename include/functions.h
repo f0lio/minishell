@@ -11,8 +11,8 @@ void			show_prompt(char *msg);
 t_token			*new_token(char *tok);
 t_array			*new_array(int size);
 void			init_env(t_env *env, int argc, char **argv, char **env_var);
-t_command		**create_commands_array(t_node *list, int size);
-t_token			**create_tokens_array(t_node *list, int size);
+t_command		*create_commands_array(t_node *list, int size);
+t_token			*create_tokens_array(t_node *list, int size);
 
 // Destructors 
 void			reset_data(ENV);
@@ -50,12 +50,12 @@ t_command		*get_command(ENV);
 BOOL			command_is_valid(ENV, t_command *cmd);
 
 // Execution
-void			cast_cmd(t_command **commands, int cmdcout, t_env *env);
+void			cast_cmd(t_command *commands, int cmdcout, t_env *env);
 // Pipage
 void			search_pipes(t_command *command);
 int				pipe_this(t_command *command);
 void			redirect_stdio(t_command *command, int i);
-char			**token_to_arr(t_token **tokens, int tokcout);
+char			**token_to_arr(t_token *tokens, int tokcout);
 char			*search_cmd(char *cmd, char **paths);
 int				search_path(char *path);
 void			exec(char *path, t_command *command, int i, t_envvar *env);

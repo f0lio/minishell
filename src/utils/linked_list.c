@@ -25,6 +25,10 @@ t_node  *new_node(void *data)
 */
 t_node	*push_back(t_node **list, void *data)
 {
+
+
+	
+
 	t_node	*node;
 
 	if (!data)
@@ -118,17 +122,27 @@ void	destroy_list(LIST)
 
 void	delete_list(LIST) 
 { 
-   t_node *current;
-   t_node *next;
+	t_node	*current;
+	t_node	*next;
+	t_token	*t;
 
-   current = *list; 
-   while (current != NULL)  
-   { 
-	   next = current->next; 
-	   safe_free((void **)&current);
-	   current = next; 
-   } 
-   *list = NULL; 
+	current = *list; 
+	while (current)
+	{
+		t = (t_token *)current->data;
+		printf("#[%s], %d\n", t->tok, t->quoted);
+
+		next = current->next;
+
+		printf("ADDR[%p]\n", current);
+		
+		// safe_free((void **)&current->data);
+		safe_free((void **)&current);
+		
+		printf("ADDR[%p]\n", current);
+		current = next;
+	} 
+	*list = NULL; 
 }
 
 /**

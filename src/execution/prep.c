@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	**token_to_arr(t_token **tokens, int tokcout)
+char	**token_to_arr(t_token *tokens, int tokcout)
 {
 	int		i;
 	char	**arr;
@@ -9,7 +9,7 @@ char	**token_to_arr(t_token **tokens, int tokcout)
 	arr = malloc(sizeof(char *) * (tokcout + 1));
 	while (i < tokcout)
 	{
-		arr[i] = tokens[i]->tok;
+		arr[i] = tokens[i].tok;
 		i++;
 	}
 	arr[i] = 0;

@@ -5,7 +5,6 @@
 void	init_env(t_env *env, int argc, char **argv, char **env_var)
 {
     env->env_var = env_var;
-	env->input = malloc(sizeof(t_input));
 	arr_to_ll(env_var, &env->envll);
     env->commands = NULL;
     env->cmds_count = 0;

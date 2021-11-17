@@ -17,13 +17,10 @@ void	destroy_env_vars(t_envvar **vars)
 	it = *vars;
 	while (it->prev)
 		it = it->prev;
-	
-	return;
-	
 	while (it)
 	{
-		safe_free((void **)&it->content);
-		safe_free((void **)&it->name);
+		safe_free((void **)&(it->content));
+		safe_free((void **)&(it->name));
 		p = it->next;
 		safe_free((void **)&it);
 		it = p;

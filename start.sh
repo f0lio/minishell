@@ -6,4 +6,4 @@ then
     echo "Building $imageName"
     docker build -t $imageName .
 fi
-docker run --rm -it -m 1g -v "$(pwd):/home/minishell" $imageName
+docker run --rm -it -m 1g -v "/home/minishell:$(pwd)" $imageName

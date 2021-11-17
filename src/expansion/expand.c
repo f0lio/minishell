@@ -8,9 +8,9 @@ char 	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
 	int		i;
 
 	new_input = str_dup("");
-	input = env->input->line;
+	input = env->input.line;
 	i = 0;
-	while (i < env->input->len)
+	while (i < env->input.len)
 	{
 		if (input[i] == SINGLE_QT)
 			*sq = handle_sinqle_quote(input, &new_input, &i);
@@ -41,8 +41,8 @@ BOOL expand_input(t_env *env)
 	ret = 0;
 	if (sq || dq)
 		ret = raise_error(env, ERR_SYNTAX);
-	safe_free((void **)&env->input->line);
-	env->input->line = new_input;
-	env->input->len = str_len(new_input);
+	safe_free((void **)&env->input.line);
+	env->input.line = new_input;
+	env->input.len = str_len(new_input);
 	return ret;
 }

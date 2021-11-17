@@ -44,7 +44,9 @@ SRC					=	src/minishell.c\
 						$(UTILS:%.c=./src/utils/%.c)\
 						$(EXECUTION:%.c=./src/execution/%.c)
 
-COMPILE	= $(CC) $(SRC) $(INCLUDES) -lreadline -o $(NAME) -g #-I dbg #-fsanitize=address 
+READLINE			=	-lreadline -L /Users/$(USER)/goinfre/.brew/opt/readline/lib -I /Users/$(USER)/goinfre/.brew/opt/readline/include
+
+COMPILE				= $(CC) $(SRC) $(INCLUDES) $(READLINE) -o $(NAME) -g #-fsanitize=address 
 
 all: $(NAME)
 
@@ -72,7 +74,6 @@ re: fclean all
 
 #dev rules
 sandbox:
-	@$(NAME)
 	@sh ./start.sh
 
 check_leaks: $(NAME)

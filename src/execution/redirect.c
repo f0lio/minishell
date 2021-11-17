@@ -52,6 +52,7 @@ void	scmd_loop(t_command *command, t_env *env, char **paths)
 	path = NULL;
 	while (++i <= command->pipe_count)
 	{
+
 		if (!command->scmd[i].tokarr[0])
 			continue ;
 		command->scmd[i].isbuiltin = isbuiltin(command->scmd[i].tokarr[0]);
@@ -97,11 +98,11 @@ void	redirect_commands(t_command *command, t_env *env)
 	}
 }
 
-void	cast_cmd(t_command **commands, int cmdcout, t_env *env)
+void	cast_cmd(t_command *commands, int cmdcout, t_env *env)
 {
 	int	i;
 
 	i = 0;
 	while (i < cmdcout)
-		redirect_commands(commands[i++], env);
+		redirect_commands(&commands[i++], env);
 }

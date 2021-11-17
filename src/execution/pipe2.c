@@ -16,7 +16,7 @@ int	count_pipes(t_command *command)
 	c = 0;
 	while (i < command->tokens_count)
 	{
-		if (is_pipe(command->tokens[i]))
+		if (is_pipe(&(command->tokens[i])))
 			c++;
 		i++;
 	}
@@ -35,9 +35,9 @@ void	search_pipes(t_command *command)
 	while (j < command->tokens_count)
 	{
 		command->pipe_location[p] = -1;
-		if (is_pipe(command->tokens[j]))
+		if (is_pipe(&(command->tokens[j])))
 		{
-			command->tokens[j]->type = TYPE_PIPE;
+			command->tokens[j].type = TYPE_PIPE;
 			command->pipe_location[p] = j;
 			p++;
 		}

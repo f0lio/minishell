@@ -6,18 +6,18 @@
 */
 int repl(t_env *env)
 {
-	env->input->line = readline(PROMPT);
-	if (env->input->line == NULL)
+	env->input.line = readline(PROMPT);
+	if (env->input.line == NULL)
 	{
 		put_str("exit");
 		destroy_env(env);
 		// system("leaks minishell");
 		exit(env->exitcode);
 	}
-	if (line_is_whitespaces(env->input->line))
+	if (line_is_whitespaces(env->input.line))
 		return 0;
-	add_history(env->input->line);
-	env->input->len = str_len(env->input->line);
+	add_history(env->input.line);
+	env->input.len = str_len(env->input.line);
 	expand_input(env);
 	tokenize_input(env);
 	analyse_syntax(env);
@@ -35,6 +35,8 @@ int main(int argc, char **argv, char **env_vars)
 	{
 		signal(SIGINT, handle_interuption);
 		repl(&env);
+		// sleep(1);
+		// printf("OK\n");
 		reset_data(&env);
 	}
 	return (0);
