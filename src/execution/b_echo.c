@@ -1,5 +1,5 @@
 #include "minishell.h"
-
+//  echo -nnnnnnnnnnnnnnnnnn -n- helo
 void	echo(t_simpcmd *scmd, int exitcode)
 {
 	int	n;

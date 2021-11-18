@@ -193,7 +193,7 @@ void			exit_program(ENV, int exit_code);
 
 //temporary utils
 void			print_array(t_array *arr, BOOL minus);
-void			print_tokens(t_token **tokens, int count);
+void			print_tokens(t_token *tokens, int count);
 void			print_linked_list(t_node *list);
 void			setmemlimit(int mb);
 

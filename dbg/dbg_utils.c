@@ -33,6 +33,8 @@ void debug_commands(ENV)
 		put_str(RED);
 		printf("-- Command: %d\n", i);
 		put_str(NO_COLOR);
-		print_tokens(&(env->commands[i]).tokens, (env->commands[i]).tokens_count);
+		printf("Count: %d\n", (env->commands[i]).tokens_count);
+		print_tokens(env->commands[i].tokens, (env->commands[i]).tokens_count);
+		printf("------------\n");
 	}
 }

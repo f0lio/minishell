@@ -7,12 +7,15 @@ BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
 	char	*va;
 
 	ret = TRUE;
-	*i += (input[*i] == SINGLE_QT);
-	va = sub_until_chars(input, i, "'");
-	str_fjoin(new_input, va);	
+	*i += (input[*i] == SINGLE_QT); 
+	va = sub_until_chars(input, i, "'"); 
+	str_fjoin(new_input, "'");
+	str_fjoin(new_input, va);
+	str_fjoin(new_input, "'");
 	if (input[*i] == SINGLE_QT)
 		ret = FALSE;
-	*i += (input[*i] == SINGLE_QT);
+	*i += (input[*i] == SINGLE_QT); 
+	safe_free((void **)&va);
 	return (ret);
 }
 

@@ -12,8 +12,8 @@ void    print_array(t_array *arr, t_bool minus)
             DN(arr->arr[i]);
 }
 
-void    print_tokens(t_token **tokens, int count)
+void    print_tokens(t_token *tokens, int count)
 {
 	for (size_t i = 0; i < count; i++)
-		printf("@> [%s]%16.c[%d]\n", (char*)(tokens[i]->tok), ' ', tokens[i]->quoted);
+		printf("@> [%s]%16.c[%d]\n", (char*)(tokens[i].tok), ' ', tokens[i].quoted);
 }

@@ -12,8 +12,8 @@ char 	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
 	i = 0;
 	while (i < env->input.len)
 	{
-		if (input[i] == SINGLE_QT)
-			*sq = handle_sinqle_quote(input, &new_input, &i);
+		if (input[i] == SINGLE_QT) // echo 'a'"hi"
+			*sq = handle_sinqle_quote(input, &new_input, &i); // 'hi' a
 		else if (input[i] == DOUBLE_QT)
 			*dq = handle_double_quote(env, input, &new_input, &i);
 		if (input[i] == DOLLAR && (i == 0 || input[i - 1] != BACK_SLASH))
