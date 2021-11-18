@@ -35,7 +35,10 @@ int	cd(t_simpcmd *scmd)
 		return (1);
 	}
 	else
+	{
+		safe_free((void **)&g_cwd);
 		g_cwd = getcwd(0, 0);
+	}
 	return (0);
 }
 

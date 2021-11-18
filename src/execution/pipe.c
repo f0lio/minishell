@@ -111,6 +111,7 @@ int	pipe_this(t_command *command)
 			if (ret < 0)
 				return (1);
 		}
+		safe_free((void **)&command->scmd[i].quoted);
 	}
 	return (0);
 }

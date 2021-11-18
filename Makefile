@@ -46,7 +46,7 @@ SRC					=	src/minishell.c\
 
 READLINE			=	-lreadline -L /Users/$(USER)/goinfre/.brew/opt/readline/lib -I /Users/$(USER)/goinfre/.brew/opt/readline/include
 
-COMPILE				= $(CC) $(SRC) $(INCLUDES) $(READLINE) -o $(NAME) -g -fsanitize=address 
+COMPILE				= $(CC) $(SRC) $(INCLUDES) $(READLINE) -o $(NAME) -g #-fsanitize=address 
 
 all: $(NAME)
 

@@ -7,6 +7,7 @@
 int repl(t_env *env)
 {
 	env->input.line = readline(PROMPT);
+	// env->input.line = str_dup("ls");
 	if (env->input.line == NULL)
 	{
 		put_str("exit");
@@ -35,9 +36,8 @@ int main(int argc, char **argv, char **env_vars)
 	{
 		signal(SIGINT, handle_interuption);
 		repl(&env);
-		// sleep(1);
-		// printf("OK\n");
 		reset_data(&env);
+		
 	}
 	return (0);
 }

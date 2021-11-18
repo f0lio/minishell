@@ -82,6 +82,7 @@ void	redirect_commands(t_command *command, t_env *env)
 		return ;
 	envv = get_env(env, "PATH");
 	paths = ft_split(envv, ':');
+	safe_free((void **)&envv);
 	scmd_loop(command, env, paths);
 	i = -1;
 	while (++i <= command->pipe_count)

@@ -7,11 +7,13 @@
 # define OPEN_MAX 512
 # endif
 
+
 # define SHELL_NAME			"minishell"
 # define PROMPT				"minishell$ "
 # define HISTORY_FILE       ".minishell_history"
 # define BUILTINS			"echo:pwd:cd:env:unset:export:exit"
 # define HERE_DOC_FILE		"/tmp/msh_heredoc"
+# define SYNTAX_ERR_CODE    258
 
 # define BOOL				char
 # define FALSE				0
