@@ -35,8 +35,8 @@ typedef struct s_envvar
 
 typedef struct s_token
 {
-	char		*tok;	//"cd" ";"
-	char		type; 	//BUILTIN, ARG, CMD_SEP, "PIPE" (macors are better)
+	char		*tok;
+	char		type;
 	size_t		len;
 	int			order;
 	t_bool		quoted;
@@ -58,6 +58,7 @@ typedef struct s_simpcmd
 	char		*infile;
 	char		*outfile;
 	int			isappend;
+	int			*quoted;
 	int			stdio[2];
 	int			pipe[2];
 	int			heredoc;

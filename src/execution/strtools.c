@@ -26,3 +26,33 @@ char	*ft_substr(char *s, int start, size_t len)
 	ret[i] = '\0';
 	return (ret);
 }
+
+int	is_alphatiriblwit(char c, int i)
+{
+	if (i && c >= '0' && c <= '9')
+		return (TRUE);
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (TRUE);
+	return (FALSE);
+}
+
+void	move_redir_down(t_command *command, int i, int j)
+{
+	char	*tmp;
+	int		k;
+	int		l;
+
+	l = 2;
+	while (l--)
+	{
+		k = -1;
+		while (command->scmd[i].tokarr[j + ++k + 1])
+		{
+			tmp = command->scmd[i].tokarr[j + k];
+			command->scmd[i].tokarr[j + k] = command->scmd[i].tokarr[j + k + 1];
+			command->scmd[i].tokarr[j + k + 1] = tmp;
+		}
+		if (!l)
+			command->scmd[i].tokarr[j + k - 1] = NULL;
+	}
+}

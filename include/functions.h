@@ -79,6 +79,9 @@ int				heredoc(char *eof, t_simpcmd *scmd);
 void			print_err(char *s1, char *s2, char *s3, char *s4);
 void			ft_putnbr(long nbr, int base_len, char *base);
 long			my_atoi(char *str);
+int				is_alphatiriblwit(char c, int i);
+void			move_redir_down(t_command *command, int i, int j);
+
 
 // Builtins
 void			echo(t_simpcmd *scmd, int exitcode);

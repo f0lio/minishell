@@ -1,5 +1,29 @@
 #include "minishell.h"
 
+int	*scmd_quoted(t_command *command, int pipe_num)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		*arr;
+
+	i = 0;
+	j = 0;
+	k = command->pipe_location[pipe_num];
+	if (k < 0)
+		k = command->tokens_count;
+	if (pipe_num)
+		j = command->pipe_location[pipe_num - 1] + 1;
+	arr = malloc(sizeof(int) * (k - j + 1));
+	arr[k - j] = -1;
+	while (i < k - j)
+	{
+		arr[i] = command->tokens[i + j].quoted;
+		i++;
+	}
+	return (arr);
+}
+
 char	**scmd_tokarr(t_command *command, int pipe_num)
 {
 	int		i;
@@ -36,6 +60,7 @@ void	scmd_tokarr_loop(t_command *command)
 	while (i <= command->pipe_count)
 	{
 		command->scmd[i].tokarr = scmd_tokarr(command, i);
+		command->scmd[i].quoted = scmd_quoted(command, i);
 		initscmd(&command->scmd[i]);
 		i++;
 	}
@@ -47,7 +72,7 @@ int	norm_topple(t_command *command, int i, int j)
 {
 	int	ret;
 
-	if (command->tokens[!!i * (command->pipe_location[i - 1] + 1) + j].quoted)
+	if (command->scmd[i].quoted[j])
 		return (0);
 	if (str_cmp(command->scmd[i].tokarr[j], ">")
 		|| str_cmp(command->scmd[i].tokarr[j], ">>"))
@@ -58,7 +83,6 @@ int	norm_topple(t_command *command, int i, int j)
 		ret = heredoc(command->scmd[i].tokarr[j + 1], &command->scmd[i]);
 	else
 		return (0);
-	command->scmd[i].tokarr[j] = 0;
 	if (ret)
 		return (-1);
 	return (1);
@@ -69,7 +93,6 @@ int	pipe_this(t_command *command)
 	int		i;
 	int		j;
 	int		ret;
-	char	*tok;
 	t_token	*tk;
 
 	scmd_tokarr_loop(command);
@@ -84,7 +107,7 @@ int	pipe_this(t_command *command)
 		{
 			ret = norm_topple(command, i, j);
 			if (ret)
-				j++;
+				move_redir_down(command, i, j);
 			if (ret < 0)
 				return (1);
 		}

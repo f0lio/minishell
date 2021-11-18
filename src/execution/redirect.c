@@ -52,7 +52,6 @@ void	scmd_loop(t_command *command, t_env *env, char **paths)
 	path = NULL;
 	while (++i <= command->pipe_count)
 	{
-
 		if (!command->scmd[i].tokarr[0])
 			continue ;
 		command->scmd[i].isbuiltin = isbuiltin(command->scmd[i].tokarr[0]);
@@ -81,7 +80,7 @@ void	redirect_commands(t_command *command, t_env *env)
 	command->tokarr = token_to_arr(command->tokens, command->tokens_count);
 	if (pipe_this(command))
 		return ;
-	envv = getenv("PATH");
+	envv = get_env(env, "PATH");
 	paths = ft_split(envv, ':');
 	scmd_loop(command, env, paths);
 	i = -1;

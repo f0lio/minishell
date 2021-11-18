@@ -64,8 +64,6 @@ t_envvar	*str_to_envv(char *str)
 	tmp = strcut(str, '=');
 	ev->name = tmp[0];
 	ev->content = tmp[1];
-	// safe_free((void **)&tmp[0]);
-	// safe_free((void **)&tmp[1]);
 	safe_free((void **)&tmp);
 	return (ev);
 }
@@ -101,7 +99,6 @@ char	**ll_to_arr(t_envvar *node)
 
 	if (!node)
 		return (0);
-
 	while (node->prev)
 		node = node->prev;
 	start = node;

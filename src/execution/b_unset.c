@@ -22,9 +22,9 @@ int	check_valid_id(char *str, int *exitcode)
 	int		len;
 
 	len = 0;
-	while ((str[len] != '=') && (str[len] != ' ') && str[len])
+	while (is_alphatiriblwit(str[len], len) && str[len])
 		len++;
-	if (!len || (str[len] == ' ') || (str[len] == '='))
+	if (!len || (str[len] && !is_alphatiriblwit(str[len], len)))
 	{
 		*exitcode = 1;
 		print_err("unset", str, ERR_INVALID_ENVV, 0);

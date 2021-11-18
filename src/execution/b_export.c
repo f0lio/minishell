@@ -5,9 +5,10 @@ int	go_to_envv(t_envvar **env, char *str, int *exitcode)
 	int		len;
 
 	len = 0;
-	while ((str[len] != '=') && (str[len] != ' ') && str[len])
+	while ((str[len] != '=') && is_alphatiriblwit(str[len], len) && str[len])
 		len++;
-	if (!len || (str[len] == ' '))
+	if (!len || (str[len] && !is_alphatiriblwit(str[len], len)
+			&& (str[len] != '=')))
 	{
 		*exitcode = 1;
 		print_err("export", str, ERR_INVALID_ENVV, 0);
@@ -60,8 +61,9 @@ void	print_envp(t_envvar *env)
 			{
 				put_str("=\"");
 				put_str(env->content);
-				put_str("\"\n");
+				put_char('\"');
 			}
+			put_char('\n');
 		}
 		env = env->next;
 	}
