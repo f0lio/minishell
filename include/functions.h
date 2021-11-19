@@ -2,8 +2,7 @@
 # define FUNCTIONS_H
 # include "minishell.h"
 
-// main
-int				repl(ENV);
+int				repl(t_env *env);
 int				read_input(char **input);
 void			show_prompt(char *msg);
 
@@ -15,40 +14,40 @@ t_command		*create_commands_array(t_node *list, int size);
 t_token			*create_tokens_array(t_node *list, int size);
 
 // Destructors 
-void			reset_data(ENV);
+void			reset_data(t_env *env);
 void			destroy_command(void *command);
 void			destroy_token(void *token);
 void			safe_free(void **ptr);
 
 // Tokenizer
-BOOL			tokenize_input(ENV);
-void			tokenizer(ENV,t_node **cmds_list, t_node **tokens_list);
+BOOL			tokenize_input(t_env *env);
+void			tokenizer(t_env *env, t_node **cmds_list, t_node **tokens_list);
 void			add_new_token(
-					ENV,
+					t_env *env,
 					t_node **tokens_list,
 					int *tokens_count);
 void			add_new_cmd(
-					ENV,
+					t_env *env,
 					t_node **cmds_list,
 					t_node **tokens_list,
 					int *tokens_count);
 t_token			*get_token(t_env *env, char *line);
-t_token			*tokenize_quoted_cmd(ENV, t_command *cmd);
-t_token			*tokenize_single_quoted(ENV, t_command *cmd);
-t_token			*tokenize_double_quoted(ENV, t_command *cmd);
+t_token			*tokenize_quoted_cmd(t_env *env, t_command *cmd);
+t_token			*tokenize_single_quoted(t_env *env, t_command *cmd);
+t_token			*tokenize_double_quoted(t_env *env, t_command *cmd);
 void			clean_from_quotes(t_token *token);
 
 t_command		*create_command(t_node *tokens, int count);
 
 // Commands
 
-BOOL			split_commands(ENV);
+BOOL			split_commands(t_env *env);
 t_command		*new_cmd(void);
-t_command		*get_quoted_command(ENV);
-t_command		*single_quoted_cmd(ENV);
-t_command		*double_quoted_cmd(ENV);
-t_command		*get_command(ENV);
-BOOL			command_is_valid(ENV, t_command *cmd);
+t_command		*get_quoted_command(t_env *env);
+t_command		*single_quoted_cmd(t_env *env);
+t_command		*double_quoted_cmd(t_env *env);
+t_command		*get_command(t_env *env);
+BOOL			command_is_valid(t_env *env, t_command *cmd);
 
 // Execution
 void			cast_cmd(t_command *commands, int cmdcout, t_env *env);
@@ -82,7 +81,6 @@ void			ft_putnbr(long nbr, int base_len, char *base);
 long			my_atoi(char *str);
 int				is_alphatiriblwit(char c, int i);
 void			move_redir_down(t_command *command, int i, int j);
-
 
 // Builtins
 void			echo(t_simpcmd *scmd);
@@ -135,17 +133,17 @@ BOOL			is_bad_quoted(char *str);
 // Linked list functions
 t_node			*new_node(void *data);
 t_node			*get_n_node(t_node *lines, int index);
-t_node			*push_back(LIST, void *data);
-void			push_front(LIST, void *data);
+t_node			*push_back(t_node **list, void *data);
+void			push_front(t_node **list, void *data);
 
 size_t			list_size(t_node *list);
-void			list_iter(LIST, void(*fun)(void *));
-void			destroy_list(LIST);
-void			delete_list(LIST);
+void			list_iter(t_node **list, void (*fun)(void *));
+void			destroy_list(t_node **list);
+void			delete_list(t_node **list);
 
 // Parser
 BOOL			split_by_type(char *buff, t_node **tokens);
-int				tokenize(char *buff, ENV);
+int				tokenize(char *buff, t_env *env);
 
 // Expansion
 
@@ -156,7 +154,7 @@ void			handle_unquoted_dollar(
 BOOL			handle_sinqle_quote(char *input, char **new_input, int *i);
 BOOL			handle_double_quote(
 					t_env *env, char *input, char **new_input, int *i);
-char			*expand_dquoted_token(ENV, char *tok);
+char			*expand_dquoted_token(t_env *env, char *tok);
 char			*handle_dollar_sign(t_env *env, char *tok, int *i);
 char			*parse_variable_name(char *buf, int *i);
 char			*sub_until_chars(char *buf, int *i, char *chars);
@@ -166,10 +164,11 @@ void			handle_backslash(
 
 // Syntaxer
 BOOL			analyse_syntax(t_env *env);
-BOOL			check_next_token(t_env *env, BOOL *flag, int len, t_command *cmd);
+BOOL			check_next_token(
+					t_env *env, BOOL *flag, int len, t_command *cmd);
 
 // Errors
-BOOL			raise_error(ENV, char *msg);
+BOOL			raise_error(t_env *env, char *msg);
 void			destroy_env(t_env *env);
 
 // File tools
@@ -181,10 +180,10 @@ BOOL			write_line(int fd, char *line);
 BOOL			write_lines(int fd, t_node *lines);
 
 // History
-BOOL			is_arrow(ENV);
-BOOL			get_history(ENV);
-BOOL			set_history(ENV);
-void			saveto_history(ENV);
+BOOL			is_arrow(t_env *env);
+BOOL			get_history(t_env *env);
+BOOL			set_history(t_env *env);
+void			saveto_history(t_env *env);
 
 // Signal handlers
 void			handle_interuption(int sig_code);
@@ -192,7 +191,7 @@ void			handle_heredoc_signal(int sig_code);
 BOOL			is_ctrl_d(char *input);
 
 // on exit
-void			exit_program(ENV, int exit_code);
+void			exit_program(t_env *env, int exit_code);
 void			set_exitcode(t_env *env);
 
 #endif

@@ -82,8 +82,8 @@ typedef struct s_command
 typedef struct s_input
 {
 	char		*line;
-	int		len;
-	int		i;
+	int			len;
+	int			i;
 }				t_input;
 
 typedef struct s_env
