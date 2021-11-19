@@ -34,8 +34,8 @@ int	main(int argc, char **argv, char **env_vars)
 	init_env(&env, argc, argv, env_vars);
 	while (1)
 	{
-		signal(SIGINT, handle_interuption);
-		signal(SIGQUIT, handle_interuption);
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, handle_sigquit);
 		if (repl(&env) == SYNTAX_ERR_CODE)
 		{
 			env.exitcode = SYNTAX_ERR_CODE;

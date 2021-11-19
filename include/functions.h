@@ -155,6 +155,8 @@ char			*sub_until_chars(char *buf, int *i, char *chars);
 char			*get_env(t_env *env, char *var_name);
 void			handle_backslash(
 					t_env *env, const char *input, char **new_input, int *i);
+void	handle_sigint(int sig_code);
+void	handle_sigquit(int sig_code);
 
 // Syntaxer
 BOOL			analyse_syntax(t_env *env);

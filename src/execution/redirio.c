@@ -27,6 +27,7 @@ void	heredoc_loop(char *eof, int fd)
 	char	*buffer;
 
 	buffer = 0;
+	g_sig = 1;
 	while (!str_cmp(eof, buffer))
 	{
 		if (buffer)
@@ -39,6 +40,7 @@ void	heredoc_loop(char *eof, int fd)
 		if (!buffer)
 			break ;
 	}
+	g_sig = 0;
 	safe_free((void **)&buffer);
 }
 
