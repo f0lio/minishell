@@ -42,13 +42,6 @@ typedef struct s_token
 	t_bool		quoted;
 }				t_token;
 
-/*
-** -tokens:	list of command tokens ["ls", "-la", "file"]
-** -
-** -ret		return value of the command,
-**			if (ret == ZERO && CMD_SEP == "&&") then stop executing.
-*/
-
 typedef struct s_simpcmd
 {
 	int			isbuiltin;

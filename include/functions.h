@@ -40,7 +40,6 @@ void			clean_from_quotes(t_token *token);
 t_command		*create_command(t_node *tokens, int count);
 
 // Commands
-
 BOOL			split_commands(t_env *env);
 t_command		*new_cmd(void);
 t_command		*get_quoted_command(t_env *env);
@@ -49,9 +48,8 @@ t_command		*double_quoted_cmd(t_env *env);
 t_command		*get_command(t_env *env);
 BOOL			command_is_valid(t_env *env, t_command *cmd);
 
-// Execution
+// Execution and Pipage
 void			cast_cmd(t_command *commands, int cmdcout, t_env *env);
-// Pipage
 void			search_pipes(t_command *command);
 int				pipe_this(t_command *command);
 void			redirect_stdio(t_command *command, int i);
@@ -62,7 +60,7 @@ void			exec(char *path, t_command *command, int i, t_envvar *env);
 void			closefdfree(t_command *command, char ***paths);
 int				execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en);
 
-// Apex strtools
+// Apaexx strtools
 int				ft_strlen(char *str);
 char			*ft_substr(char *s, int start, size_t len);
 char			**ft_split(char *s, char c);
@@ -91,9 +89,6 @@ void			unset(t_envvar *env, t_simpcmd *scmd, int *exitcode);
 void			exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode);
 int				my_exit(t_env *env, t_simpcmd *scmd, int pipenum, int ex);
 
-// Lexer
-// int             lex_tokens(t_command **commands, int cmds_count);
-
 // strtools_0
 size_t			str_len(const char *str);
 void			put_char(char c);
@@ -110,7 +105,6 @@ BOOL			str_cmp(char *s1, char *s2);
 BOOL			str_ncmp(char *s1, char *s2, int max);
 BOOL			is_alphanum(char c);
 BOOL			is_included(char c, char *s);
-//char        *char_addr(char c, char **buff);
 
 // strtools_2
 char			*str_dup(const char *str);
@@ -146,7 +140,6 @@ BOOL			split_by_type(char *buff, t_node **tokens);
 int				tokenize(char *buff, t_env *env);
 
 // Expansion
-
 BOOL			expand_input(t_env *env);
 void			handle_unquoted_token(char *input, char **new_input, int *i);
 void			handle_unquoted_dollar(
@@ -190,7 +183,7 @@ void			handle_interuption(int sig_code);
 void			handle_heredoc_signal(int sig_code);
 BOOL			is_ctrl_d(char *input);
 
-// on exit
+// On exit
 void			exit_program(t_env *env, int exit_code);
 void			set_exitcode(t_env *env);
 

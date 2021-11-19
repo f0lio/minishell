@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_token	*tokenize_quoted_cmd(ENV, t_command *cmd)
+t_token	*tokenize_quoted_cmd(t_env *env, t_command *cmd)
 {
 	t_token	*token;
 
@@ -11,7 +11,7 @@ t_token	*tokenize_quoted_cmd(ENV, t_command *cmd)
 	return (token);
 }
 
-t_token	*tokenize_single_quoted(ENV, t_command *cmd)
+t_token	*tokenize_single_quoted(t_env *env, t_command *cmd)
 {
 	t_token	*token;
 	char	*tok;
@@ -31,7 +31,7 @@ t_token	*tokenize_single_quoted(ENV, t_command *cmd)
 	return (token);
 }
 
-t_token	*tokenize_double_quoted(ENV, t_command *cmd)
+t_token	*tokenize_double_quoted(t_env *env, t_command *cmd)
 {
 	t_token	*token;
 	int		j;

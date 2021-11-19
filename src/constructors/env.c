@@ -51,20 +51,6 @@ t_command	*new_cmd(void)
 	return (cmd);
 }
 
-t_array	*new_array(int size)
-{
-	t_array	*array;
-	int		i;
-
-	array = malloc(sizeof(*(array)));
-	ARRLLOC(array->arr, size);
-	array->size = size;
-	i = 0;
-	while (i < size)
-		array->arr[i++] = -1;
-	return (array);
-}
-
 void	initscmd(t_simpcmd *scmd)
 {
 	scmd->isbuiltin = 0;
