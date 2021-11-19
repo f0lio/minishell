@@ -37,4 +37,5 @@ void debug_commands(ENV)
 		print_tokens(env->commands[i].tokens, (env->commands[i]).tokens_count);
 		printf("------------\n");
 	}
+	put_str(NO_COLOR);
 }

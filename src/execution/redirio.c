@@ -45,17 +45,21 @@ void	heredoc_loop(char *eof, int fd)
 int	heredoc(char *eof, t_simpcmd *scmd)
 {
 	int		fd;
+	char	*fr;
+	static int	suff = 0;
 
-	scmd->heredoc = 1;
-	fd = open(HERE_DOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	fr = int_to_str(suff++);
+	scmd->heredoc = str_join(HERE_DOC_FILE, fr);
+	safe_free((void **)&fr);
+	fd = open(scmd->heredoc, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 	{
-		print_err(HERE_DOC_FILE, strerror(errno), 0, 0);
+		print_err(scmd->heredoc, strerror(errno), 0, 0);
 		return (1);
 	}
 	heredoc_loop(eof, fd);
 	close(fd);
-	rediri(HERE_DOC_FILE, scmd);
+	rediri(scmd->heredoc, scmd);
 	return (0);
 }
 

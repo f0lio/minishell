@@ -37,7 +37,7 @@ t_token *get_token(ENV)
 		{
 			if (line[j] == quote)
 			{
-				if (flag && (line[j + 1] == ' ' || !line[j + 1]) && ++j)
+				if (flag && (!line[j + 1] || is_included(line[j + 1], "> <|")) && ++j)
 					break ;
 				quote = 0;
 			}
@@ -80,7 +80,7 @@ void	clean_from_quotes(t_token *token)
 
 	len = str_len(token->tok);
 	new_tok = (char *)malloc(len + 1);
-	bzero(new_tok, len); //norme!!
+	bzero(new_tok, len + 1); //norme!!
 	i = 0;
 	j = 0;
 	while (token->tok[i])
@@ -116,10 +116,8 @@ void	tokenizer(ENV,t_node **cmds_list, t_node **tokens_list)
 	while (env->input.i < env->input.len)
 	{
 		if (env->input.line[env->input.i] != SPACE)
-		{
 			add_new_token(
 				env, tokens_list, &tokens_count);
-		}
 		else
 			env->input.i++;
 	}
@@ -132,6 +130,11 @@ BOOL tokenize_input(ENV)
 	t_node	*tokens_list;
 	t_node	*cmds_list;
 
+	if (env->input.len == 0)
+	{
+		env->cmds_count = 0;
+		return 0;
+	}
 	env->input.i = skip_char(env->input.line, ' ');
 	if (env->input.line[env->input.i] == CMD_SEP)
 		return raise_error(env, ERR_SYNTAX);

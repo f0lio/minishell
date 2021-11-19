@@ -71,6 +71,7 @@ char *handle_dollar_sign(t_env *env, char *tok, int *i)
 	else
 	{
 		var = parse_variable_name(tok, i);
+		printf("VAL:[%s]\n", var);
 		*i -= (tok[*i] != 0);
 		if (var)
 		{

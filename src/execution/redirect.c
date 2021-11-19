@@ -89,6 +89,7 @@ void	redirect_commands(t_command *command, t_env *env)
 	{
 		j = 0;
 		waitpid(command->scmd[i].pid, &j, 0);
+		unlink(command->scmd[i].heredoc);
 	}
 	if (j)
 	{

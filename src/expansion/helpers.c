@@ -45,13 +45,13 @@ BOOL	handle_double_quote(
 
 void	handle_unquoted_dollar(t_env *env, char *input, char **new_input, int *i)
 {
-	char *va;
-	char *p;
+	char	*va;
+	char	*p;
 
-	if (input[*i + 1] == DOLLAR)
+	if (input[*i + 1] == DOLLAR
+		|| (is_alphanum(input[*i + 1]) == 0 && input[*i + 1] != '_'))
 	{
-		str_fjoin(new_input, int_to_str(getpid()));
-		(*i)++;
+		str_fjoin(new_input, "$");
 		return ;
 	}
 	va = parse_variable_name(input, i);

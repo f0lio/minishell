@@ -37,25 +37,19 @@ t_command *create_commands_array(t_node *list, int size)
 	int			i;
 
 	cmds = (t_command*)malloc(size * sizeof(t_command));
-	i = 0;
+	i = -1;
 	it = list;
-	while (i < size && it)
+	while (++i < size && it)
 	{
-		
 		cmds[i].cmd = ((t_command*)it->data)->cmd;
 		cmds[i].tokens = ((t_command*)it->data)->tokens;
 		cmds[i].scmd = ((t_command*)it->data)->scmd;
-		
-		// cmds[i].origio = ((t_command*)it->data)->origio;
-		
 		cmds[i].tokens_count = ((t_command*)it->data)->tokens_count;
 		cmds[i].tokarr = ((t_command*)it->data)->tokarr;
 		cmds[i].pipe_count = ((t_command*)it->data)->pipe_count;
 		cmds[i].pipe_location = ((t_command*)it->data)->pipe_location;
 		cmds[i].ret = ((t_command*)it->data)->ret;
 		cmds[i].sep = ((t_command*)it->data)->sep;
-		
-		i++;
 		p = it;
 		it = it->next;
 		safe_free((void **)&p->data);

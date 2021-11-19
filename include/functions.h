@@ -186,6 +186,7 @@ void			saveto_history(ENV);
 
 // Signal handlers
 void			handle_interuption(int sig_code);
+void			handle_heredoc_signal(int sig_code);
 BOOL			is_ctrl_d(char *input);
 
 // on exit

@@ -3,6 +3,7 @@
 void	print_err(char *s1, char *s2, char *s3, char *s4)
 {
 	fput_str(SHELL_NAME, STDERR_FILENO);
+	printf("%s\n", s1);
 	if (s1)
 	{
 		fput_str(": ", STDERR_FILENO);

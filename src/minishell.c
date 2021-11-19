@@ -20,6 +20,7 @@ int repl(t_env *env)
 	env->input.len = str_len(env->input.line);
 	if (expand_input(env))
 		return (SYNTAX_ERR_CODE);
+	// printf("NEW: [%s]\n", env->input.line);
 	if (tokenize_input(env))
 		return (SYNTAX_ERR_CODE);
 	if (analyse_syntax(env))

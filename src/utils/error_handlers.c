@@ -2,9 +2,9 @@
 
 BOOL    raise_error(ENV, char *msg)
 {
-    put_str("Error\n");
-    put_str(msg);
-    put_char('\n');
+    fput_str("Error\n", 2);
+    fput_str(msg, 2);
+    fput_char('\n', 2);
     //Free memory
     return (-1);
 }
