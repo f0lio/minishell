@@ -16,6 +16,11 @@ char	*parse_variable_name(char *buf, int *i)
 		*i += 1;
 		return (str_dup("$"));
 	}
+	else if (buf[*i + 1] == '?')
+	{
+		*i += 2;
+		return (str_dup("?"));
+	}
 	j = *i + 1;
 	start = j;
 	while (is_alphanum(buf[j]) || buf[j] == '_')
@@ -61,17 +66,16 @@ char *handle_dollar_sign(t_env *env, char *tok, int *i)
 
 	val = NULL;
 	var = NULL;
-	if (tok[*i + 1] == DOLLAR) //???????? getpid is forbidden.. in this case write it literally
+	if (tok[*i + 1] == DOLLAR
+		|| (is_alphanum(tok[*i + 1]) == 0
+		&& tok[*i + 1] != '_' && tok[*i + 1] != '?'))
 	{
-		val = int_to_str(getpid());
+		val = str_dup("$");
 		(*i)++;
 	}
-	else if (!is_alphanum(tok[*i + 1]) && tok[*i + 1] != '_')
-		val = strdup("$");	
 	else
 	{
 		var = parse_variable_name(tok, i);
-		printf("VAL:[%s]\n", var);
 		*i -= (tok[*i] != 0);
 		if (var)
 		{

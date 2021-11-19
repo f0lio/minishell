@@ -43,13 +43,15 @@ BOOL	handle_double_quote(
 	return (!ret);
 }
 
-void	handle_unquoted_dollar(t_env *env, char *input, char **new_input, int *i)
+void	handle_unquoted_dollar(
+	t_env *env, char *input, char **new_input, int *i)
 {
 	char	*va;
 	char	*p;
 
 	if (input[*i + 1] == DOLLAR
-		|| (is_alphanum(input[*i + 1]) == 0 && input[*i + 1] != '_'))
+		|| (is_alphanum(input[*i + 1]) == 0
+		&& input[*i + 1] != '_' && input[*i + 1] != '?'))
 	{
 		str_fjoin(new_input, "$");
 		return ;

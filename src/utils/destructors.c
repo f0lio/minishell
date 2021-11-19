@@ -35,6 +35,7 @@ void	destroy_command(void *ptr)
 	while (--cmd->pipe_count >= -1)
 	{
 		safe_free((void**)&cmd->scmd[cmd->pipe_count + 1].tokarr);
+		safe_free((void**)&cmd->scmd[cmd->pipe_count + 1].quoted);
 		safe_free((void**)&cmd->scmd[cmd->pipe_count + 1].heredoc);
 	}
 	safe_free((void**)&cmd->scmd);
