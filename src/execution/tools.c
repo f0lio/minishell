@@ -2,10 +2,9 @@
 
 long	my_atoi(char *str)
 {
-	long long	topple;
-	long		res;
-	int			i;
-	int			cond;
+	long	topple;
+	int		i;
+	int		cond;
 
 	topple = 0;
 	i = 0;
@@ -17,14 +16,13 @@ long	my_atoi(char *str)
 	while (str[i])
 	{
 		topple = str[i++] - '0' + topple * 10;
-		if (topple > __LONG_MAX__ || topple < (__LONG_MAX__ * -1 - 1))
+		if (topple > __LONG_MAX__ || topple < 0)
 		{
 			print_err(SHELL_NAME, "exit", str, ERR_NUM_WRONG);
 			return (255);
 		}
 	}
-	res = topple * (cond * -2 + 1);
-	return (res);
+	return ((long)topple * (cond * -2 + 1));
 }
 
 char	**strcut(char *str, char c)

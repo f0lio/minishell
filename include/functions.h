@@ -191,6 +191,7 @@ BOOL			is_ctrl_d(char *input);
 
 // on exit
 void			exit_program(ENV, int exit_code);
+void			set_exitcode(t_env *env);
 
 //temporary utils
 void			print_array(t_array *arr, BOOL minus);

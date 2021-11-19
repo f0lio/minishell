@@ -38,7 +38,11 @@ int main(int argc, char **argv, char **env_vars)
 	{
 		signal(SIGINT, handle_interuption);
 		if (repl(&env) == SYNTAX_ERR_CODE)
+		{
 			env.exitcode = SYNTAX_ERR_CODE;
+			set_exitcode(&env);
+		}
+
 		reset_data(&env);
 	}
 	return (0);

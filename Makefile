@@ -2,7 +2,7 @@
 .PHONEY: all clean fclean re bonus
 
 NAME				=	minishell
-CC					=	clang
+CC					=	gcc
 FLAGS				=	-Werror -Wextra -Wall
 
 INCLUDES			=	-I include -I /usr/include/readline/readline.h

@@ -97,6 +97,17 @@ void	redirect_commands(t_command *command, t_env *env)
 		if (WIFSIGNALED(j))
 			env->exitcode = WTERMSIG(j) + 128;
 	}
+	safe_free((void **)&env->envll->content);
+	set_exitcode(env);
+}
+
+void	set_exitcode(t_env *env)
+{
+	while (env->envll->next && !str_cmp(env->envll->name, "?"))
+		env->envll = env->envll->next;
+	env->envll->content = int_to_str(env->exitcode);
+	while (env->envll->prev)
+		env->envll = env->envll->prev;
 }
 
 void	cast_cmd(t_command *commands, int cmdcout, t_env *env)
