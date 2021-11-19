@@ -97,7 +97,6 @@ void	redirect_commands(t_command *command, t_env *env)
 		if (WIFSIGNALED(j))
 			env->exitcode = WTERMSIG(j) + 128;
 	}
-	safe_free((void **)&env->envll->content);
 	set_exitcode(env);
 }
 

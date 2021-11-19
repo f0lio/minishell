@@ -117,6 +117,7 @@ char			*clean_sub_str(
 					char const *s, int start, int end, t_array *arr );
 int				skip_char(char *s, char c);
 char			*int_to_str(int n);
+void			mem_zero(void *mem, size_t size);
 
 // Quotes stuff
 BOOL			check_quotes(char *str);

@@ -3,7 +3,7 @@
 
 NAME				=	minishell
 CC					=	gcc
-FLAGS				=	-Werror -Wextra -Wall -g
+FLAGS				=	-Werror -Wextra -Wall
 
 INCLUDES			=	-I include -I /usr/include/readline/readline.h
 
@@ -33,7 +33,7 @@ EXECUTION			=	redirect.c\
 						builtins.c\
 						tools.c
 
-SRC					=	src/minishell.c src/utils/tmp_utils.c\
+SRC					=	src/minishell.c\
 						$(DBG:%.c=./dbg/%.c)\
 						$(CONSTRUCTORS:%.c=./src/constructors/%.c)\
 						$(TOKENIZER:%.c=./src/tokenizer/%.c)\

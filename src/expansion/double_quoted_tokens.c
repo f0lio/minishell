@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 char	*parse_variable_name(char *buf, int *i)

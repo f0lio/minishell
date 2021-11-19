@@ -57,6 +57,18 @@ t_command	*create_commands_array(t_node *list, int size)
 	return (cmds);
 }
 
+void	mem_zero(void *mem, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < size)
+	{
+		((char *)mem)[i] = 0;
+		i++;
+	}
+}
+
 void	clean_from_quotes(t_token *token)
 {
 	int		i;
@@ -66,7 +78,7 @@ void	clean_from_quotes(t_token *token)
 
 	len = str_len(token->tok);
 	new_tok = (char *)malloc(len + 1);
-	bzero(new_tok, len + 1); //norme!!
+	mem_zero(new_tok, len + 1);
 	i = 0;
 	j = 0;
 	while (token->tok[i])

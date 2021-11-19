@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	handle_interuption(int sig_code)
