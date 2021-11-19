@@ -3,7 +3,7 @@
 
 NAME				=	minishell
 CC					=	gcc
-FLAGS				=	-Werror -Wextra -Wall
+FLAGS				=	-g -Werror -Wextra -Wall
 
 INCLUDES			=	-I include -I /usr/include/readline/readline.h
 

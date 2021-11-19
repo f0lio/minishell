@@ -36,7 +36,7 @@ int	treat_exec_token(char **path, t_simpcmd scmd, char **paths)
 	if (!*path)
 	{
 		ret = 127;
-		print_err(scmd.tokarr[0], ERR_CMD_NOT_FOUND, 0, 0);
+		print_er(scmd.tokarr[0], ERR_CMD_NOT_FOUND, 0, 0);
 	}
 	if (ret == 127)
 		return (ret);
@@ -83,7 +83,6 @@ void	redirect_commands(t_command *command, t_env *env)
 		return ;
 	envv = get_env(env, "PATH");
 	scmd_loop(command, env, envv);
-	safe_free((void **)&envv);
 	i = -1;
 	while (++i <= command->pipe_count)
 	{

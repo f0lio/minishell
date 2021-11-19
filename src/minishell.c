@@ -35,12 +35,14 @@ int	main(int argc, char **argv, char **env_vars)
 	while (1)
 	{
 		signal(SIGINT, handle_interuption);
+		signal(SIGQUIT, handle_interuption);
 		if (repl(&env) == SYNTAX_ERR_CODE)
 		{
 			env.exitcode = SYNTAX_ERR_CODE;
 			set_exitcode(&env);
 		}
 		reset_data(&env);
+		g_sig = 0;
 	}
 	return (0);
 }

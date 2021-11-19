@@ -18,5 +18,5 @@
 # include "functions.h"
 
 char	*g_cwd;
-
+int g_sig;
 #endif

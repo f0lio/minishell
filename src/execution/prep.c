@@ -25,9 +25,9 @@ char	*search_cmd(char *cmd, char **paths)
 
 	i = -1;
 	ret = 1;
-	str = malloc(sizeof(char) * 2);
-	str[0] = '/';
-	str[1] = 0;
+	if (!cmd[0])
+		return (NULL);
+	str = str_dup("/");
 	cmd = str_join(str, cmd);
 	while (ret && paths && paths[++i])
 	{
@@ -65,7 +65,7 @@ int	search_path(char *path)
 		errno = EISDIR;
 	if (ret || !(buf.st_mode & S_IXUSR) || (buf.st_mode & S_IFDIR))
 	{
-		print_err(path, strerror(errno), 0, 0);
+		print_er(path, strerror(errno), 0, 0);
 		return (127);
 	}
 	return (0);

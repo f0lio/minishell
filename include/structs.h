@@ -89,6 +89,8 @@ typedef struct s_env
 	t_envvar	*envll;
 	t_file		*history;
 	t_input		input;
+	char		*cwd;
+	int			child;
 	t_command	*commands;
 	int			cmds_count;
 }				t_env;

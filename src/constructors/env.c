@@ -8,7 +8,7 @@ void	init_env(t_env *env, int argc, char **argv, char **env_var)
 	arr_to_ll(env_var, &env->envll);
 	env->commands = NULL;
 	env->cmds_count = 0;
-	g_cwd = getcwd(0, 0);
+	env->cwd = getcwd(0, 0);
 	env->exitcode = 0;
 }
 

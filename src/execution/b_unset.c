@@ -27,13 +27,13 @@ int	check_valid_id(char *str, int *exitcode)
 	if (!len || (str[len] && !is_alphatiriblwit(str[len], len)))
 	{
 		*exitcode = 1;
-		print_err("unset", str, ERR_INVALID_ENVV, 0);
+		print_er("unset", str, ERR_INVALID_ENVV, 0);
 		return (1);
 	}
 	return (0);
 }
 
-void	unset(t_envvar *env, t_simpcmd *scmd, int *exitcode)
+void	unset(t_envvar *env, t_simpcmd *scmd, int *exitcode, int pipe)
 {
 	int			j;
 	t_envvar	*start;
@@ -49,7 +49,7 @@ void	unset(t_envvar *env, t_simpcmd *scmd, int *exitcode)
 			continue ;
 		while (env)
 		{
-			if (str_cmp(env->name, scmd->tokarr[j]))
+			if (str_cmp(env->name, scmd->tokarr[j]) && !pipe)
 				rm_link_iter(&env, &start);
 			else
 				env = env->next;

@@ -59,10 +59,15 @@ void	move_redir_down(t_command *command, int i, int j)
 
 void	set_exitcode(t_env *env)
 {
-	safe_free((void **)&env->envll->content);
+	if (!env->envll)
+		return ;
 	while (env->envll->next && !str_cmp(env->envll->name, "?"))
 		env->envll = env->envll->next;
-	env->envll->content = int_to_str(env->exitcode);
+	if (!str_cmp(env->envll->name, "?"))
+	{
+		safe_free((void **)&env->envll->content);
+		env->envll->content = int_to_str(env->exitcode);
+	}
 	while (env->envll->prev)
 		env->envll = env->envll->prev;
 }

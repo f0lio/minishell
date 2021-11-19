@@ -60,10 +60,7 @@ void	handle_unquoted_dollar(
 	safe_free((void **)&p);
 	*i -= (va != NULL);
 	if (va)
-	{
 		str_fjoin(new_input, va);
-		free(va);
-	}
 }
 
 void	handle_unquoted_token(char *input, char **new_input, int *i)

@@ -41,6 +41,7 @@ void	exec(char *path, t_command *command, int i, t_envvar *env)
 		execve(path, command->scmd[i].tokarr, arr);
 		exit(1);
 	}
+	g_sig = 1;
 }
 
 int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
@@ -51,15 +52,15 @@ int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
 	if (str_cmp(scmd->tokarr[0], "echo"))
 		echo(scmd);
 	if (str_cmp(scmd->tokarr[0], "cd"))
-		ret = cd(scmd);
+		ret = cd(scmd, en);
 	if (str_cmp(scmd->tokarr[0], "pwd"))
-		pwd();
+		pwd(en);
 	if (str_cmp(scmd->tokarr[0], "env"))
 		env(en->envll);
 	if (str_cmp(scmd->tokarr[0], "unset"))
-		unset(en->envll, scmd, &en->exitcode);
+		unset(en->envll, scmd, &en->exitcode, (command->pipe_count > 0));
 	if (str_cmp(scmd->tokarr[0], "export"))
-		exportt(en->envll, scmd, &en->exitcode);
+		exportt(en->envll, scmd, &en->exitcode, (command->pipe_count > 0));
 	if (str_cmp(scmd->tokarr[0], "exit"))
 		ret = my_exit(en, scmd, command->pipe_count, en->exitcode);
 	if (ret)

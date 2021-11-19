@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void	pwd(void)
+void	pwd(t_env *env)
 {
-	write(1, g_cwd, str_len(g_cwd));
+	write(1, env->cwd, str_len(env->cwd));
 	write(1, "\n", 1);
 }
 
@@ -21,23 +21,31 @@ void	env(t_envvar *env)
 	}
 }
 
-int	cd(t_simpcmd *scmd)
+int	cd(t_simpcmd *scmd, t_env *env)
 {
-	char	*path;
+	char		*path;
+	struct stat	buf;
 
 	if (!scmd->tokarr[1])
-		path = getenv("HOME");
-	else
-		path = scmd->tokarr[1];
-	if (chdir(path))
 	{
-		print_err(scmd->tokarr[0], scmd->tokarr[1], strerror(errno), 0);
-		return (1);
+		path = get_env(env, "HOME");
+		if (!path)
+			return (print_er(scmd->tokarr[0], scmd->tokarr[1], ERR_N_HOME, 0));
 	}
 	else
+		path = scmd->tokarr[1];
+	if (env->commands->pipe_count)
 	{
-		safe_free((void **)&g_cwd);
-		g_cwd = getcwd(0, 0);
+		if (stat(path, &buf) || !S_ISDIR(buf.st_mode))
+			print_er(scmd->tokarr[0], scmd->tokarr[1], strerror(errno), 0);
+		return (stat(path, &buf) || !S_ISDIR(buf.st_mode));
+	}
+	if (chdir(path))
+		return (print_er(scmd->tokarr[0], scmd->tokarr[1], strerror(errno), 0));
+	else
+	{
+		safe_free((void **)&env->cwd);
+		env->cwd = getcwd(0, 0);
 	}
 	return (0);
 }
@@ -56,14 +64,14 @@ int	check_syntax(t_simpcmd *scmd, int *exitcode)
 	if (scmd->tokarr[1][i] || (i && (scmd->tokarr[1][i - 1] == '-'
 		|| scmd->tokarr[1][i - 1] == '+')))
 	{
-		print_err("exit", scmd->tokarr[1], ERR_NUM_WRONG, 0);
+		print_er("exit", scmd->tokarr[1], ERR_NUM_WRONG, 0);
 		*exitcode = 255;
 	}
 	else
 		*exitcode = (unsigned char)my_atoi(scmd->tokarr[1]);
 	if (scmd->tokarr[2] && !(*exitcode))
 	{
-		print_err("exit", ERR_TOO_MANY_ARGS, 0, 0);
+		print_er("exit", ERR_TOO_MANY_ARGS, 0, 0);
 		return (255);
 	}
 	return (0);
@@ -82,7 +90,6 @@ int	my_exit(t_env *env, t_simpcmd *scmd, int pipenum, int exitcode)
 	{
 		not_trma = get_env(env, "?");
 		exitcode = my_atoi(not_trma);
-		safe_free((void **)&not_trma);
 	}
 	if (!pipenum)
 	{

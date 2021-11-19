@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	print_err(char *s1, char *s2, char *s3, char *s4)
+int	print_er(char *s1, char *s2, char *s3, char *s4)
 {
 	fput_str(SHELL_NAME, STDERR_FILENO);
 	if (s1)
@@ -24,4 +24,5 @@ void	print_err(char *s1, char *s2, char *s3, char *s4)
 		fput_str(s4, STDERR_FILENO);
 	}
 	fput_str("\n", STDERR_FILENO);
+	return (1);
 }

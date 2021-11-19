@@ -31,29 +31,30 @@
 # define DOLLAR				'$'
 
 // Token types
-# define TYPE_CMD                0
-# define TYPE_ARG                1
-# define TYPE_PIPE               2
-# define TYPE_GREATER            3
-# define TYPE_LESSER             4
-# define TYPE_APPEND             5
-# define TYPE_HEREDOC            6
-# define TYPE_FILE               7
-# define TYPE_SINGLE_QT          1
-# define TYPE_DOUBLE_QT          2
+# define TYPE_CMD			0
+# define TYPE_ARG			1
+# define TYPE_PIPE			2
+# define TYPE_GREATER		3
+# define TYPE_LESSER		4
+# define TYPE_APPEND		5
+# define TYPE_HEREDOC		6
+# define TYPE_FILE			7
+# define TYPE_SINGLE_QT		1
+# define TYPE_DOUBLE_QT		2
 
 // Colors
-# define RED                "\033[1;31m"
-# define GREEN              "\033[1;32m"
-# define WHITE              "\033[1;37m"
-# define NO_COLOR           "\033[0m"
+# define RED				"\033[1;31m"
+# define GREEN				"\033[1;32m"
+# define WHITE				"\033[1;37m"
+# define NO_COLOR			"\033[0m"
 
-# define ERR_MALLOC         "Couldn't allocate memory"
-# define ERR_SYNTAX         "invalid syntax"
-# define ERR_INPUT          "invalid input"
+# define ERR_MALLOC			"Couldn't allocate memory"
+# define ERR_SYNTAX			"invalid syntax"
+# define ERR_INPUT			"invalid input"
 # define ERR_CMD_NOT_FOUND	"command not found"
 # define ERR_TOO_MANY_ARGS	"too many arguments"
 # define ERR_NUM_WRONG		"numeric argument required"
 # define ERR_INVALID_ENVV	"not a valid identifier"
+# define ERR_N_HOME			"HOME not set"
 
 #endif

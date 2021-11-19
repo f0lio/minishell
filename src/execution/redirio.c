@@ -9,7 +9,7 @@ int	rediro(char *tok, int j, t_simpcmd *scmd)
 	scmd->isappend = !i * (int)O_APPEND + i * (int)O_TRUNC;
 	scmd->stdio[1] = open(tok, O_WRONLY | scmd->isappend | O_CREAT, 0644);
 	if (scmd->stdio[1] < 0)
-		print_err(tok, strerror(errno), 0, 0);
+		print_er(tok, strerror(errno), 0, 0);
 	return (scmd->stdio[1] < 0);
 }
 
@@ -18,7 +18,7 @@ int	rediri(char *tok, t_simpcmd *scmd)
 	close(scmd->stdio[0]);
 	scmd->stdio[0] = open(tok, O_RDONLY);
 	if (scmd->stdio[0] < 0)
-		print_err(tok, strerror(errno), 0, 0);
+		print_er(tok, strerror(errno), 0, 0);
 	return (scmd->stdio[0] < 0);
 }
 
@@ -54,7 +54,7 @@ int	heredoc(char *eof, t_simpcmd *scmd)
 	fd = open(scmd->heredoc, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 	{
-		print_err(scmd->heredoc, strerror(errno), 0, 0);
+		print_er(scmd->heredoc, strerror(errno), 0, 0);
 		return (1);
 	}
 	heredoc_loop(eof, fd);

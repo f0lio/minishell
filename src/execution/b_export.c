@@ -11,7 +11,7 @@ int	go_to_envv(t_envvar **env, char *str, int *exitcode)
 			&& (str[len] != '=')))
 	{
 		*exitcode = 1;
-		print_err("export", str, ERR_INVALID_ENVV, 0);
+		print_er("export", str, ERR_INVALID_ENVV, 0);
 		return (-1);
 	}
 	while ((*env)->next)
@@ -69,7 +69,7 @@ void	print_envp(t_envvar *env)
 	}
 }
 
-void	exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode)
+void	exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode, int pipe)
 {
 	t_envvar	*start;
 	int			i;
@@ -88,9 +88,9 @@ void	exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode)
 			if (str_cmp(scmd->tokarr[i], "?"))
 				continue ;
 			j = go_to_envv(&env, scmd->tokarr[i], exitcode);
-			if (!j)
+			if (!j && !pipe)
 				new_envv(env, scmd->tokarr[i]);
-			else if (j > 0)
+			else if (j > 0 && !pipe)
 				reassign_envv(env, scmd->tokarr[i]);
 			env = start;
 		}

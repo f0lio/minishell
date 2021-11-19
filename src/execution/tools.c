@@ -18,7 +18,7 @@ long	my_atoi(char *str)
 		topple = str[i++] - '0' + topple * 10;
 		if (topple > __LONG_MAX__ || topple < 0)
 		{
-			print_err(SHELL_NAME, "exit", str, ERR_NUM_WRONG);
+			print_er(SHELL_NAME, "exit", str, ERR_NUM_WRONG);
 			return (255);
 		}
 	}

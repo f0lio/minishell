@@ -74,7 +74,7 @@ char			*randname(void);
 int				rediro(char *tok, int j, t_simpcmd *scmd);
 int				rediri(char *tok, t_simpcmd *scmd);
 int				heredoc(char *eof, t_simpcmd *scmd);
-void			print_err(char *s1, char *s2, char *s3, char *s4);
+int				print_er(char *s1, char *s2, char *s3, char *s4);
 void			ft_putnbr(long nbr, int base_len, char *base);
 long			my_atoi(char *str);
 int				is_alphatiriblwit(char c, int i);
@@ -82,11 +82,11 @@ void			move_redir_down(t_command *command, int i, int j);
 
 // Builtins
 void			echo(t_simpcmd *scmd);
-void			pwd(void);
-int				cd(t_simpcmd *scmd);
+void			pwd(t_env *env);
+int				cd(t_simpcmd *scmd, t_env *env);
 void			env(t_envvar *en);
-void			unset(t_envvar *env, t_simpcmd *scmd, int *exitcode);
-void			exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode);
+void			unset(t_envvar *env, t_simpcmd *scmd, int *exitcode, int pipe);
+void			exportt(t_envvar *env, t_simpcmd *scmd, int *exitcode, int pip);
 int				my_exit(t_env *env, t_simpcmd *scmd, int pipenum, int ex);
 
 // strtools_0
