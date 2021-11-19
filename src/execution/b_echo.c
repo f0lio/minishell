@@ -1,10 +1,9 @@
 #include "minishell.h"
 
-void	echo(t_simpcmd *scmd, int exitcode)
+void	echo(t_simpcmd *scmd)
 {
 	int	n;
 	int	i;
-	(void)exitcode;
 
 	n = str_cmp(scmd->tokarr[1], "-n");
 	i = 0;

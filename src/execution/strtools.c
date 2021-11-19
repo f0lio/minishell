@@ -56,3 +56,12 @@ void	move_redir_down(t_command *command, int i, int j)
 			command->scmd[i].tokarr[j + k - 1] = NULL;
 	}
 }
+
+void	set_exitcode(t_env *env)
+{
+	while (env->envll->next && !str_cmp(env->envll->name, "?"))
+		env->envll = env->envll->next;
+	env->envll->content = int_to_str(env->exitcode);
+	while (env->envll->prev)
+		env->envll = env->envll->prev;
+}

@@ -43,13 +43,15 @@ int	treat_exec_token(char **path, t_simpcmd scmd, char **paths)
 	return (0);
 }
 
-void	scmd_loop(t_command *command, t_env *env, char **paths)
+void	scmd_loop(t_command *command, t_env *env, char *envv)
 {
 	int		i;
 	char	*path;
+	char	**paths;
 
 	i = -1;
 	path = NULL;
+	paths = ft_split(envv, ':');
 	while (++i <= command->pipe_count)
 	{
 		if (!command->scmd[i].tokarr[0])
@@ -73,7 +75,6 @@ void	redirect_commands(t_command *command, t_env *env)
 {
 	int		i;
 	int		j;
-	char	**paths;
 	char	*envv;
 
 	search_pipes(command);
@@ -81,9 +82,8 @@ void	redirect_commands(t_command *command, t_env *env)
 	if (pipe_this(command))
 		return ;
 	envv = get_env(env, "PATH");
-	paths = ft_split(envv, ':');
+	scmd_loop(command, env, envv);
 	safe_free((void **)&envv);
-	scmd_loop(command, env, paths);
 	i = -1;
 	while (++i <= command->pipe_count)
 	{
@@ -99,15 +99,6 @@ void	redirect_commands(t_command *command, t_env *env)
 	}
 	safe_free((void **)&env->envll->content);
 	set_exitcode(env);
-}
-
-void	set_exitcode(t_env *env)
-{
-	while (env->envll->next && !str_cmp(env->envll->name, "?"))
-		env->envll = env->envll->next;
-	env->envll->content = int_to_str(env->exitcode);
-	while (env->envll->prev)
-		env->envll = env->envll->prev;
 }
 
 void	cast_cmd(t_command *commands, int cmdcout, t_env *env)

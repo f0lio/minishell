@@ -106,10 +106,7 @@ int	pipe_this(t_command *command)
 		{
 			ret = norm_topple(command, i, j);
 			if (ret)
-			{
-				move_redir_down(command, i, j);
-				j--;
-			}
+				move_redir_down(command, i, j--);
 			if (ret < 0)
 				return (1);
 		}

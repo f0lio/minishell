@@ -1,8 +1,7 @@
 #include "minishell.h"
 
-void	pwd(t_simpcmd *scmd)
+void	pwd(void)
 {
-	(void)scmd;
 	write(1, g_cwd, str_len(g_cwd));
 	write(1, "\n", 1);
 }

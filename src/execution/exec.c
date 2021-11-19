@@ -49,11 +49,11 @@ int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
 
 	ret = 0;
 	if (str_cmp(scmd->tokarr[0], "echo"))
-		echo(scmd, en->exitcode);
+		echo(scmd);
 	if (str_cmp(scmd->tokarr[0], "cd"))
 		ret = cd(scmd);
 	if (str_cmp(scmd->tokarr[0], "pwd"))
-		pwd(scmd);
+		pwd();
 	if (str_cmp(scmd->tokarr[0], "env"))
 		env(en->envll);
 	if (str_cmp(scmd->tokarr[0], "unset"))

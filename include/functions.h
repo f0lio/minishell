@@ -85,8 +85,8 @@ void			move_redir_down(t_command *command, int i, int j);
 
 
 // Builtins
-void			echo(t_simpcmd *scmd, int exitcode);
-void			pwd(t_simpcmd *scmd);
+void			echo(t_simpcmd *scmd);
+void			pwd(void);
 int				cd(t_simpcmd *scmd);
 void			env(t_envvar *en);
 void			unset(t_envvar *env, t_simpcmd *scmd, int *exitcode);

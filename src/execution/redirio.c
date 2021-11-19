@@ -44,8 +44,8 @@ void	heredoc_loop(char *eof, int fd)
 
 int	heredoc(char *eof, t_simpcmd *scmd)
 {
-	int		fd;
-	char	*fr;
+	int			fd;
+	char		*fr;
 	static int	suff = 0;
 
 	fr = int_to_str(suff++);
