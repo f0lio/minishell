@@ -12,18 +12,19 @@ t_token	*make_token(t_env *env, int j, BOOL quote)
 	return (token);
 }
 
-BOOL	handle_quotes(char *line, BOOL *quote, int j, BOOL *flag)
+BOOL	handle_quotes(char *line, BOOL *quote, int *j, BOOL *flag)
 {
-	if (line[j] == *quote)
+	if (line[*j] == *quote)
 	{
-		if (*flag && (!line[j + 1] || is_included(line[j + 1], "> <|")) && ++j)
+		if (*flag && (!line[*j + 1] || is_included(line[*j + 1], "> <|"))
+			&& ++(*j))
 			return (1);
 		*quote = 0;
 	}
-	else if (quote == 0)
+	else if (*quote == 0)
 	{
-		*flag = (!j || line[j - 1] == ' ');
-		*quote = line[j];
+		*flag = (!*j || line[*j - 1] == ' ');
+		*quote = line[*j];
 	}
 	return (0);
 }
@@ -54,7 +55,7 @@ t_token	*get_token(t_env *env, char *line)
 		}
 		else if (line[j] == SINGLE_QT || line[j] == DOUBLE_QT)
 		{
-			if (handle_quotes(line, &quote, j, &flag))
+			if (handle_quotes(line, &quote, &j, &flag))
 				break ;
 		}
 		else if (!quote && line[j] == ' ')
