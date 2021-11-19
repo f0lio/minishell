@@ -1,7 +1,6 @@
-
 #include "minishell.h"
 
-static void		lengths(int n, size_t *len, int *weight)
+static void	lengths(int n, size_t *len, int *weight)
 {
 	*len = 1;
 	if (n >= 0)
@@ -17,7 +16,7 @@ static void		lengths(int n, size_t *len, int *weight)
 	}
 }
 
-char			*int_to_str(int n)
+char	*int_to_str(int n)
 {
 	size_t		len;
 	int			weight;

@@ -61,7 +61,7 @@ int	execbuiltins(t_simpcmd *scmd, t_command *command, t_env *en)
 	if (str_cmp(scmd->tokarr[0], "export"))
 		exportt(en->envll, scmd, &en->exitcode);
 	if (str_cmp(scmd->tokarr[0], "exit"))
-		my_exit(en, scmd, command->pipe_count, en->exitcode);
+		ret = my_exit(en, scmd, command->pipe_count, en->exitcode);
 	if (ret)
 		en->exitcode = ret;
 	return (1);

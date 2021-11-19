@@ -3,19 +3,19 @@
 
 NAME				=	minishell
 CC					=	gcc
-FLAGS				=	-Werror -Wextra -Wall
+FLAGS				=	-Werror -Wextra -Wall -g
 
 INCLUDES			=	-I include -I /usr/include/readline/readline.h
 
 UTILS				=	strtools_0.c strtools_1.c strtools_2.c strtools_3.c\
-						file_tools.c get_line.c linked_list.c  destructors.c\
-						error_handlers.c signals_handlers.c exit_handlers.c\
-						itoa.c tmp_utils.c
+						str_join.c itoa.c\
+						linked_list.c linked_list_helpers.c destructors.c\
+						error_handlers.c signals_handlers.c exit_handlers.c
 
 CONSTRUCTORS		=	env.c
 
 EXPANSION			=	expand.c helpers.c double_quoted_tokens.c get_env_var.c
-TOKENIZER			=	tokenize.c tokenize_quoted.c utils.c
+TOKENIZER			=	tokenizer.c get_token.c tokenize_quoted.c utils.c
 SYNTAX_ANALYSER			= analyse_syntax.c
 
 EXECUTION			=	redirect.c\
@@ -33,9 +33,7 @@ EXECUTION			=	redirect.c\
 						builtins.c\
 						tools.c
 
-DBG					=	dbg_utils.c mem-limit.c
-
-SRC					=	src/minishell.c\
+SRC					=	src/minishell.c src/utils/tmp_utils.c\
 						$(DBG:%.c=./dbg/%.c)\
 						$(CONSTRUCTORS:%.c=./src/constructors/%.c)\
 						$(TOKENIZER:%.c=./src/tokenizer/%.c)\
@@ -44,9 +42,11 @@ SRC					=	src/minishell.c\
 						$(UTILS:%.c=./src/utils/%.c)\
 						$(EXECUTION:%.c=./src/execution/%.c)
 
-READLINE			=	-lreadline -L /Users/$(USER)/goinfre/.brew/opt/readline/lib -I /Users/$(USER)/goinfre/.brew/opt/readline/include
+READLINE			=	-lreadline\
+						-L /Users/$(USER)/goinfre/.brew/opt/readline/lib\
+						-I /Users/$(USER)/goinfre/.brew/opt/readline/include
 
-COMPILE				= $(CC) $(SRC) $(INCLUDES) $(READLINE) -o $(NAME) -g #-fsanitize=address 
+COMPILE				= $(CC) $(FLAGS) $(SRC) $(INCLUDES) $(READLINE) -o $(NAME)
 
 all: $(NAME)
 

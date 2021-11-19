@@ -37,7 +37,7 @@ typedef struct s_token
 {
 	char		*tok;
 	char		type;
-	size_t		len;
+	int			len;
 	int			order;
 	t_bool		quoted;
 }				t_token;
@@ -82,8 +82,8 @@ typedef struct s_command
 typedef struct s_input
 {
 	char		*line;
-	size_t		len;
-	size_t		i;
+	int		len;
+	int		i;
 }				t_input;
 
 typedef struct s_env

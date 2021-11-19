@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
@@ -7,14 +6,14 @@ BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
 	char	*va;
 
 	ret = TRUE;
-	*i += (input[*i] == SINGLE_QT); 
-	va = sub_until_chars(input, i, "'"); 
+	*i += (input[*i] == SINGLE_QT);
+	va = sub_until_chars(input, i, "'");
 	str_fjoin(new_input, "'");
 	str_fjoin(new_input, va);
 	str_fjoin(new_input, "'");
 	if (input[*i] == SINGLE_QT)
 		ret = FALSE;
-	*i += (input[*i] == SINGLE_QT); 
+	*i += (input[*i] == SINGLE_QT);
 	safe_free((void **)&va);
 	return (ret);
 }
@@ -22,8 +21,8 @@ BOOL	handle_sinqle_quote(char *input, char **new_input, int *i)
 BOOL	handle_double_quote(
 	t_env *env, char *input, char **new_input, int *i)
 {
-	char *va;
-	char *p;
+	char	*va;
+	char	*p;
 	BOOL	ret;
 
 	*i += (input[*i] == DOUBLE_QT);
@@ -49,9 +48,8 @@ void	handle_unquoted_dollar(
 	char	*va;
 	char	*p;
 
-	if (input[*i + 1] == DOLLAR
-		|| (is_alphanum(input[*i + 1]) == 0
-		&& input[*i + 1] != '_' && input[*i + 1] != '?'))
+	if (input[*i + 1] == DOLLAR || (is_alphanum(input[*i + 1]) == 0
+			&& input[*i + 1] != '_' && input[*i + 1] != '?'))
 	{
 		str_fjoin(new_input, "$");
 		return ;
@@ -70,7 +68,7 @@ void	handle_unquoted_dollar(
 
 void	handle_unquoted_token(char *input, char **new_input, int *i)
 {
-	char *va;
+	char	*va;
 
 	va = sub_until_chars(input, i, "$\"'");
 	if (va)

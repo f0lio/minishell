@@ -1,7 +1,6 @@
-
 #include "minishell.h"
 
-char 	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
+char	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
 {
 	char	*new_input;
 	char	*input;
@@ -10,7 +9,7 @@ char 	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
 	new_input = str_dup("");
 	input = env->input.line;
 	i = 0;
-	while (i < env->input.len)
+	while (i < (int)env->input.len)
 	{
 		if (input[i] == SINGLE_QT)
 			*sq = handle_sinqle_quote(input, &new_input, &i);
@@ -28,7 +27,7 @@ char 	*get_new_input(t_env *env, BOOL	*sq, BOOL *dq)
 	return (new_input);
 }
 
-BOOL expand_input(t_env *env)
+BOOL	expand_input(t_env *env)
 {
 	char	*new_input;
 	BOOL	dq;
@@ -44,5 +43,5 @@ BOOL expand_input(t_env *env)
 	safe_free((void **)&env->input.line);
 	env->input.line = new_input;
 	env->input.len = str_len(new_input);
-	return ret;
+	return (ret);
 }

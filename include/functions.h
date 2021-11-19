@@ -32,10 +32,11 @@ void			add_new_cmd(
 					t_node **cmds_list,
 					t_node **tokens_list,
 					int *tokens_count);
-t_token			*get_token(ENV);
+t_token			*get_token(t_env *env, char *line);
 t_token			*tokenize_quoted_cmd(ENV, t_command *cmd);
 t_token			*tokenize_single_quoted(ENV, t_command *cmd);
 t_token			*tokenize_double_quoted(ENV, t_command *cmd);
+void			clean_from_quotes(t_token *token);
 
 t_command		*create_command(t_node *tokens, int count);
 
@@ -165,6 +166,7 @@ void			handle_backslash(
 
 // Syntaxer
 BOOL			analyse_syntax(t_env *env);
+BOOL			check_next_token(t_env *env, BOOL *flag, int len, t_command *cmd);
 
 // Errors
 BOOL			raise_error(ENV, char *msg);
@@ -192,11 +194,5 @@ BOOL			is_ctrl_d(char *input);
 // on exit
 void			exit_program(ENV, int exit_code);
 void			set_exitcode(t_env *env);
-
-//temporary utils
-void			print_array(t_array *arr, BOOL minus);
-void			print_tokens(t_token *tokens, int count);
-void			print_linked_list(t_node *list);
-void			setmemlimit(int mb);
 
 #endif

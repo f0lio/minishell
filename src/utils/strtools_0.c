@@ -1,15 +1,13 @@
-
 #include "minishell.h"
 
 size_t	str_len(const char *str)
 {
-	size_t len;
+	size_t	len;
 
 	len = 0;
 	while (*str && ++len)
 		str++;
-
-	return len;
+	return (len);
 }
 
 void	fput_char(char c, int fd)
@@ -31,4 +29,3 @@ void	put_str(const char *str)
 {
 	fput_str(str, 1);
 }
-

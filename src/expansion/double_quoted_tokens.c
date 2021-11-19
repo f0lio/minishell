@@ -1,10 +1,5 @@
 
-# include "minishell.h"
-
-char *parse_pid()
-{
-	return (int_to_str(getpid()));
-}
+#include "minishell.h"
 
 char	*parse_variable_name(char *buf, int *i)
 {
@@ -29,18 +24,18 @@ char	*parse_variable_name(char *buf, int *i)
 	return (sub_str(buf, start, j));
 }
 
-char	*expand_dquoted_token(ENV, char *tok)
+char	*expand_dquoted_token(t_env *env, char *tok)
 {
 	char	*new_tok;
 	char	*val;
 	int		i;
 	int		len;
 
-	i = 0;
 	val = NULL;
 	new_tok = str_dup("");
 	len = str_len(tok);
-	while (i < len)
+	i = -1;
+	while (++i < len)
 	{
 		if (tok[i] == DOLLAR)
 			val = handle_dollar_sign(env, tok, &i);
@@ -54,21 +49,19 @@ char	*expand_dquoted_token(ENV, char *tok)
 			str_fjoin(&new_tok, val);
 			safe_free((void **)&val);
 		}
-		i++;
 	}
 	return (new_tok);
 }
 
-char *handle_dollar_sign(t_env *env, char *tok, int *i)
+char	*handle_dollar_sign(t_env *env, char *tok, int *i)
 {
-	char *val;
-	char *var;
+	char	*val;
+	char	*var;
 
 	val = NULL;
 	var = NULL;
-	if (tok[*i + 1] == DOLLAR
-		|| (is_alphanum(tok[*i + 1]) == 0
-		&& tok[*i + 1] != '_' && tok[*i + 1] != '?'))
+	if (tok[*i + 1] == DOLLAR || (is_alphanum(tok[*i + 1]) == 0
+			&& tok[*i + 1] != '_' && tok[*i + 1] != '?'))
 	{
 		val = str_dup("$");
 		(*i)++;

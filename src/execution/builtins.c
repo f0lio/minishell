@@ -2,6 +2,7 @@
 
 void	pwd(t_simpcmd *scmd)
 {
+	(void)scmd;
 	write(1, g_cwd, str_len(g_cwd));
 	write(1, "\n", 1);
 }
@@ -71,13 +72,25 @@ int	check_syntax(t_simpcmd *scmd, int *exitcode)
 
 int	my_exit(t_env *env, t_simpcmd *scmd, int pipenum, int exitcode)
 {
+	char	*not_trma;
+
 	if (scmd->tokarr[1])
+	{
 		if (check_syntax(scmd, &exitcode))
 			return (255);
+	}
+	else
+	{
+		not_trma = get_env(env, "?");
+		exitcode = my_atoi(not_trma);
+		safe_free((void **)&not_trma);
+	}
 	if (!pipenum)
 	{
 		destroy_env(env);
 		exit(exitcode);
 	}
+	else
+		return (exitcode);
 	return (0);
 }

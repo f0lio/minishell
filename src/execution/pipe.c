@@ -93,7 +93,6 @@ int	pipe_this(t_command *command)
 	int		i;
 	int		j;
 	int		ret;
-	t_token	*tk;
 
 	scmd_tokarr_loop(command);
 	i = -1;

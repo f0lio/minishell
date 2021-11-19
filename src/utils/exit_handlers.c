@@ -1,11 +1,4 @@
-
 #include "minishell.h"
-
-void	exit_program(ENV, int exit_code)
-{
-	//free memory
-	exit(exit_code);
-}
 
 void	destroy_env_vars(t_envvar **vars)
 {
