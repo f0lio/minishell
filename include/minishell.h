@@ -17,5 +17,5 @@
 # include "structs.h"
 # include "functions.h"
 
-int g_sig;
+int	g_sig;
 #endif

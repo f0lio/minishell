@@ -63,7 +63,7 @@ void	set_exitcode(t_env *env)
 		return ;
 	while (env->envll->next && !str_cmp(env->envll->name, "?"))
 		env->envll = env->envll->next;
-	if (!str_cmp(env->envll->name, "?"))
+	if (str_cmp(env->envll->name, "?"))
 	{
 		safe_free((void **)&env->envll->content);
 		env->envll->content = int_to_str(env->exitcode);

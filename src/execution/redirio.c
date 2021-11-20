@@ -27,7 +27,7 @@ void	heredoc_loop(char *eof, int fd)
 	char	*buffer;
 
 	buffer = 0;
-	g_sig = 1;
+	g_sig = 2;
 	while (!str_cmp(eof, buffer))
 	{
 		if (buffer)

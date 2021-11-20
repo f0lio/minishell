@@ -1,11 +1,30 @@
 #include "minishell.h"
 
+void	update_shell_level(t_env *env)
+{
+	char	*tmp;
+
+	if (!env->envll)
+		return ;
+	while (env->envll->next && !str_cmp(env->envll->name, "SHLVL"))
+		env->envll = env->envll->next;
+	if (str_cmp(env->envll->name, "SHLVL"))
+	{
+		tmp = int_to_str(my_atoi(env->envll->content) + 1);
+		safe_free((void **)&env->envll->content);
+		env->envll->content = tmp;
+	}
+	while (env->envll->prev)
+		env->envll = env->envll->prev;
+}
+
 void	init_env(t_env *env, int argc, char **argv, char **env_var)
 {
 	(void)argc;
 	(void)argv;
 	env->env_var = env_var;
 	arr_to_ll(env_var, &env->envll);
+	update_shell_level(env);
 	env->commands = NULL;
 	env->cmds_count = 0;
 	env->cwd = getcwd(0, 0);
