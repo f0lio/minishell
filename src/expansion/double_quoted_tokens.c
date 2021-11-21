@@ -70,7 +70,10 @@ char	*handle_dollar_sign(t_env *env, char *tok, int *i)
 		var = parse_variable_name(tok, i);
 		*i -= (tok[*i] != 0);
 		if (var)
-			val = get_env(env, var);
+		{
+			val = str_dup(get_env(env, var));
+			safe_free((void **)&var);
+		}
 	}
 	return (val);
 }

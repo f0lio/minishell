@@ -71,6 +71,6 @@ void	handle_unquoted_token(char *input, char **new_input, int *i)
 	if (va)
 	{
 		str_fjoin(new_input, va);
-		free(va);
+		safe_free((void **)&va);
 	}	
 }
